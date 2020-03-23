@@ -1,11 +1,11 @@
 ---
-title: HTTPS加密机制
+title: HTTPS 加密
 comments: true
 date: 2020-02-28 10:12:49
 tags: HTTP
 ---
 
-学习笔记，如有错误，望指出
+简单描述一下 HTTPS 加密
 <!--more-->
 
 ## 加密的种类
