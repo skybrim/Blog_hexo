@@ -1,6 +1,6 @@
 ---
 title: VIM Plugin
-date: 2019/12/12
+date: 2018/12/12
 tags: vim
 comments: true
 ---
