@@ -236,3 +236,8 @@ UIButton (NSObject -> UIResponder -> UIView -> UIControl -> UIButton)
     [super touchesBegan:touches withEvent:event]; 
 }
 ```
+
+参考：
+
+[史上最详细的iOS之事件的传递和响应机制-原理篇](https://www.jianshu.com/p/2e074db792ba)
+文／VV木公子（简书作者）
