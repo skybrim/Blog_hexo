@@ -1,5 +1,5 @@
 ---
-title: iOS 事件响应链
+title: iOS 事件传递与响应链
 comments: true
 date: 2020-05-18 15:09:51
 tags: iOS
@@ -86,6 +86,7 @@ UIButton (NSObject -> UIResponder -> UIView -> UIControl -> UIButton)
 // 触摸结束前，某个系统事件(例如电话呼入)会打断触摸过程，系统会自动调用view的下面方法
 - (void)touchesCancelled:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event;
 ```
+
 
 ## 事件的产生与传递
 
@@ -179,5 +180,59 @@ UIButton (NSObject -> UIResponder -> UIView -> UIControl -> UIButton)
         return nil;
     }
     return view;
+}
+```
+
+
+## 响应链
+
+### responder chain （响应者链条）
+
+在iOS程序中无论是最后面的UIWindow还是最前面的某个按钮，它们的摆放是有前后关系的，一个控件可以放到另一个控件上面或下面。
+
+这种先后关系构成一个链条就叫“响应者链”。
+
+也可以说，响应者链是由多个响应者对象连接起来的链条。
+
+![](https://raw.githubusercontent.com/skybrim/AllImages/dev/responder-chain-2.png)
+
+### 响应链的传递过程
+
+1. 如果当前view是控制器的view，那么控制器就是上一个响应者，事件就传递给控制器；如果当前view不是控制器的view，那么父视图就是当前view的上一个响应者，事件就传递给它的父视图
+   
+2. 在视图层次结构的最顶级视图，如果也不能处理收到的事件或消息，则其将事件或消息传递给window对象进行处理
+   
+3. 如果window对象也不处理，则其将事件或消息传递给UIApplication对象
+   
+4. 如果UIApplication也不能处理该事件或消息，则将其丢弃
+
+
+## 总结
+
+### iOS 事件处理的完整流程
+
+1. 触摸屏幕产生触摸事件后，触摸事件会被添加到由UIApplication管理的事件队列中。
+
+2. UIApplication会从事件队列中取出最前面的事件，把事件传递给应用程序的主窗口（keyWindow）。
+
+3. 主窗口会在视图层次结构中找到一个最合适的视图来处理触摸事件。（至此，完成事件的传递)
+
+4. 最合适的view会调用自己的touches方法处理事件，touches默认做法是把事件顺着响应者链条向上抛。（开始响应链传递）
+
+```objectivec
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{ 
+    [super touchesBegan:touches withEvent:event]; 
+}
+```
+
+### 如何做到一个事件多个对象处理：
+
+通过重写 touches 相关方法和父控件的touches方法，来达到一个事件多个对象处理的目的。
+
+```objectivec
+- (void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{ 
+    // TODO:
+    // responder chain
+    [super touchesBegan:touches withEvent:event]; 
 }
 ```
