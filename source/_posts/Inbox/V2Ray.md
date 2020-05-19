@@ -21,18 +21,11 @@ Project V
 
 ### 二、部署服务器
 
-* 服务器选择依据
-  
-    > 速度  
-    > 价格  
-    > 流量  
-    > 系统（这个一般来说没问题）  
-    > 个人其他需求  
-
 * V2Ray 在Linux系统中可用版本
    
-    > Linux 2.6.23 及之后版本（x86 / amd64 / arm / arm64 / mips64 / mips）。
-    > 包括但不限于 Debian 7 / 8、Ubuntu 12.04 / 14.04 及后续版本、CentOS 6 / 7、Arch Linux；
+    Linux 2.6.23 及之后版本（x86 / amd64 / arm / arm64 / mips64 / mips）
+
+    包括但不限于 Debian 7 / 8、Ubuntu 12.04 / 14.04 及后续版本、CentOS 6 / 7、Arch Linux；
 
 * 账号密码
   
