@@ -13,6 +13,8 @@ runtime
 
 ### 对象
 
+![](https://raw.githubusercontent.com/skybrim/AllImages/dev/run_time-1.jpg)
+
 * 对象：objc_object 结构体，isa 指向类
 
 * 类：  objc_class 结构体，继承自 objc_object，isa 指向元类
@@ -493,6 +495,8 @@ objc_msgSend 的两个隐藏参数：
 当前对象调用任何方法，接收者都是当前对象，即使是 super 调用
 
 ### 发送流程
+
+![](https://raw.githubusercontent.com/skybrim/AllImages/dev/runtime-2.png)
 
 1. 对象接收到消息
    
