@@ -467,6 +467,8 @@ load 方法的特点：
 
 ### initialize
 
+向对象发送消息时，lookUpImpOrForward 函数会判断当前类是否是
+
 特点
 
 * 第一次调用类所属的方法时，才调用 initialize
@@ -517,6 +519,152 @@ objc_msgSend 的两个隐藏参数：
 9.  forwardingTargetForSelector: 未实现，先调用 methodSignatureForSelector: 在方法内部生成 NSMethodSignature 类型的方法签名对象 forwardInvocation: 中转发消息
     
 10. 还未对消息处理，crash
+
+### lookUpImpOrForward 源码
+
+```objectivec
+IMP lookUpImpOrForward(Class cls, SEL sel, id inst, 
+                       bool initialize, bool cache, bool resolver)
+{
+    IMP imp = nil;
+    bool triedResolver = NO;
+
+    runtimeLock.assertUnlocked();
+
+    // 如果cache是YES，则从缓存中查找IMP。如果是从cache3函数进来，则不会执行cache_getImp()函数
+    if (cache) {
+        // 通过cache_getImp函数查找IMP，查找到则返回IMP并结束调用
+        imp = cache_getImp(cls, sel);
+        if (imp) return imp;
+    }
+
+    // runtimeLock is held during isRealized and isInitialized checking
+    // to prevent races against concurrent realization.
+
+    // runtimeLock is held during method search to make
+    // method-lookup + cache-fill atomic with respect to method addition.
+    // Otherwise, a category could be added but ignored indefinitely because
+    // the cache was re-filled with the old value after the cache flush on
+    // behalf of the category.
+
+    runtimeLock.read();
+
+    // 判断类是否已经被创建，如果没有被创建，则将类实例化 (class 的创建时机：第一次接收消息)
+    if (!cls->isRealized()) {
+        // Drop the read-lock and acquire the write-lock.
+        // realizeClass() checks isRealized() again to prevent
+        // a race while the lock is down.
+        runtimeLock.unlockRead();
+        runtimeLock.write();
+        
+        // 对类进行实例化操作
+        realizeClass(cls);
+
+        runtimeLock.unlockWrite();
+        runtimeLock.read();
+    }
+
+    // 第一次调用当前类的话，执行 initialize 的代码
+    if (initialize  &&  !cls->isInitialized()) {
+        runtimeLock.unlockRead();
+        // 对类进行初始化，并开辟内存空间
+        _class_initialize (_class_getNonMetaClass(cls, inst));
+        runtimeLock.read();
+        // If sel == initialize, _class_initialize will send +initialize and 
+        // then the messenger will send +initialize again after this 
+        // procedure finishes. Of course, if this is not being called 
+        // from the messenger then it won't happen. 2778172
+    }
+
+    
+ retry:    
+    runtimeLock.assertReading();
+
+    // 尝试获取这个类的缓存
+    imp = cache_getImp(cls, sel);
+    if (imp) goto done;
+
+    {
+        // 如果没有从cache中查找到，则从方法列表中获取Method
+        Method meth = getMethodNoSuper_nolock(cls, sel);
+        if (meth) {
+            // 如果获取到对应的Method，则加入缓存并从Method获取IMP
+            log_and_fill_cache(cls, meth->imp, sel, inst, cls);
+            imp = meth->imp;
+            goto done;
+        }
+    }
+
+    // Try superclass caches and method lists.
+    {
+        unsigned attempts = unreasonableClassCount();
+        // 循环获取这个类的 缓存IMP 或 方法列表的IMP
+        for (Class curClass = cls->superclass;
+             curClass != nil;
+             curClass = curClass->superclass)
+        {
+            // Halt if there is a cycle in the superclass chain.
+            if (--attempts == 0) {
+                _objc_fatal("Memory corruption in class list.");
+            }
+            
+            // Superclass cache.
+            // 获取父类 缓存的IMP
+            imp = cache_getImp(curClass, sel);
+            if (imp) {
+                if (imp != (IMP)_objc_msgForward_impcache) {
+                    // Found the method in a superclass. Cache it in this class.
+                    // 如果发现父类的方法，并且不再缓存中，在下面的函数中缓存方法
+                    log_and_fill_cache(cls, imp, sel, inst, curClass);
+                    goto done;
+                }
+                else {
+                    // Found a forward:: entry in a superclass.
+                    // Stop searching, but don't cache yet; call method 
+                    // resolver for this class first.
+                    break;
+                }
+            }
+            
+            // Superclass method list.
+            // 在父类的方法列表中，获取method_t对象。如果找到则缓存查找到的IMP
+            Method meth = getMethodNoSuper_nolock(curClass, sel);
+            if (meth) {
+                log_and_fill_cache(cls, meth->imp, sel, inst, curClass);
+                imp = meth->imp;
+                goto done;
+            }
+        }
+    }
+
+    // No implementation found. Try method resolver once.
+
+    // 如果没有找到，则尝试动态方法解析
+    if (resolver  &&  !triedResolver) {
+        runtimeLock.unlockRead();
+        _class_resolveMethod(cls, sel, inst);
+        runtimeLock.read();
+        // Don't cache the result; we don't hold the lock so it may have 
+        // changed already. Re-do the search from scratch instead.
+        triedResolver = YES;
+        goto retry;
+    }
+
+    // No implementation found, and method resolver didn't help. 
+    // Use forwarding.
+
+    // 如果没有IMP被发现，并且动态方法解析也没有处理，则进入消息转发阶段
+    imp = (IMP)_objc_msgForward_impcache;
+    cache_fill(cls, sel, imp, inst);
+
+ done:
+    runtimeLock.unlockRead();
+
+    return imp;
+}
+```
+
+### 消息转发的方法的区别
 
 forwardingTargetForSelector:， 仅支持一个对象的返回，也就是说消息只能被转发给一个对象、无法处理消息的内容，比如参数和返回值。
 
