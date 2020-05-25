@@ -549,7 +549,15 @@ forwardInvocation:， 可以将消息同时转发给任意多个对象
 
 ## method swizzling
 
-### aspects 源码
+### method_exchangeImplementations
+
+核心 API method_exchangeImplementations
+
+### aspects
+
+[源码分析](https://skybrim.top/2019/01/01/iOS/Aspects/)
+
+aspects 合理的规避了 method swizzling 的一些风险
 
 ### 注意
 
