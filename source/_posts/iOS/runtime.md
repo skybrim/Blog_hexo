@@ -496,6 +496,15 @@ objc_msgSend 的两个隐藏参数：
 
 当前对象调用任何方法，接收者都是当前对象，即使是 super 调用
 
+当向一个空对象（nil）发送消息，objc_msgSend 会判断接收者为空，直接返回 nil
+
+注意 NSNull 和 nil 的区别：
+
+* NSNull 是继承 NSObject 的对象，只有一个方法 [NSNull null]，向它发送别的消息（方法），会 crash
+
+* nil 是空，向它发消息不会报错
+
+
 ### 发送流程
 
 ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/runtime-2.png)
