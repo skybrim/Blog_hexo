@@ -100,7 +100,7 @@ struct property_t {
 typedef struct ivar_t *Ivar;
 
 struct ivar_t {
-    int32_t *offset;
+    int32_t *offset; // 一个 int 指针，而不是 int，通过这样设计，即使父类新增变量，子类不需要重新编译
     const char *name;
     const char *type;
     // alignment is sometimes -1; use alignment() instead
@@ -113,6 +113,23 @@ struct ivar_t {
     }
 };
 ```
+
+[Objective-C类成员变量深度剖析](http://quotation.github.io/objc/2015/05/21/objc-runtime-ivar-access.html)
+
+补充：
+
+```objectivec
+- (void)doSomething:(SomeClass *)obj
+{
+    obj->ivar1 = 42;         // 访问obj对象的public成员变量
+    int n = self->ivar2;     // 访问当前类实例的成员变量
+    ivar2 = n + 1;           // 访问当前类的成员变量
+}
+```
+
+为基类**动态增加成员变量**会导致所有已创建出的子类实例都无法使用，所以成员变量是在编译时决定的
+
+但是可以**动态添加方法和属性**，因为方法和属性属于类，成员变量属于实例
 
 ### Category
 
