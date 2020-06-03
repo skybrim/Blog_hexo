@@ -1,5 +1,5 @@
 ---
-title: iOS runtime
+title: Objective-C runtime
 comments: true
 date: 2020-05-22 14:02:51
 tags: iOS
@@ -114,7 +114,7 @@ struct ivar_t {
 };
 ```
 
-[Objective-C类成员变量深度剖析](http://quotation.github.io/objc/2015/05/21/objc-runtime-ivar-access.html)
+[Objective-C 类成员变量深度剖析](http://quotation.github.io/objc/2015/05/21/objc-runtime-ivar-access.html)
 
 补充：
 
@@ -180,21 +180,37 @@ union isa_t
 #   define ISA_MAGIC_MASK  0x000003f000000001ULL
 #   define ISA_MAGIC_VALUE 0x000001a000000001ULL
     struct {
-        uintptr_t nonpointer        : 1;
-        uintptr_t has_assoc         : 1;
-        uintptr_t has_cxx_dtor      : 1;
-        uintptr_t shiftcls          : 33; // MACH_VM_MAX_ADDRESS 0x1000000000
-        uintptr_t magic             : 6;
-        uintptr_t weakly_referenced : 1;
-        uintptr_t deallocating      : 1;
-        uintptr_t has_sidetable_rc  : 1;
-        uintptr_t extra_rc          : 19;
+        uintptr_t nonpointer        : 1;  // 0 表示普通的 isa 指针；1 表示优化后的 isa 指针，存储引用计数
+        uintptr_t has_assoc         : 1;  // 表示该对象是否包含 associated object，如果没有，则析构时会更快
+        uintptr_t has_cxx_dtor      : 1;  // 表示该对象是否有 C++ 或 ARC 的析构函数，如果没有，则析构时更快
+        uintptr_t shiftcls          : 33; // 类的指针 MACH_VM_MAX_ADDRESS 0x1000000000
+        uintptr_t magic             : 6;  // 固定值为 0xd2，用于在调试时分辨对象是否未完成初始化。
+        uintptr_t weakly_referenced : 1;  // 表示该对象是否有过 weak 对象，如果没有，则析构时更快
+        uintptr_t deallocating      : 1;  // 表示该对象是否正在析构
+        uintptr_t has_sidetable_rc  : 1;  // 表示该对象的引用计数值是否过大无法存储在 isa 指针  
+        uintptr_t extra_rc          : 19; // 存储引用计数值减一后的结果
 #       define RC_ONE   (1ULL<<45)
 #       define RC_HALF  (1ULL<<18)
     };
 
 # elif __x86_64__
-    ...
+#   define ISA_MASK        0x00007ffffffffff8ULL
+#   define ISA_MAGIC_MASK  0x0000000000000001ULL
+#   define ISA_MAGIC_VALUE 0x0000000000000001ULL
+    struct {
+        uintptr_t indexed           : 1;
+        uintptr_t has_assoc         : 1;
+        uintptr_t has_cxx_dtor      : 1;
+        uintptr_t shiftcls          : 44; // MACH_VM_MAX_ADDRESS 0x7fffffe00000
+        uintptr_t weakly_referenced : 1;
+        uintptr_t deallocating      : 1;
+        uintptr_t has_sidetable_rc  : 1;
+        uintptr_t extra_rc          : 14;
+#       define RC_ONE   (1ULL<<50)
+#       define RC_HALF  (1ULL<<13)
+    };
+
+# else
 # else
     ...
 # endif
