@@ -1,8 +1,8 @@
 ---
 title: Objective-C 引用计数
 comments: true
-date: 2017-10-19 11:08:50
-tags:
+date: 2019-10-19 11:08:50
+tags: iOS
 ---
 
 Objective-C 引用计数
@@ -116,6 +116,7 @@ union isa_t
 
 ### hash 表存储
 
+![SideTables](https://raw.githubusercontent.com/skybrim/AllImages/dev/weak_point_0.png)
 
 从上往下分析结构
 
@@ -270,16 +271,6 @@ weak_table_t 也是一个 hash 表，key 是对象的地址，值是一个动态
         template<HaveOld, HaveNew>
         static void unlockTwo(SideTable *lock1, SideTable *lock2);
     }
-    /**
-    * The global weak references table. Stores object ids as keys,
-    * and weak_entry_t structs as their values.
-    */
-    struct weak_table_t {
-        weak_entry_t *weak_entries;
-        size_t    num_entries;
-        uintptr_t mask;
-        uintptr_t max_hash_displacement;
-    };
     ```
 
 * RefcountMap
@@ -299,6 +290,82 @@ weak_table_t 也是一个 hash 表，key 是对象的地址，值是一个动态
     key：DisguisedPtr<objc_object>，是对 objc_object * 指针及其一些操作进行的封装
 
     value：__darwin_size_t，等价于 unsigned long，内容也是 **引用计数减一**
+
+* weak_table_t
+  
+    ```objectivec
+    /**
+    * The global weak references table. Stores object ids as keys,
+    * and weak_entry_t structs as their values.
+    */
+    struct weak_table_t {
+        weak_entry_t *weak_entries;
+        size_t    num_entries;
+        uintptr_t mask;
+        uintptr_t max_hash_displacement;
+    };
+    ```
+
+* weak_entry_t
+
+    ```objectivec
+    #if __LP64__
+    #define PTR_MINUS_2 62
+    #else
+    #define PTR_MINUS_2 30
+    #endif
+
+    /**
+    * The internal structure stored in the weak references table. 
+    * It maintains and stores
+    * a hash set of weak references pointing to an object.
+    * If out_of_line_ness != REFERRERS_OUT_OF_LINE then the set
+    * is instead a small inline array.
+    */
+    #define WEAK_INLINE_COUNT 4
+
+    // out_of_line_ness field overlaps with the low two bits of inline_referrers[1].
+    // inline_referrers[1] is a DisguisedPtr of a pointer-aligned address.
+    // The low two bits of a pointer-aligned DisguisedPtr will always be 0b00
+    // (disguised nil or 0x80..00) or 0b11 (any other address).
+    // Therefore out_of_line_ness == 0b10 is used to mark the out-of-line state.
+    #define REFERRERS_OUT_OF_LINE 2
+
+    struct weak_entry_t {
+        DisguisedPtr<objc_object> referent;
+        union {
+            struct {
+                weak_referrer_t *referrers;
+                uintptr_t        out_of_line_ness : 2;
+                uintptr_t        num_refs : PTR_MINUS_2;
+                uintptr_t        mask;
+                uintptr_t        max_hash_displacement;
+            };
+            struct {
+                // out_of_line_ness field is low bits of inline_referrers[1]
+                weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];
+            };
+        };
+
+        bool out_of_line() {
+            return (out_of_line_ness == REFERRERS_OUT_OF_LINE);
+        }
+
+        weak_entry_t& operator=(const weak_entry_t& other) {
+            memcpy(this, &other, sizeof(other));
+            return *this;
+        }
+
+        weak_entry_t(objc_object *newReferent, objc_object **newReferrer)
+            : referent(newReferent)
+        {
+            inline_referrers[0] = newReferrer;
+            for (int i = 1; i < WEAK_INLINE_COUNT; i++) {
+                inline_referrers[i] = nil;
+            }
+        }
+    };
+    ```
 
 ## 获取引用计数
 
@@ -343,3 +410,4 @@ _objc_rootRelease(id obj)
 ## 引用&参考
 
 [Objective-C 引用计数原理 by:杨潇玉](http://yulingtianxia.com/blog/2015/12/06/The-Principle-of-Refenrence-Counting/)
+[Objective-C runtime机制(7)](https://blog.csdn.net/u013378438/article/details/82790332) 
