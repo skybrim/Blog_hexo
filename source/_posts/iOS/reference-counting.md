@@ -301,6 +301,8 @@ RefcountMap 是一个 hash 表，key 是对象的地址，值是引用计数减�
     关于 weak_table_t 的详细分析，见 [Objective-C 弱引用](https://skybrim.top/2019/10/21/iOS/weak-point/)，这里只展示源码
 
     <details>
+    <summary>weak_table_t</summary>
+
     ```objectivec
     /**
     * The global weak references table. Stores object ids as keys,
@@ -312,14 +314,18 @@ RefcountMap 是一个 hash 表，key 是对象的地址，值是引用计数减�
         uintptr_t mask;
         uintptr_t max_hash_displacement;
     };
-    ```   
+    ```
+
     </details>
+    
 
 * weak_entry_t
 
     关于 weak_entry_t 的详细分析，见 [Objective-C 弱引用](https://skybrim.top/2019/10/21/iOS/weak-point/)，这里展示下源码
 
     <details>
+    <summary>weak_entry_t</summary>
+
     ```objectivec
     #if __LP64__
     #define PTR_MINUS_2 62
@@ -378,6 +384,7 @@ RefcountMap 是一个 hash 表，key 是对象的地址，值是引用计数减�
         }
     };
     ```
+    
     </details>    
 
 ## 获取引用计数
