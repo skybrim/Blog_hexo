@@ -1,5 +1,5 @@
 ---
-title: weak-point
+title: Objective-C 弱引用
 comments: true
 date: 2019-10-21 11:10:56
 tags: iOS
@@ -10,7 +10,7 @@ weak 指针学习
 
 ## 前置学习
 
-[Objective-C 引用计数](https://skybrim.top/2017/10/19/iOS/reference-counting/)
+[Objective-C 引用计数](https://skybrim.top/2019/10/19/iOS/reference-counting/)
 
 
 ## __weak
@@ -24,7 +24,7 @@ __weak 修饰的指针指向对象，对象的引用计数不会增加
 
 Runtime 维护着一个全局的 SideTables 定长哈希表，key 是对象的地址，值是对象对应的 SideTable
 
-SideTable 里维护这对象的 引用计数表（RefcountMap）和 **弱指针全局表（weak_table_t）**
+SideTable 里维护这对象的 引用计数表（RefcountMap）和 **弱指针表（weak_table_t）**
 
 weak_table_t 中，通过对象的地址，获取到对象的 **弱指针数组（weak_entry_t *）**
 
@@ -35,8 +35,260 @@ weak_table_t 中，通过对象的地址，获取到对象的 **弱指针数组�
 
 ## SideTables 结构图
 
+**详细的结构分析，见上一篇博文 [Objective-C 引用计数](https://skybrim.top/2019/10/19/iOS/reference-counting/)**
+
+此文重点是 weak_table_t 与 weak_entry_t 的分析
+
 ![SideTables](https://raw.githubusercontent.com/skybrim/AllImages/dev/weak_point_0.png)
 
+
+### weak_table_t
+
+weak_table_t 是一个全局的弱引用哈希表。
+
+weak_table_t 的 key 是对象地址，value 是 weak_entry_t
+
+由于 SideTables 一共只有 64（iPhone真机为8）个节点，App 中对象肯定不止，所以每个 SideTable 对应多个对象。
+
+所以，weak_table_t 也是对应着多个对象的弱引用信息，即 weak_entries 中存放着多个对象的弱引用信息（weak_entry_t）。
+
+而 weak_table_t，则是通过对 **对象指针** 进行哈希计算，获取到 **对象的 weak_entry_t**
+
+weak_table_t 定义
+```objectivec
+/**
+ * The global weak references table. Stores object ids as keys,
+ * and weak_entry_t structs as their values.
+ */
+struct weak_table_t {
+    weak_entry_t *weak_entries;
+    size_t    num_entries;
+    uintptr_t mask;
+    uintptr_t max_hash_displacement;
+};
+```
+
+分析 weak_entry_for_referent 方法，可以得知 weak_table 通过 对象指针 获取到对象的弱引用信息（weak_entry_t）
+
+```objectivec
+/** 
+ * Return the weak reference table entry for the given referent. 
+ * If there is no entry for referent, return NULL. 
+ * Performs a lookup.
+ *
+ * @param weak_table 
+ * @param referent The object. Must not be nil.
+ * 
+ * @return The table of weak referrers to this object. 
+ */
+static weak_entry_t *
+weak_entry_for_referent(weak_table_t *weak_table, objc_object *referent)
+{
+    ASSERT(referent);
+
+    weak_entry_t *weak_entries = weak_table->weak_entries;
+
+    if (!weak_entries) return nil;
+
+    // 计算出对象的 weak_entry_t 在 weak_entries 中的索引
+    size_t begin = hash_pointer(referent) & weak_table->mask;
+    size_t index = begin;
+    size_t hash_displacement = 0;
+    while (weak_table->weak_entries[index].referent != referent) {
+        index = (index+1) & weak_table->mask;
+        if (index == begin) bad_weak_table(weak_table->weak_entries);
+        hash_displacement++;
+        if (hash_displacement > weak_table->max_hash_displacement) {
+            return nil;
+        }
+    }
+    
+    return &weak_table->weak_entries[index];
+}
+```
+
+### weak_entry_t
+
+weak_entry_t 维护着对象的弱引用信息的哈希集合
+
+是一个 union 类型，如果 out_of_line_ness != REFERRERS_OUT_OF_LINE ，用一个内联数组代替
+
+这是因为对象可能不止一个弱指针，根据不同情况来优化
+
+通过分析 remove_referrer 和 append_referrer 源码可以得知
+
+weak_entry_t 通过对 弱指针的指针 进行哈希计算，可以找到 弱指针 在 weak_referrer_t->referrers 中的位置
+
+```objectivec
+// The address of a __weak variable.
+// These pointers are stored disguised so memory analysis tools
+// don't see lots of interior pointers from the weak table into objects.
+typedef DisguisedPtr<objc_object *> weak_referrer_t;
+
+#if __LP64__
+#define PTR_MINUS_2 62
+#else
+#define PTR_MINUS_2 30
+#endif
+
+/**
+ * The internal structure stored in the weak references table. 
+ * It maintains and stores
+ * a hash set of weak references pointing to an object.
+ * If out_of_line_ness != REFERRERS_OUT_OF_LINE then the set
+ * is instead a small inline array.
+ */
+#define WEAK_INLINE_COUNT 4
+
+// out_of_line_ness field overlaps with the low two bits of inline_referrers[1].
+// inline_referrers[1] is a DisguisedPtr of a pointer-aligned address.
+// The low two bits of a pointer-aligned DisguisedPtr will always be 0b00
+// (disguised nil or 0x80..00) or 0b11 (any other address).
+// Therefore out_of_line_ness == 0b10 is used to mark the out-of-line state.
+#define REFERRERS_OUT_OF_LINE 2
+
+struct weak_entry_t {
+    DisguisedPtr<objc_object> referent;
+    union {
+        struct {
+            weak_referrer_t *referrers;
+            uintptr_t        out_of_line_ness : 2;
+            uintptr_t        num_refs : PTR_MINUS_2;
+            uintptr_t        mask;
+            uintptr_t        max_hash_displacement;
+        };
+        struct {
+            // out_of_line_ness field is low bits of inline_referrers[1]
+            weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];
+        };
+    };
+
+    bool out_of_line() {
+        return (out_of_line_ness == REFERRERS_OUT_OF_LINE);
+    }
+
+    weak_entry_t& operator=(const weak_entry_t& other) {
+        memcpy(this, &other, sizeof(other));
+        return *this;
+    }
+
+    weak_entry_t(objc_object *newReferent, objc_object **newReferrer)
+        : referent(newReferent)
+    {
+        inline_referrers[0] = newReferrer;
+        for (int i = 1; i < WEAK_INLINE_COUNT; i++) {
+            inline_referrers[i] = nil;
+        }
+    }
+};
+```
+
+```objectivec
+/** 
+ * Add the given referrer to set of weak pointers in this entry.
+ * Does not perform duplicate checking (b/c weak pointers are never
+ * added to a set twice). 
+ *
+ * @param entry The entry holding the set of weak pointers. 
+ * @param new_referrer The new weak pointer to be added.
+ */
+static void append_referrer(weak_entry_t *entry, objc_object **new_referrer)
+{
+    if (! entry->out_of_line()) {
+        // Try to insert inline.
+        for (size_t i = 0; i < WEAK_INLINE_COUNT; i++) {
+            if (entry->inline_referrers[i] == nil) {
+                entry->inline_referrers[i] = new_referrer;
+                return;
+            }
+        }
+
+        // Couldn't insert inline. Allocate out of line.
+        weak_referrer_t *new_referrers = (weak_referrer_t *)
+            calloc(WEAK_INLINE_COUNT, sizeof(weak_referrer_t));
+        // This constructed table is invalid, but grow_refs_and_insert
+        // will fix it and rehash it.
+        for (size_t i = 0; i < WEAK_INLINE_COUNT; i++) {
+            new_referrers[i] = entry->inline_referrers[i];
+        }
+        entry->referrers = new_referrers;
+        entry->num_refs = WEAK_INLINE_COUNT;
+        entry->out_of_line_ness = REFERRERS_OUT_OF_LINE;
+        entry->mask = WEAK_INLINE_COUNT-1;
+        entry->max_hash_displacement = 0;
+    }
+
+    ASSERT(entry->out_of_line());
+
+    if (entry->num_refs >= TABLE_SIZE(entry) * 3/4) {
+        return grow_refs_and_insert(entry, new_referrer);
+    }
+
+    // 对 弱指针的指针 进行哈希计算，拿到索引，将对应的 弱指针 插入到 weak_referrer_t->referrers 中
+    size_t begin = w_hash_pointer(new_referrer) & (entry->mask);
+    size_t index = begin;
+    size_t hash_displacement = 0;
+    while (entry->referrers[index] != nil) {
+        hash_displacement++;
+        index = (index+1) & entry->mask;
+        if (index == begin) bad_weak_table(entry);
+    }
+    if (hash_displacement > entry->max_hash_displacement) {
+        entry->max_hash_displacement = hash_displacement;
+    }
+    weak_referrer_t &ref = entry->referrers[index];
+    ref = new_referrer;
+    entry->num_refs++;
+}
+
+/** 
+ * Remove old_referrer from set of referrers, if it's present.
+ * Does not remove duplicates, because duplicates should not exist. 
+ * 
+ * @todo this is slow if old_referrer is not present. Is this ever the case? 
+ *
+ * @param entry The entry holding the referrers.
+ * @param old_referrer The referrer to remove. 
+ */
+static void remove_referrer(weak_entry_t *entry, objc_object **old_referrer)
+{
+    if (! entry->out_of_line()) {
+        for (size_t i = 0; i < WEAK_INLINE_COUNT; i++) {
+            if (entry->inline_referrers[i] == old_referrer) {
+                entry->inline_referrers[i] = nil;
+                return;
+            }
+        }
+        _objc_inform("Attempted to unregister unknown __weak variable "
+                     "at %p. This is probably incorrect use of "
+                     "objc_storeWeak() and objc_loadWeak(). "
+                     "Break on objc_weak_error to debug.\n", 
+                     old_referrer);
+        objc_weak_error();
+        return;
+    }
+
+    size_t begin = w_hash_pointer(old_referrer) & (entry->mask);
+    size_t index = begin;
+    size_t hash_displacement = 0;
+    while (entry->referrers[index] != old_referrer) {
+        index = (index+1) & entry->mask;
+        if (index == begin) bad_weak_table(entry);
+        hash_displacement++;
+        if (hash_displacement > entry->max_hash_displacement) {
+            _objc_inform("Attempted to unregister unknown __weak variable "
+                         "at %p. This is probably incorrect use of "
+                         "objc_storeWeak() and objc_loadWeak(). "
+                         "Break on objc_weak_error to debug.\n", 
+                         old_referrer);
+            objc_weak_error();
+            return;
+        }
+    }
+    entry->referrers[index] = nil;
+    entry->num_refs--;
+}
+```
 
 ## weak 指针的创建
 
@@ -230,6 +482,7 @@ weak_register_no_lock(weak_table_t *weak_table, id referent_id,
     weak_entry_t *entry;
     if ((entry = weak_entry_for_referent(weak_table, referent))) {
 
+        // append_referrer() 的源码在文章上半部分
         // 如果能找到 weak_entries，插入 referrer
         append_referrer(entry, referrer);
     } 
@@ -348,7 +601,7 @@ void *objc_destructInstance(id obj)
         // This order is important.
         // c++ 析构方法
         if (cxx) object_cxxDestruct(obj);
-        // 移除关联对象 
+        // 移除关联对象，并将其自身从Association Manager的map中移除
         if (assoc) _object_remove_assocations(obj);
         // 执行 clearDeallocating
         obj->clearDeallocating();

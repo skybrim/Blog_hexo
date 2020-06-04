@@ -126,7 +126,13 @@ union isa_t
 
     键是对象的地址，值是对象的 SideTable
 
-    所以，每个 **SideTable** 可能对应多个 **对象**
+    所以，**一个 SideTable 可能对应多个对象**
+
+    SideTables 在系统中是全局唯一的。
+
+    SideTables的类型是是template<typename T> class StripedMap，StripedMap<SideTable> 。
+    
+    可以简单的理解为一个64 * sizeof(SideTable) 的哈希线性数组
 
     ```objectivc
 
@@ -241,7 +247,6 @@ union isa_t
 
 RefcountMap 是一个 hash 表，key 是对象的地址，值是引用计数减一
 
-weak_table_t 也是一个 hash 表，key 是对象的地址，值是一个动态数组，数组元素的类型是 weak_entry_t 
 
     ```objectivec
     struct SideTable {
@@ -292,7 +297,10 @@ weak_table_t 也是一个 hash 表，key 是对象的地址，值是一个动态
     value：__darwin_size_t，等价于 unsigned long，内容也是 **引用计数减一**
 
 * weak_table_t
-  
+
+    关于 weak_table_t 的详细分析，见 [Objective-C 弱引用](https://skybrim.top/2019/10/21/iOS/weak-point/)，这里只展示源码
+
+    <details>
     ```objectivec
     /**
     * The global weak references table. Stores object ids as keys,
@@ -304,10 +312,14 @@ weak_table_t 也是一个 hash 表，key 是对象的地址，值是一个动态
         uintptr_t mask;
         uintptr_t max_hash_displacement;
     };
-    ```
+    ```   
+    </details>
 
 * weak_entry_t
 
+    关于 weak_entry_t 的详细分析，见 [Objective-C 弱引用](https://skybrim.top/2019/10/21/iOS/weak-point/)，这里展示下源码
+
+    <details>
     ```objectivec
     #if __LP64__
     #define PTR_MINUS_2 62
@@ -366,6 +378,7 @@ weak_table_t 也是一个 hash 表，key 是对象的地址，值是一个动态
         }
     };
     ```
+    </details>    
 
 ## 获取引用计数
 
@@ -410,4 +423,5 @@ _objc_rootRelease(id obj)
 ## 引用&参考
 
 [Objective-C 引用计数原理 by:杨潇玉](http://yulingtianxia.com/blog/2015/12/06/The-Principle-of-Refenrence-Counting/)
+[Objective-C runtime机制(5)](https://blog.csdn.net/u013378438/article/details/80733391)
 [Objective-C runtime机制(7)](https://blog.csdn.net/u013378438/article/details/82790332) 
