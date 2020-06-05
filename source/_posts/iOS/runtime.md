@@ -6,6 +6,7 @@ tags: iOS
 ---
 
 runtime
+源码基于 [objc4-781](https://opensource.apple.com/tarballs/objc4/objc4-781.tar.gz)
 <!--more-->
 
 
@@ -162,59 +163,132 @@ struct category_t {
 };
 ```
 
+### Protocol
+
+```objectivec
+struct protocol_t : objc_object {
+    const char *mangledName;
+    struct protocol_list_t *protocols;
+    method_list_t *instanceMethods;
+    method_list_t *classMethods;
+    method_list_t *optionalInstanceMethods;
+    method_list_t *optionalClassMethods;
+    property_list_t *instanceProperties;
+    uint32_t size;   // sizeof(protocol_t)
+    uint32_t flags;
+    // Fields below this point are not always present on disk.
+    const char **_extendedMethodTypes;
+    const char *_demangledName;
+    property_list_t *_classProperties;
+
+    const char *demangledName();
+
+    const char *nameForLogging() {
+        return demangledName();
+    }
+
+    bool isFixedUp() const;
+    void setFixedUp();
+
+    bool isCanonical() const;
+    void clearIsCanonical();
+
+#   define HAS_FIELD(f) (size >= offsetof(protocol_t, f) + sizeof(f))
+
+    bool hasExtendedMethodTypesField() const {
+        return HAS_FIELD(_extendedMethodTypes);
+    }
+    bool hasDemangledNameField() const {
+        return HAS_FIELD(_demangledName);
+    }
+    bool hasClassPropertiesField() const {
+        return HAS_FIELD(_classProperties);
+    }
+
+#   undef HAS_FIELD
+
+    const char **extendedMethodTypes() const {
+        return hasExtendedMethodTypesField() ? _extendedMethodTypes : nil;
+    }
+
+    property_list_t *classProperties() const {
+        return hasClassPropertiesField() ? _classProperties : nil;
+    }
+};
+```
+
 ##  runtime 结构体分析
 
 ### isa_t
 
 ```objectivec
-union isa_t 
-{
+union isa_t {
     isa_t() { }
     isa_t(uintptr_t value) : bits(value) { }
 
     Class cls;
     uintptr_t bits;
+#if defined(ISA_BITFIELD)
+    struct {
+        ISA_BITFIELD;  // defined in isa.h
+    };
+#endif
+};
 
-    # if __arm64__
+// isa.h ISA_BITFIELD 的定义
+#if SUPPORT_PACKED_ISA
+
+    // extra_rc must be the MSB-most field (so it matches carry/overflow flags)
+    // nonpointer must be the LSB (fixme or get rid of it)
+    // shiftcls must occupy the same bits that a real class pointer would
+    // bits + RC_ONE is equivalent to extra_rc + 1
+    // RC_HALF is the high bit of extra_rc (i.e. half of its range)
+
+    // future expansion:
+    // uintptr_t fast_rr : 1;     // no r/r overrides
+    // uintptr_t lock : 2;        // lock for atomic property, @synch
+    // uintptr_t extraBytes : 1;  // allocated with extra bytes
+
+# if __arm64__
 #   define ISA_MASK        0x0000000ffffffff8ULL
 #   define ISA_MAGIC_MASK  0x000003f000000001ULL
 #   define ISA_MAGIC_VALUE 0x000001a000000001ULL
-    struct {
-        uintptr_t nonpointer        : 1;  // 0 表示普通的 isa 指针；1 表示优化后的 isa 指针，存储引用计数
-        uintptr_t has_assoc         : 1;  // 表示该对象是否包含 associated object，如果没有，则析构时会更快
-        uintptr_t has_cxx_dtor      : 1;  // 表示该对象是否有 C++ 或 ARC 的析构函数，如果没有，则析构时更快
-        uintptr_t shiftcls          : 33; // 类的指针 MACH_VM_MAX_ADDRESS 0x1000000000
-        uintptr_t magic             : 6;  // 固定值为 0xd2，用于在调试时分辨对象是否未完成初始化。
-        uintptr_t weakly_referenced : 1;  // 表示该对象是否有过 weak 对象，如果没有，则析构时更快
-        uintptr_t deallocating      : 1;  // 表示该对象是否正在析构
-        uintptr_t has_sidetable_rc  : 1;  // 表示该对象的引用计数值是否过大无法存储在 isa 指针  
-        uintptr_t extra_rc          : 19; // 存储引用计数值减一后的结果
-#       define RC_ONE   (1ULL<<45)
-#       define RC_HALF  (1ULL<<18)
-    };
+#   define ISA_BITFIELD                                                                               \
+      uintptr_t nonpointer        : 1;  /*0 表示普通的 isa 指针；1 表示优化后的 isa 指针，存储引用计数*/      \
+      uintptr_t has_assoc         : 1;  /*表示该对象是否包含 associated object，如果没有，则析构时会更快*/    \
+      uintptr_t has_cxx_dtor      : 1;  /*表示该对象是否有 C++ 或 ARC 的析构函数，如果没有，则析构时更快*/     \
+      uintptr_t shiftcls          : 33; /*类的指针 MACH_VM_MAX_ADDRESS 0x1000000000*/                  \
+      uintptr_t magic             : 6;  /*固定值为 0xd2，用于在调试时分辨对象是否未完成初始化。*/             \
+      uintptr_t weakly_referenced : 1;  /*表示该对象是否有过 weak 对象，如果没有，则析构时更快*/              \
+      uintptr_t deallocating      : 1;  /*表示该对象是否正在析构*/                                        \
+      uintptr_t has_sidetable_rc  : 1;  /*表示该对象的引用计数值是否过大无法存储在 isa 指针  */               \
+      uintptr_t extra_rc          : 19  /*存储引用计数值减一后的结果*/ 
+#   define RC_ONE   (1ULL<<45)
+#   define RC_HALF  (1ULL<<18)
 
 # elif __x86_64__
 #   define ISA_MASK        0x00007ffffffffff8ULL
-#   define ISA_MAGIC_MASK  0x0000000000000001ULL
-#   define ISA_MAGIC_VALUE 0x0000000000000001ULL
-    struct {
-        uintptr_t indexed           : 1;
-        uintptr_t has_assoc         : 1;
-        uintptr_t has_cxx_dtor      : 1;
-        uintptr_t shiftcls          : 44; // MACH_VM_MAX_ADDRESS 0x7fffffe00000
-        uintptr_t weakly_referenced : 1;
-        uintptr_t deallocating      : 1;
-        uintptr_t has_sidetable_rc  : 1;
-        uintptr_t extra_rc          : 14;
-#       define RC_ONE   (1ULL<<50)
-#       define RC_HALF  (1ULL<<13)
-    };
+#   define ISA_MAGIC_MASK  0x001f800000000001ULL
+#   define ISA_MAGIC_VALUE 0x001d800000000001ULL
+#   define ISA_BITFIELD                                                        \
+      uintptr_t nonpointer        : 1;                                         \
+      uintptr_t has_assoc         : 1;                                         \
+      uintptr_t has_cxx_dtor      : 1;                                         \
+      uintptr_t shiftcls          : 44; /*MACH_VM_MAX_ADDRESS 0x7fffffe00000*/ \
+      uintptr_t magic             : 6;                                         \
+      uintptr_t weakly_referenced : 1;                                         \
+      uintptr_t deallocating      : 1;                                         \
+      uintptr_t has_sidetable_rc  : 1;                                         \
+      uintptr_t extra_rc          : 8 
+#   define RC_ONE   (1ULL<<56)
+#   define RC_HALF  (1ULL<<7)
 
 # else
-# else
-    ...
+#   error unknown architecture for packed isa
 # endif
-};
+
+// SUPPORT_PACKED_ISA
+#endif
 ```
 
 ### class_ro_t 与 class_rw_t
@@ -301,85 +375,111 @@ isa_t 同 Tagged Pointer，在 OC2.0 之后，直接本身就存储着对象的�
 
 ```objectivec
 + (id)alloc {
+    // 按照注释 [cls alloc] 调用的是 objc_alloc，不过最终都会走到 callAlloc 方法
     return _objc_rootAlloc(self);
 }
 
-id _objc_rootAlloc(Class cls)
+// Base class implementation of +alloc. cls is not nil.
+// Calls [cls alloc]. 
+id
+objc_alloc(Class cls)
 {
-    return callAlloc(cls, false/*checkNil*/, true/*allocWithZone*/);
+    return callAlloc(cls, true/*checkNil*/, false/*allocWithZone*/);
 }
 
+// Call [cls alloc] or [cls allocWithZone:nil], with appropriate 
+// shortcutting optimizations.
 static ALWAYS_INLINE id
 callAlloc(Class cls, bool checkNil, bool allocWithZone=false)
 {
+#if __OBJC2__
+    // 重点关注这一部分，最终都会走到这里
+    // 检查是否为 nil 对象调用
+    if (slowpath(checkNil && !cls)) return nil;
+    // 调用 _objc_rootAllocWithZone
     if (fastpath(!cls->ISA()->hasCustomAWZ())) {
-        // No alloc/allocWithZone implementation. Go straight to the allocator.
-        // fixme store hasCustomAWZ in the non-meta class and 
-        // add it to canAllocFast's summary
-        if (fastpath(cls->canAllocFast())) {
-            // No ctors, raw isa, etc. Go straight to the metal.
-            bool dtor = cls->hasCxxDtor();
-            id obj = (id)calloc(1, cls->bits.fastInstanceSize());
-            if (slowpath(!obj)) return callBadAllocHandler(cls);
-            obj->initInstanceIsa(cls, dtor);
-            return obj;
-        }
-        else {
-            // Has ctor or raw isa or something. Use the slower path.
-            id obj = class_createInstance(cls, 0);
-            if (slowpath(!obj)) return callBadAllocHandler(cls);
-            return obj;
-        }
+        return _objc_rootAllocWithZone(cls, nil);
     }
+#endif
+
+    // No shortcuts available.
+    if (allocWithZone) {
+        return ((id(*)(id, SEL, struct _NSZone *))objc_msgSend)(cls, @selector(allocWithZone:), nil);
+    }
+    return ((id(*)(id, SEL))objc_msgSend)(cls, @selector(alloc));
 }
 
-id class_createInstance(Class cls, size_t extraBytes)
-{
-    return _class_createInstanceFromZone(cls, extraBytes, nil);
-}
-
-static __attribute__((always_inline)) 
+NEVER_INLINE
 id
-_class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone, 
-                              bool cxxConstruct = true, 
+_objc_rootAllocWithZone(Class cls, malloc_zone_t *zone __unused)
+{
+    // allocWithZone under __OBJC2__ ignores the zone parameter
+    return _class_createInstanceFromZone(cls, 0, nil,
+                                         OBJECT_CONSTRUCT_CALL_BADALLOC);
+}
+
+/***********************************************************************
+* class_createInstance
+* fixme
+* Locking: none
+*
+* Note: this function has been carefully written so that the fastpath
+* takes no branch.
+**********************************************************************/
+static ALWAYS_INLINE id
+_class_createInstanceFromZone(Class cls, size_t extraBytes, void *zone,
+                              int construct_flags = OBJECT_CONSTRUCT_NONE,
+                              bool cxxConstruct = true,
                               size_t *outAllocatedSize = nil)
 {
-    if (!cls) return nil;
-
-    assert(cls->isRealized());
+    // 是否实现 cls
+    ASSERT(cls->isRealized());
 
     // Read class's info bits all at once for performance
-    bool hasCxxCtor = cls->hasCxxCtor();
+    // cls 是否有 c++ 的构建方法
+    bool hasCxxCtor = cxxConstruct && cls->hasCxxCtor();
+    // cls 是否有 c++ 的析构方法
     bool hasCxxDtor = cls->hasCxxDtor();
-    bool fast = cls->canAllocNonpointer();  //获取对象原始大小，编译时决定，对象大小至少 16 字节
+    // cls 是否开启了 isa 优化
+    bool fast = cls->canAllocNonpointer();
+    size_t size;
 
-    size_t size = cls->instanceSize(extraBytes);
+    // 获取实例的内存大小，至少 16 字节，参数 extraBytes 是 0
+    size = cls->instanceSize(extraBytes);
+    // outAllocatedSize 默认 nil
     if (outAllocatedSize) *outAllocatedSize = size;
 
     id obj;
-    if (!zone  &&  fast) {
+    // zone 是 nil
+    if (zone) {
+        obj = (id)malloc_zone_calloc((malloc_zone_t *)zone, 1, size);
+    } else {
+        // 根据 size 开辟内存
         obj = (id)calloc(1, size);
-        if (!obj) return nil;
-        obj->initInstanceIsa(cls, hasCxxDtor);
-    } 
-    else {
-        if (zone) {
-            obj = (id)malloc_zone_calloc ((malloc_zone_t *)zone, 1, size);
-        } else {
-            obj = (id)calloc(1, size);
+    }
+    if (slowpath(!obj)) {
+        if (construct_flags & OBJECT_CONSTRUCT_CALL_BADALLOC) {
+            return _objc_callBadAllocHandler(cls);
         }
-        if (!obj) return nil;
+        return nil;
+    }
 
-        // Use raw pointer isa on the assumption that they might be 
+    if (!zone && fast) {
+        // fast 参数，开启了 isa 优化，初始化 isa_t
+        obj->initInstanceIsa(cls, hasCxxDtor);
+    } else {
+        // Use raw pointer isa on the assumption that they might be
         // doing something weird with the zone or RR.
+        // 使用为优化的 isa 指针
         obj->initIsa(cls);
     }
 
-    if (cxxConstruct && hasCxxCtor) {
-        obj = _objc_constructOrFree(obj, cls);
+    if (fastpath(!hasCxxCtor)) {
+        return obj;
     }
 
-    return obj;
+    construct_flags |= OBJECT_CONSTRUCT_FREE_ONFAILURE;
+    return object_cxxConstructFromClass(obj, cls, construct_flags);
 }
 ```
 
@@ -400,25 +500,57 @@ id _objc_rootInit(id obj)
 
 ### dealloc
 
-runtime 调用 objc_object::rootDealloc，然后 object_dispose()
+* rootDealloc
 
-object_dispose() 通过 objc_destructInstance() 实现
+当对象的引用计数为0时，底层会调用 _objc_rootDealloc 方法对对象进行释放
+
+在 _objc_rootDealloc 方法里面会调用 rootDealloc 方法
+
+```objectivec
+inline void
+objc_object::rootDealloc() {
+
+    // TaggedPointer 类型的对象，直接返回
+    if (isTaggedPointer()) return;  // fixme necessary?
+
+    //  当对象 
+    // 1使用优化的 isa 计数；            isa.nonpointer
+    // 2没有weak引用；                 !isa.weakly_referenced
+    // 3没有关联对象；                  !isa.has_assoc
+    // 4没有c++析构方法；               !isa.has_cxx_dtor
+    // 5没有使用SideTable记录引用计数    !isa.has_sidetable_rc
+    // 直接 free
+    if (fastpath(isa.nonpointer  &&  
+                 !isa.weakly_referenced  &&  
+                 !isa.has_assoc  &&  
+                 !isa.has_cxx_dtor  &&  
+                 !isa.has_sidetable_rc))
+    {
+        assert(!sidetable_present());
+        free(this);
+    } 
+    else {
+        object_dispose((id)this);
+    }
+}
+```
+
+* object_dispose
 
 ```objectivec
 void *objc_destructInstance(id obj) 
 {
     if (obj) {
         // Read all of the flags at once for performance.
-        // 判断是否有OC或C++的析构函数
         bool cxx = obj->hasCxxDtor();
-        // 对象是否有相关联的引用
         bool assoc = obj->hasAssociatedObjects();
 
         // This order is important.
-        // 对当前对象进行析构
+        // c++ 析构方法
         if (cxx) object_cxxDestruct(obj);
-        // 移除所有对象的关联，例如把weak指针置nil
+        // 移除关联对象，并将其自身从Association Manager的map中移除
         if (assoc) _object_remove_assocations(obj);
+        // 执行 clearDeallocating
         obj->clearDeallocating();
     }
 
@@ -426,6 +558,55 @@ void *objc_destructInstance(id obj)
 }
 ```
 
+* clearDeallocating
+
+```objectivec
+inline void 
+objc_object::clearDeallocating()
+{
+    if (slowpath(!isa.nonpointer)) {
+        // Slow path for raw pointer isa.
+        // 没有使用优化的 isa 指针，清除 SideTable 中的引用计数的数据
+        sidetable_clearDeallocating();
+    }
+    else if (slowpath(isa.weakly_referenced  ||  isa.has_sidetable_rc)) {
+        // Slow path for non-pointer isa with weak refs and/or side table data.
+        // 有弱指针 或者 使用 SideTable 管理引用计数
+        clearDeallocating_slow();
+    }
+
+    assert(!sidetable_present());
+}
+```
+
+* clearDeallocating_slow
+
+```objectivec
+NEVER_INLINE void
+objc_object::clearDeallocating_slow()
+{
+    assert(isa.nonpointer  &&  (isa.weakly_referenced || isa.has_sidetable_rc));
+
+    // 在全局的 SideTables 中，以this指针为key，找到对应的 SideTable
+    SideTable& table = SideTables()[this]; 
+
+    table.lock();
+
+    // 如果对象被弱引用
+    // 在 SideTable 的 weak_table 中对this进行清理工作
+    if (isa.weakly_referenced) { 
+        weak_clear_no_lock(&table.weak_table, (id)this); 
+    }
+
+    // 如果采用了 SideTable 管理引用计数
+    // 在 SideTable 的引用计数中移除
+    if (isa.has_sidetable_rc) { 
+        table.refcnts.erase(this); 
+    }
+
+    table.unlock();
+}
+```
 
 ## runtime 加载
 
