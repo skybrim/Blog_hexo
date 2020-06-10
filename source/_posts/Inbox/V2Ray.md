@@ -38,19 +38,8 @@ TCP + TLS 分流器
     MacOS中，直接打开终端（Terminal），输入命令 ：
 
     ```bash
-    ssh root@45.00.00.00
-    拼写方式是 ssh+空格+Username(root)+@+IP
-    加号不用输入，IP 和 Username 就是你刚刚复制的，一般 Username 是 root
+    ssh username@xxx.xxx.x.x
     ```
-
-    显示如下，说明可以正常连接服务器，输入yes，并回车。  
-    ![1](https://raw.githubusercontent.com/skybrim/AllImages/master/20190314172310.png)
-
-    接下来输入密码。选中密码，拷贝，选中终端，cmd+V，不显示密码或者**是正常情况，直接回车即可。  
-    ![2](https://raw.githubusercontent.com/skybrim/AllImages/master/20190314150746.png)
-
-    进入下面这个界面，说明成功连接上VPS。  
-    ![3](https://raw.githubusercontent.com/skybrim/AllImages/master/20190314150916.png)
 
 * Windows系统
 
@@ -121,8 +110,8 @@ TCP + TLS 分流器
     ```bash
     listen: 0.0.0.0:443
     vhosts:
-        # 将 example.com 改为你的域名
-    - name: example.com
+        # 将 domain.me 改为你的域名
+    - name: domain.me
         tlsoffloading: true
         managedcert: true
         alpn: h2,http/1.1
@@ -171,7 +160,7 @@ TCP + TLS 分流器
                 "settings": {
                     "vnext": [
                         {
-                            "address": "example.com",
+                            "address": "domain.me",
                             "port": 443,
                             "users": [
                                 {
