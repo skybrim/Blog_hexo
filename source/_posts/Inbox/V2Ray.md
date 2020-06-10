@@ -1,37 +1,37 @@
 ---
-title: V2Ray
+title: Project V
 date: 2018/12/12
-tags: V2Ray
+tags: Project V
 comments: true
 ---
 
 Project V 
 <!--more-->
 
+## 方案
 
-## 开始搭建
+TCP + TLS 分流器
 
-### 一、购买VPS
 
-* 服务商
+## 服务端
+
+### VPS
 
 根据个人需求，找一些适合自己的VPS服务商。
 
-搬瓦工、vultr、gcp。
+### 部署
 
-### 二、部署服务器
+* Debian 10
 
-* V2Ray 在Linux系统中可用版本
-   
-    Linux 2.6.23 及之后版本（x86 / amd64 / arm / arm64 / mips64 / mips）
+* 自行设置 ssh 相关，或者直接使用服务商的后台
 
-    包括但不限于 Debian 7 / 8、Ubuntu 12.04 / 14.04 及后续版本、CentOS 6 / 7、Arch Linux；
+### 域名
 
-* 账号密码
-  
-    部署完服务器后，记录一下自己的服务器的 IP Address 、 Username 、 Password
+根据自身条件，购买一个域名（国内需备案），并在域名商后台添加一个 A 记录指向自己的 vps 地址，dns 服务可能需要一点时间才能生效
 
-### 三、连接服务器
+下文使用 domain.me 替代
+
+### 连接
 
 * MacOS系统
     
@@ -56,7 +56,7 @@ Project V
 
     使用一些SSH工具即可。如：Putty。
 
-### 四、服务器安装V2Ray
+### v2ray
 
 * 执行安装脚本
 
@@ -64,13 +64,7 @@ Project V
     bash <(curl -L -s https://install.direct/go.sh)
     ```
 
-    如果之前系统选择正确的话，直接执行下面的脚本即可，官方提供。  
-    此脚本会配置自动运行脚本。自动运行脚本会在系统重启之后，自动运行 V2Ray。
-
-    这个脚本会自动检测有没有安装过 V2Ray，如果没有，则进行完整的安装和配置；如果之前安装过 V2Ray，则只更新 V2Ray 二进制程序而不更新配置。
-
-    脚本安装完毕，会自动配置好一套，如果不需要搭建酸酸乳，直接使用即可。  
-    复制并保存 PORT 、 UUID
+    复制并保存 PORT 、 UUID，即可使用。
 
     ![4](https://raw.githubusercontent.com/skybrim/AllImages/master/20190314154947.png)
 
@@ -84,64 +78,120 @@ Project V
 
     注意，必须是在英文输入法状态下编辑，json格式一定要正确，否则不会运行。
 
+    编辑完后，按下esc，然后输入:wq，保存退出
+
     ```json
-    "inbounds": [{
-        "port": 443,// vmess 协议服务器监听端口，自定
-        "protocol": "vmess", // 协议名
-        "settings": {
-        "clients": [
+    {
+        "inbounds": [
             {
-            "id": "b831381d-6324-4d53-ad4f-8cda48b30811", //UUID
-            "level": 1,
-            "alterId": 64
+                "protocol": "vmess",
+                "listen": "127.0.0.1",
+                "port": 40001, /* 自定，记得删除注释*/
+                "settings": {
+                    "clients": [
+                        {
+                            "id": "f2435e5c-9ad9-4367-836a-8341117d0a5f" /* 自定，记得删除注释*/
+                        }
+                    ]
+                },
+                "streamSettings": {
+                    "network": "tcp"
+                }
+            }
+        ],
+        "outbounds": [
+            {
+                "protocol": "freedom"
             }
         ]
-        }
-    },{
-        "port": 444,// SS 协议服务端监听端口，自定
-        "protocol": "shadowsocks", // 协议名
-        "settings": {
-            "method": "aes-128-gcm",
-            "password": "password" //密码
-        }
-    }],
-    "outbounds": [{
-        "protocol": "freedom",
-        "settings": {}
-        },{
-        "protocol": "blackhole",
-        "settings": {},
-        "tag": "blocked"
-    }],
-    "routing": {
-        "rules": [{
-            "type": "field",
-            "ip": ["geoip:private"],
-            "outboundTag": "blocked"
-        }]
     }
     ```
+### TLS 分流器
 
-* 开启服务
-执行下面命令，服务端配置完成。
-
-    ```bash
-    service v2ray start
-    ```
-
-    每次更改完配置文件，都需要重新开启服务。  
-    其他常用命令：
+* 安装脚本
 
     ```bash
-    //服务停止
-    service v2ray stop
-    //服务状态
-    service v2ray status
-    //服务重启
-    service v2ray restart
+    bash <(curl -L -s https://raw.githubusercontent.com/liberal-boy/tls-shunt-proxy/master/dist/install.sh)
     ```
 
-### 五、客户端配置
+* 配置文件
+
+    ```vim /etc/tls-shunt-proxy/config.yaml```
+
+    ```bash
+    listen: 0.0.0.0:443
+    vhosts:
+        # 将 example.com 改为你的域名
+    - name: example.com
+        tlsoffloading: true
+        managedcert: true
+        alpn: h2,http/1.1
+        # 如果不需要兼容 tls12, 可改为 tls13
+        protocols: tls12,tls13
+        http:
+        handler: fileServer
+        # /var/www/html 是静态网站目录
+        args: /var/www/html
+        default:
+        handler: proxyPass
+        args: 127.0.0.1:40001
+    ```
+
+### 启动服务
+
+    ```bash
+    systemctl restart tls-shunt-proxy
+    systemctl restart v2ray
+    ```
+
+
+## 客户端
+
+### 配置
+
+    ```json
+    {
+        "inbounds": [
+            {
+                "port": 1080,
+                "listen": "127.0.0.1",
+                "protocol": "socks",
+                "sniffing": {
+                    "enabled": true,
+                    "destOverride": ["http", "tls"]
+                },
+                "settings": {
+                    "auth": "noauth"  //socks的认证设置，noauth 代表不认证，由于 socks 通常在客户端使用，所以这里不认证
+                }
+            }
+        ],
+        "outbounds": [
+            {
+                "protocol": "vmess",
+                "settings": {
+                    "vnext": [
+                        {
+                            "address": "example.com",
+                            "port": 443,
+                            "users": [
+                                {
+                                    "id": "f2435e5c-9ad9-4367-836a-8341117d0a5f",
+                                    "security": "none"
+                                }
+                            ]
+                        }
+                    ]
+                },
+                "streamSettings": {
+                    "network": "tcp",
+                    "security": "tls"
+                }
+            }
+        ]
+    }    
+    ```
+
+### GUI 客户端
 
 * iOS
 
