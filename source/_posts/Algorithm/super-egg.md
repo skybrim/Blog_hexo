@@ -112,25 +112,22 @@ def super_egg_drop(K, N):
                 result = n
             else:
                 low, high = 1, n
-
+                # 二分搜索
                 while low + 1 < high:
-                    # 二分搜索
                     x = (low + high) // 2
                     t1 = dp(k-1, x-1)
                     t2 = dp(k, n-x)
-
                     if t1 < t2:
                         low = x
                     elif t1 > t2:
                         hight = x
                     else:
                         low = hight = x
-                    
-                    result = 1 + min(max(dp(k-1, x-1), dp(k, n-x)) for x in (low, high))
+                result = 1 + min(max(dp(k-1, x-1), dp(k, n-x)) for x in (low, high))
 
-                # 记录已经算过的值
-                store[(k, n)] = result
-
-            return store[(k, n)]
+            # 记录已经算过的值
+            store[(k, n)] = result
+        return store[(k, n)]
+        
     return dp(K, N)
 ```
