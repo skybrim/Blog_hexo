@@ -1,8 +1,8 @@
 ---
-title: react
+title: React
 comments: true
-date: 2020-06-15 15:16:09
-tags:
+date: 2019-06-15 15:16:09
+tags: react
 ---
 
 react 学习笔记
@@ -440,6 +440,100 @@ function WelcomeDialog() {
     <Dialog
       title="Welcome"
       message="Thank you for visiting our spacecraft!" />
+  );
+}
+```
+
+### 错误边界
+
+```javascript
+// 异常捕获边界（Error boundaries）
+// import MyErrorBoundary from './MyErrorBoundary';
+const MyComponent = () => (
+  <div>
+    <MyErrorBoundary>
+      <Suspense fallback={<div>Loading...</div>}>
+        <section>
+          <OtherComponent />
+          <AnotherComponent />
+        </section>
+      </Suspense>
+    </MyErrorBoundary>
+  </div>
+);
+```
+
+### React API
+
+```javascript
+// React.Component
+class Greeting extends React.Component {
+  render() {
+    return <h1>Hello, {this.props.name}</h1>;
+  }
+}
+
+// React.Children
+React.Children.map(children, function[(thisArg)]);
+React.Children.forEach(children, function[(thisArg)]);
+React.Children.count(children);
+React.Children.only(children);
+React.Children.toArray(children);
+
+// React.Fragment
+// 在不额外创建 DOM 元素的情况下，让 render() 方法中返回多个元素。
+render() {
+  return (
+    <React.Fragment>
+      Some text.
+      <h2>A heading</h2>
+    </React.Fragment>
+  );
+}
+
+// React.createRef
+class MyComponent extends React.Component {
+  constructor(props) {
+    super(props);
+
+    this.inputRef = React.createRef();
+  }
+
+  render() {
+    return <input type="text" ref={this.inputRef} />;
+  }
+
+  componentDidMount() {
+    this.inputRef.current.focus();
+  }
+}
+
+// React.forwardRef
+const FancyButton = React.forwardRef((props, ref) => (
+  <button ref={ref} className="FancyButton">
+    {props.children}
+  </button>
+));
+// You can now get a ref directly to the DOM button:
+const ref = React.createRef();
+<FancyButton ref={ref}>Click me!</FancyButton>;
+
+// React.lazy
+// React.lazy() 允许你定义一个动态加载的组件。这有助于缩减 bundle 的体积，并延迟加载在初次渲染时未用到的组件
+const SomeComponent = React.lazy(() => import('./SomeComponent'));
+
+// React.Suspense
+// React.Suspense 可以指定加载指示器（loading indicator），以防其组件树中的某些子组件尚未具备渲染条件。目前，懒加载组件是 <React.Suspense> 支持的唯一用例
+// 该组件是动态加载的
+const OtherComponent = React.lazy(() => import('./OtherComponent'));
+function MyComponent() {
+  return (
+    // 显示 <Spinner> 组件直至 OtherComponent 加载完成
+    <React.Suspense fallback={<Spinner />}>
+      <div>
+        <OtherComponent />
+      </div>
+    </React.Suspense>
   );
 }
 ```
