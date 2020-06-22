@@ -12,8 +12,7 @@ react 学习笔记
 ## 基础
 
 ### 元素
-```javascript
-
+```js
 // 可以加括号也可以不加
 const element = <h1>Hello, world!</h1>;
 const element = (
