@@ -1,7 +1,7 @@
 ---
 title: block
 comments: true
-date: 2020-06-04 15:17:38
+date: 2019-03-04 15:17:38
 tags:
 ---
 
@@ -330,7 +330,119 @@ int main() {
   | _NSConcreteGlobalBlock | 程序的数据区域（.data 区）|
   | _NSConcreteMallocBlock | 堆 |
 
+  ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/block_0.png)
+
 * _NSConcreteGlobalBlock
   
    1. block 声明在全局变量的地方
-   2. block 表达式中没有使用自动变量
+   2. block 表达式中没有使用自动变量，虽然 clang 转换的源码通常是_NSConcreteStackBlock，但实现上不同
+
+  即，block 存储在程序的数据区域中。
+
+* _NSConcreteStackBlock
+
+  除了上述两种 global 情况外，其他 block 为 _NSConcreteStackBlock 对象，存储在栈上。
+
+* _NSConcreteMallocBlock
+
+  何时使用堆上的 _NSConcreteMallocBlock?
+
+  设置在栈上的 block 和 __block 对象，在离开了所属变量的作用域时，就会被废弃。
+
+  Blocks 提供了将 block 和 __block 对象，从栈上赋值到堆上的方法来解决这个问题。
+
+  复制到堆上的 block 将 _NSConcreteMallocBlock 类对象写入 block 的结构体实例的变量 isa
+
+  impl.isa = &_NSConcreteMallocBlock;
+
+  ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/block_1.png)
+
+  当 block 被复制到堆上时，block 使用的所有 __block 变量，也会被复制到堆上，此时 block 持有 __block 变量。
+
+  __block 对象的 __forwarding 指针，则会在复制到堆上后，指向堆上的 __block 结构体实例的地址。
+
+  ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/block_2.png)
+
+* 什么时候栈上的 block 会被复制到堆上呢？
+
+  - 调用 block 的 copy 实例方法；
+  - block 作为函数的返回值
+  - 将 block 赋值给 __strong 修饰的 id 类型的类或 block 类型成员变量时；
+  - 在方法名中含有 usingBlock 的 Cocoa 框架方法，或者 GCD 的 API 中传递 block 时。
+
+
+## 循环引用
+
+如果在 block 中使用 strong 修饰符的对象的自动变量，那么当 block 从栈复制到堆上时，改对象被 block 持有。
+
+此时可能产生循环引用。
+
+```objc
+// block 循环引用实例代码
+
+typedef void(^blk_t)(void);
+
+@interface MyObject: NSObject
+{
+  blk_t blk_;
+}
+@end
+
+@implementation MyObject
+- (id)init {
+  self = [super init];
+  blk_ = ^{ NSLog(@"self = %@", self); };
+  return self;
+}
+- (void)execBlock {
+  blk_();
+}
+- (void)dealloc {
+  NSLog(@"dealloc");
+}
+@end
+
+int main() {
+  id foo = [[MyObject alloc] init];
+  NSLog(@"%@", foo);
+  return 0;
+}
+```
+
+上述代码中，dealloc 方法没有被调用。
+
+1. foo 强引用 blk_
+2. blk_ 强引用 foo。
+
+解决方法：
+
+* 使用 weak
+  
+  ```objc
+  id __weak tmp = self;
+  blk_ = ^{ NSLog(@"self = %@", tmp); };
+  ```
+
+  1. foo 强引用 blk_
+  2. blk_ 弱引用 foo。
+
+* 使用 __block
+
+  ```objc
+  __block id tmp = self;
+  blk_ = ^{
+    NSLog(@"self = %@", self);
+    tmp = nil; // 置空 tmp
+  };
+  // ...
+  // 必须执行 blk_()
+  [foo execBlock];
+  ```
+
+  1. foo 强引用 blk_;
+  2. blk_ 强引用 __block 修饰的 tmp;
+  3. tmp 强引用 foo;
+  4. **执行完 blk_(), tmp 对 foo 没有引用**
+
+  简单起见，使用 weak 方法。
+
