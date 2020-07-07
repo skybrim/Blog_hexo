@@ -1,11 +1,11 @@
 ---
-title: swift 中 string
+title: swift 中 string 的常见操作
 date: 2019/1/1
-tags: iOS
+tags: [iOS, swift]
 comments: true
 ---
 
-在此记录一下一些 string 的基本操作。  
+在此记录一下一些 string 的常见操作。  
 持续更新...
 <!--more-->
 
