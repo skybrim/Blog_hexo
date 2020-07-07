@@ -13,21 +13,21 @@ tags: [iOS, swift]
 ```bash
 # 编译工具
 brew install cmake ninja
+
 # 下载源码
+mkdir swift-source
+cd swift-source
 git clone https://github.com/apple/swift.git
-# 拉取编译所需依赖的仓库
 ./swift/utils/update-checkout --clone
 # 编译 
-# -x 生成一个 Xcode 项目，通过 Xcode 阅读
-# -R 使用 release 编译
-./swift/utils/build-script -x -R
+./swift/utils/build-script --release-debuginfo --debug-swift-stdlib
 ```
 
 ## 更新源码
 
 ```bash
 ./swift/utils/update-checkout
-./swift/utils/build-script -x -R
+./swift/utils/build-script --release-debuginfo --debug-swift-stdlib
 ```
 
 ## 切换版本
