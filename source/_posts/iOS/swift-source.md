@@ -10,6 +10,9 @@ tags: [iOS, swift]
 
 ## 编译
 
+system macOS 10.15.5
+Xcode 11.4.1
+
 ```bash
 # 编译工具
 brew install cmake ninja
@@ -19,8 +22,14 @@ mkdir swift-source
 cd swift-source
 git clone https://github.com/apple/swift.git
 ./swift/utils/update-checkout --clone
+
+# 切换到最新的 release tag （写文是 5.2.4）
+./swift/utils/update-checkout --tag swift-5.2.4-RELEASE
+
 # 编译 
-./swift/utils/build-script --release-debuginfo --debug-swift-stdlib
+# -x 使用 xcode 编译
+# -r --release-debuginfo
+./swift/utils/build-script -x -r --debug-swift-stdlib 
 ```
 
 ## 更新源码
@@ -28,12 +37,6 @@ git clone https://github.com/apple/swift.git
 ```bash
 ./swift/utils/update-checkout
 ./swift/utils/build-script --release-debuginfo --debug-swift-stdlib
-```
-
-## 切换版本
-
-```bash
-./swift/utils/update-checkout --tag swift-5.0-RELEASE
 ```
 
 ## 单个文件编译
