@@ -1,8 +1,8 @@
 ---
-title: swift 中 string 的常见操作
-date: 2019/1/1
-tags: [iOS, swift]
+title: swift-string
 comments: true
+date: 2020-07-09 16:49:40
+tags: [iOS, swift]
 ---
 
 在此记录一下一些 string 的常见操作。  
