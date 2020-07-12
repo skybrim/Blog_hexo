@@ -47,6 +47,11 @@ conda install Sphinx
 ./utils/build-script -x -r --debug-swift-stdlib 
 ```
 
+## 运行
+
+1. 首先运行 cmark 工程
+2. 再运行 swift 工程
+
 ## 更新源码
 
 ```bash
