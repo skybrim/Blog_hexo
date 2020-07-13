@@ -1,7 +1,7 @@
 ---
 title: Project V
 date: 2018/12/12
-tags: Project V
+tags: [V, inbox]
 comments: true
 ---
 

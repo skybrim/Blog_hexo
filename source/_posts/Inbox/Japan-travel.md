@@ -1,7 +1,7 @@
 ---
 title: 日本自由行
 date: 2019/5/11
-tags: travel
+tags: [travel, inbox]
 ---
 
 18年两人就计划好的清明日本之旅，终于开始了。  

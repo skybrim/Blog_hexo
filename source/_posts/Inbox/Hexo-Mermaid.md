@@ -1,7 +1,7 @@
 ---
 title: Hexo 实现 Mermaid 流程图
 date: 2018/11/11
-tags: hexo
+tags: [hexo, inbox]
 comments: true
 ---
 

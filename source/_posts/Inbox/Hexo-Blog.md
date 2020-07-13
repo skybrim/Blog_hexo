@@ -1,7 +1,7 @@
 ---
 title: hexo 搭建 blog
 date: 2018/11/11
-tags: hexo
+tags: [hexo, inbox]
 comments: true
 ---
 

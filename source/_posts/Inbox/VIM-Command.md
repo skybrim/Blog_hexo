@@ -1,7 +1,7 @@
 ---
 title: VIM 基本命令备忘
 date: 2018/12/12
-tags: vim
+tags: [vim, inbox]
 comments: true
 ---
 

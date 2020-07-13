@@ -2,7 +2,7 @@
 title: git-command
 comments: true
 date: 2020-05-20 10:22:25
-tags: git
+tags: [git, inbox]
 ---
 
 git 命令备忘

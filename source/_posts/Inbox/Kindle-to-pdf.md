@@ -1,7 +1,7 @@
 ---
 title: Kindle电子书转PDF
 date: 2019/12/12
-tags: kindle
+tags: [kindle, inbox]
 comments: true
 ---
 
