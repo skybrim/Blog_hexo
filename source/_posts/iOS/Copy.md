@@ -1,11 +1,11 @@
 ---
-title: iOS 中 Copy 修饰词
+title: Copy
 date: 2019/1/1
 tags: iOS
 comments: true
 ---
 
-Copy 在 Objective-C 中的一些个人见解。
+Copy 在 Objective-C 中的使用，一些个人理解。
 
 <!--more-->
 
@@ -54,12 +54,12 @@ NSArray、NSDictionary、NSSet 属于 collection 集合类对象。
 
 这些集合类的属性，使用 copy 修饰，只能保证容器本身的不变，如果容器内的引用对象，发生了变化，这些容器属性中的对象也会发生变化。
 
-想要对集合内元素也实现
-
 * block
 
-block 使用 copy 是从 MRC 遗留下来的“传统”。  
-在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区。  
+block 使用 copy 是从 MRC 遗留下来的“传统”。
+
+在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区。
+
 在 ARC 中写不写都行：对于 block 使用 copy 还是 strong 效果是一样的，但写上 copy 可以提示：编译器自动对 block 进行了 copy 操作。
 
 如果block块没有访问处于栈区的变量（比如局部变量），也没有访问堆区的变量（比如我们alloc创建的对象），那就存在代码区(低地址)，即使访问了全局变量，也依然存在代码区。
@@ -159,9 +159,7 @@ oneLevelDeepCopy 0x600003d9ef10
 )
 ```
 
-**注意**：
-
-```initWithArray:copyItems:``` 这个方法，只能对一元数组进行 deep copy。
+**注意**：```initWithArray:copyItems:``` 这个方法，只能对一元数组进行 deep copy。
 
 apple 推荐使用 NSKeyedArchiver 实现 true deep copy。**需要集合对象中的元素，实现 NSCoding 协议**
 
