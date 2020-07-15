@@ -5,7 +5,8 @@ date: 2020-07-07 14:15:41
 tags: [iOS, swift]
 ---
 
-swift 集合协议
+《swift advance》 读书笔记：swift 集合协议
+
 <!--more-->
 
 ## 标准库中的结合协议架构
@@ -444,6 +445,39 @@ Array(Words("Hello world test").prefix(2)) // ["hello", "world"]
 
 ## SubSequence
 
+在 Swift5 中，SubSequence 被定义到了 Collection 协议中，是一个关联类型，表示集合中一个连续的子区间。
+
+默认情况下，Collection 把 Slice<Self> 作为自己的 SubSequence 类型。
+
+子序列和原始的集合类型共享内部存储。
+
+```swift
+extension Collection {
+    associatedtype SubSequence: Collection = Slice<Self> 
+        where Element == SubSequence.Element, SubSequence == SubSequence.SubSequence
+}
+```
+
+扩展：以每 n 个元素切割集合
+
+```swift
+extension Collection {
+    public func split(batchSize: Int) -> [SubSequence] {
+        var result: [SubSequence] = []
+        var batchStart = startIndex
+        while batchStart < endIndex {
+            let batchEnd = index(batchStart, offsetBy: batchSize, limitedBy: endIndex) ?? endIndex
+            let batch = self[batchStart..<batchEnd]
+            result.append(batch)
+            batchStart = batchEnd
+        }
+        return result
+    }
+}
+
+let letters = "abcdefg"
+let batches = letters.split(batchSize: 3) // ["abc", "def", "g"]
+```
 
 ## 专门的集合类型 
 
