@@ -479,7 +479,21 @@ let letters = "abcdefg"
 let batches = letters.split(batchSize: 3) // ["abc", "def", "g"]
 ```
 
+* 切片
+
+
+* 切片与原集合共享索引
+
+
+
 ## 专门的集合类型 
 
+* BidirectionalCollection
+* RandomAccessCollection
+* MutableCollection
+* RangeReplaceableCollection
+* 组合能力
 
 ## LazySequenceProtocol
+
+* 集合的延迟处理
