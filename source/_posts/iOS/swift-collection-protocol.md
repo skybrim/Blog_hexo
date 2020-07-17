@@ -736,16 +736,16 @@ LazyCollectionProtocol 扩展了 LazySequence，它要求实现它的类型也�
 ```swift
 // 当对一个延迟加载的集合，应用 map 方法
 // 通过下标访问其中的元素
-// map 就智慧对你访问的那个结果执行变换。
+// map 只会对你访问的那个结果执行变换。 O(1)
 let allNumbers = 1..<1_000_000
 let allSquares = allNumbers.lazy.map { $0 * $0 }
 print(allSquares[50]) // 2500
 
 // 注意
 // 当使用下标访问元素的时候，每一次的结果都是计算出来的
-// 比如下面的代码，索引 50 已经被过滤掉了
-// 为了获取值，需要计算前 50 个的值，然后才能获取到索引 50 的值（第 51 个）
-// 可以对比一下 1000 和 1001 的计算速度
+// 比如下面的代码， 50 已经被过滤掉了
+// 为了获取值，需要计算前 50 个的值，然后才能获取到 50 的值（第 51 个）
+// 显然这是一个 O(n) 的操作
 let largeSquares = allNumbers.lazy.filter { $0 > 1000 }.map { $0 * $0 }
 print(largeSquares[50]) // 2500
 ```
