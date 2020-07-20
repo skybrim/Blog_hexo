@@ -40,6 +40,35 @@ copy 作为 内存管理语义 ，在 @property 中声明，其目的是：复�
 
 对应的， strong(retain) 修饰词，只是将外部值或者指针赋值给属性（shadow copy），如果是对象指针，之后外部值修改会影响属性。
 
+```objc
+//copy 修饰
+@property (nonatomic, copy) NSString *copyStr;
+- (void)setCopyStr:(NSString *)copyStr {
+    if (_copyStr != copyStr) {
+        [_copyStr release];
+        _copyStr = [copyStr copy];
+    }
+}
+
+// strong(retain) 修饰
+@property (nonatomic, strong) NSString *strongStr;
+- (void)setStrongStr:(NSString *)strongStr {
+    if (_strongStr != strongStr) {
+        [_strongStr release];
+        [strongStr retain];
+        _strongStr = strongStr;
+    }
+}
+```
+
+观察赋值方法，引申出一个小知识点：
+
+使用```self.foo = foo;```语法赋值，调用了 setter 方法；使用```_foo = foo;```则只是改变指针指向。
+
+如果只是简单的变更指针指向，可能会导致可变对象和不可变对象混淆。
+
+因此，更推荐使用```self.```语法进行赋值
+
 * NSString
 
 在 OC 中，因为父类指针可以指向子类对象，使用 copy 的目的是为了让本对象的属性不受外界影响。
