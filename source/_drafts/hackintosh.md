@@ -12,17 +12,17 @@ OpenCore 0.5.9 引导
 
 ## OpenCore
 
-[OpenCore Desktop 教程](https://dortania.github.io/OpenCore-Desktop-Guide/)
+[OpenCore Desktop 教程](https://dortania.github.io/OpenCore-Install-Guide/)
 
 OpenCore 0.5.9 + macOS Catalina 10.15.5
 
 ## 写在前面
 
-本篇只是个人安装黑苹果的采坑记录
+文章只是个人使用 OpenCore 安装黑苹果的采坑记录，没有利益相关。
 
-本人有 MacBook Pro，想给家里组装个台式机，因为没有游戏需求，又习惯 macOS 的开发环境，所以有了这次采坑记录。
+本人有 MacBook Pro，所以是在 macOS 中进行各种配置；windows的用户区别主要在于制作 U盘启动器，需要自己去 OpenCore 官网采坑。
 
-建议强需求或者爱折腾的人士安装黑苹果，黑苹果并非主流。
+**只推荐爱折腾的人尝试黑苹果。**
 
 ## 配置
 
@@ -46,13 +46,16 @@ OpenCore 0.5.9 + macOS Catalina 10.15.5
 
 ## 安装总结
 
-OpenCore 安装黑苹果还是比较简单的，大致分为三步：
+电脑系统的通过主板的启动器(BIOS/UEFI)，唤醒操作系统。
 
-1. 制作 USB 启动器
+黑苹果相当于，自己配置一套 EFI，欺骗macOS并引导其工作。
+
+主要就是两大步骤：
+
+1. 制作 U盘安装工具
 2. 配置 EFI 文件
-3. 调优
 
-## USB启动器
+## U盘安装工具
 
 ### 下载 OS X
 
@@ -62,17 +65,32 @@ OpenCore 安装黑苹果还是比较简单的，大致分为三步：
    
 2. 格式化 U 盘
 
-    使用自带的磁盘工具应用(实用工具-磁盘工具)
+    1. macOS 自带的 Disk Utility (实用工具-磁盘工具)
+    2. 左上角 View-Show All Device
+    3. 选择自己的U盘的最外层的目录
+    4. Erase(抹除)-> Name: MyVolume; Format: Mac OS Extended(Journaled); Scheme: GUID Partition Map
+    5. Terminal（终端）- ```sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume```
     
-
 * Windows
 
-[OpenCore Windows Creating the USB](https://dortania.github.io/OpenCore-Desktop-Guide/installer-guide/winblows-install.html)
-
-### 格式化
-
-
+[OpenCore Windows Creating the USB](https://dortania.github.io/OpenCore-Install-Guide/installer-guide/winblows-install.html)
 
 ## EFI
+
+### 加载 EFI
+
+macOS 下比较简单，直接使用 diskutil 命令就可以
+```bash
+diskutil list
+sudo diskutil mount xxx
+```
+
+### Base OpenCore Files
+
+[OpenCorePkg](https://github.com/acidanthera/OpenCorePkg/releases/)
+
+### config.plist
+
+### ACPI
 
 ## 调优
