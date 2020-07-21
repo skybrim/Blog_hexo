@@ -16,14 +16,6 @@ OpenCore 0.5.9 引导
 
 OpenCore 0.5.9 + macOS Catalina 10.15.5
 
-## 写在前面
-
-文章只是个人使用 OpenCore 安装黑苹果的采坑记录，没有利益相关。
-
-本人有 MacBook Pro，所以是在 macOS 中进行各种配置；windows的用户区别主要在于制作 U盘启动器，需要自己去 OpenCore 官网采坑。
-
-**只推荐爱折腾的人尝试黑苹果。**
-
 ## 配置
 
 | 硬件 | 型号 | 备注 |
@@ -68,8 +60,9 @@ OpenCore 0.5.9 + macOS Catalina 10.15.5
     1. macOS 自带的 Disk Utility (实用工具-磁盘工具)
     2. 左上角 View-Show All Device
     3. 选择自己的U盘的最外层的目录
-    4. Erase(抹除)-> Name: MyVolume; Format: Mac OS Extended(Journaled); Scheme: GUID Partition Map
-    5. Terminal（终端）- ```sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume```
+    4. Erase(抹除)-> Name: MyVolume（和下面的命令中的名字要对应）; Format: Mac OS Extended(Journaled); Scheme: GUID Partition Map
+    5. 将下载好的系统 Catalina 写入 U 盘
+    6. 终端执行 ```sudo /Applications/Install\ macOS\ Catalina.app/Contents/Resources/createinstallmedia --volume /Volumes/MyVolume```
     
 * Windows
 
@@ -79,15 +72,23 @@ OpenCore 0.5.9 + macOS Catalina 10.15.5
 
 ### 加载 EFI
 
-macOS 下比较简单，直接使用 diskutil 命令就可以
+macOS中直接使用 diskutil 命令就可以加载 EFI 分区，或者按照 OpenCore 官网指导进行
+
+windows 中按照 OpenCore 的教程走
+
 ```bash
+# 列出所有分区，找到 U 盘的盘符，找 EFI 分区的标识
 diskutil list
-sudo diskutil mount xxx
+# 注意，disk2s1 是 U 盘的 EFI 分区的标识，不要选到系统盘上的 EFI 分区
+sudo diskutil mount /dev/disk2s1
 ```
 
 ### Base OpenCore Files
 
+下载 OpenCorePkg，我当前使用的是 0.5.9 版本，release 和 debug 的包都下载下来
+
 [OpenCorePkg](https://github.com/acidanthera/OpenCorePkg/releases/)
+
 
 ### config.plist
 
