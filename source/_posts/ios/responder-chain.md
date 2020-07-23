@@ -167,7 +167,7 @@ UIButton (NSObject -> UIResponder -> UIView -> UIControl -> UIButton)
 }
 ```
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/responder-chain-1.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/responder-chain-1.png)
 
 ### 其他操作
 
@@ -194,7 +194,7 @@ UIButton (NSObject -> UIResponder -> UIView -> UIControl -> UIButton)
 
 也可以说，响应者链是由多个响应者对象连接起来的链条。
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/responder-chain-2.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/responder-chain-2.png)
 
 ### 响应链的传递过程
 

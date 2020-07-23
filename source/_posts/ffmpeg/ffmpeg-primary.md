@@ -130,4 +130,4 @@ AVPacket
 
 ## FFmpeg 代码结构
 
-![FFmpeg-代码结构](https://raw.githubusercontent.com/skybrim/AllImages/dev/FFmpeg%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84.jpg)
+![FFmpeg-代码结构](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/FFmpeg%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84.jpg)

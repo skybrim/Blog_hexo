@@ -14,7 +14,7 @@ runtime
 
 ### 对象
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/run_time-1.jpg)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/run_time-1.jpg)
 
 * 对象：objc_object 结构体，isa 指向类
 
@@ -721,7 +721,7 @@ objc_msgSend 的两个隐藏参数：
 
 ### 发送流程
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/runtime-2.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/runtime-2.png)
 
 1. 对象接收到消息
    

@@ -39,7 +39,7 @@ weak_table_t 中，通过对象的地址，获取到对象的 **弱指针数组�
 
 此文重点是 weak_table_t 与 weak_entry_t 的分析
 
-![SideTables](https://raw.githubusercontent.com/skybrim/AllImages/dev/weak_point_0.png)
+![SideTables](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/weak_point_0.png)
 
 
 ### weak_table_t

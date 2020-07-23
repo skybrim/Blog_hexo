@@ -39,7 +39,7 @@ tags: [travel, inbox]
 全程高速到香港机场。
 
 13:05，乘飞机。香港 TO 福冈 （UO 638）。  
-![1](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG1.jpeg)
+![1](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG1.jpeg)
 入境要填写一些表格，自备笔最好，或者机场内填写也可以。  
 大概5点到福冈机场，按指示入境即可。
 
@@ -65,7 +65,7 @@ tags: [travel, inbox]
 晚餐  
 附近随便找了一家吃，应该是小火锅。万万没想到，居然是猪大肠汤底。  
 回国后了解到，这个应该是牛肠火锅，算是博多当地特产，小店人也很多。   
-![2](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG2.jpeg)
+![2](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG2.jpeg)
 
 >补充：
 >博多站附近也有一些可以尝试的美食，由于生病的原因，都错过了。  
@@ -76,7 +76,7 @@ eg:墨鱼刺身、火烧鸟。
 ## 4月1日，黑川温泉
 
 08:30，早上起来，体温36.7，看来基本好了。711随便买了点早餐吃。  
-![3](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG3.jpeg)
+![3](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG3.jpeg)
 
 09:30，去博多站乘车，不同楼层不一样，城际巴士、市内公交、地铁等。  
 这个站比较大，最好提前一点去，防止迷路。  
@@ -85,35 +85,35 @@ eg:墨鱼刺身、火烧鸟。
 车票是网上提前买好的，提前a4纸打印好，给司机，司机会告诉你坐哪里，当然车票上也有写位置。
 
 大概两个半到三个小时的车程黑川温泉站。路上风景不错。  
-![4](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG4.jpeg)
+![4](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG4.jpeg)
 
 黑川预定的酒店会到车站接车，送我们到去温泉街游客中心，帮我们把行李寄存到酒店。  
-![5](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG10.jpeg)
+![5](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG10.jpeg)
 
 [温泉街](https://maps.app.goo.gl/N5Yhy)  
-![6](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG5.jpeg)
+![6](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG5.jpeg)
 
 游客中心可以一人买一个温泉手型，可以去任意几家温泉街的店泡温泉，由于生病外加天气冷，就没有这样做，只是买了个手型做纪念。  
 黑川的温泉街，不算大，很有日本特色。  
-![7](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG8.jpeg)
+![7](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG8.jpeg)
 
-![8](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG9.jpeg)
+![8](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG9.jpeg)
 
 有一个神社。  
-![9](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG7.jpeg)
+![9](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG7.jpeg)
 
 午餐随便选的一家。  
 买了一些纪念品。  
-![10](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG6.jpeg)
+![10](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG6.jpeg)
 
 15:00 黑川酒店check-in  
 河野裕旅馆(Ryokan Kono-Yu)[酒店地址](https://maps.app.goo.gl/Yzqqw)  
 网上预订好的，里面有中文接待，目测应该是国人。  
 酒店是庭院式的，风景是真的好。  
-![11](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG13.jpeg)
+![11](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG13.jpeg)
 
 住宿的屋子是双层的，下面是用来泡温泉的，有一个小的室外温泉和一个室内温泉。  
-![12](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG11.jpeg)
+![12](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG11.jpeg)
 
 二层是起居室，吃晚餐的时候，工作人员会给你铺好床。  
 
@@ -130,27 +130,27 @@ eg:墨鱼刺身、火烧鸟。
 ## 4月2日，福冈去京都
 
 08:00，起床，下雪了！不过不大。  
-![13](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG18.jpeg)
+![13](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG18.jpeg)
 
 雪中泡了一个早起温泉，舒服。  
-![14](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG12.jpeg)
+![14](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG12.jpeg)
 
 早餐，酒店早餐，依然丰盛。  
-![15](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG14.jpeg)
+![15](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG14.jpeg)
 
 10:00 黑川酒店check-out  
 和酒店工作人员约好乘车时间，工作人员会按时，从酒店带上行李，到游客中心街上接上我们，送到黑川温泉站。  
 逛温泉街，上吃了甜点。日本的甜点太甜了。  
-![16](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG19.jpeg)
+![16](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG19.jpeg)
 
-![17](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG15.jpeg)
+![17](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG15.jpeg)
 
 温泉街比较小，可以逛的地方不多，不过景色还是很不错的。
-![18](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG16.jpeg)
+![18](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG16.jpeg)
 
-![19](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG17.jpeg)
+![19](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG17.jpeg)
 
-![20](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG20.jpeg)
+![20](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG20.jpeg)
 
 14:00，乘巴士  
 黑川 TO 博多 （51205便 1号车 14:00）  
@@ -182,15 +182,15 @@ eg:墨鱼刺身、火烧鸟。
 吉野站出门，往前走一点就是接驳巴士，400日元/人，到中千本下车。
 步行下山，还是挺累的，天气也比较冷。  
 路上寺庙比较多，这个地方跟佛教有关，算日本佛教的热门旅游点。  
-![21](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG21.jpeg)
+![21](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG21.jpeg)
 
-![22](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG22.jpeg)
+![22](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG22.jpeg)
 
-![23 一目千本，可惜没有开花](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG23.jpeg)
+![23 一目千本，可惜没有开花](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG23.jpeg)
 
-![24](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG24.jpeg)
+![24](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG24.jpeg)
 
-![25 仁王](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG25.jpeg)
+![25 仁王](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG25.jpeg)
 
 晚餐  
 回到京都市区，见了毛毛一个也是来日本旅游的朋友。  
@@ -212,15 +212,15 @@ eg:墨鱼刺身、火烧鸟。
 豆水楼吃午餐  
 刚刚好赶上豆水楼午餐的最后一个位置。Good Luck。  
 味道不错。  
-![26](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG26.jpeg)
+![26](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG26.jpeg)
 
-![27](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG27.jpeg)
+![27](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG27.jpeg)
 
-![28](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG28.jpeg)
+![28](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG28.jpeg)
 
 八班神社  
 人超级多，很多日本的学生，穿着很职业的感觉。  
-![29](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG29.jpeg)
+![29](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG29.jpeg)
 
 16:00，京都酒店坐地铁到京都站，转乘JR到大阪。
 
@@ -233,9 +233,9 @@ eg:墨鱼刺身、火烧鸟。
 
 乘坐地铁，[夜樱毛马樱之公园](https://maps.app.goo.gl/psAaQ) 观看夜樱。  
 有点黑，路灯也比较暗。
-![30](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG30.jpeg)
+![30](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG30.jpeg)
 
-![31](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG36.jpeg)
+![31](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG36.jpeg)
 
 ---
 
@@ -251,33 +251,33 @@ eg:墨鱼刺身、火烧鸟。
 哈利波特魔法区域，人山人海。几个项目也都是非常刺激的。  
 用餐区人也是爆满，简单的吃了一点。  
 接着去鲁邦三世X名侦探柯南、小黄人区域。都是超刺激项目。  
-![32](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG31.jpeg)
+![32](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG31.jpeg)
 
-![33](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG32.jpeg)
+![33](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG32.jpeg)
 
-![34](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG33.jpeg)
+![34](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG33.jpeg)
 
-![35](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG34.jpeg)
+![35](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG34.jpeg)
 
-![36](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG35.jpeg)
+![36](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG35.jpeg)
 
-![37](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG37.jpeg)
+![37](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG37.jpeg)
 
 晚上吃了一点晚餐，开始环球影城的夜间活动。  
-![38](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG38.jpeg)
+![38](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG38.jpeg)
 
 先去哈利波特区域，霍格沃茨灯光秀。  
 人超级多，只能限流，还好我们去的早，还能进去。  
 灯光秀非常漂亮。
-![39](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG39.jpeg)
+![39](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG39.jpeg)
 
-![40](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG40.jpeg)
+![40](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG40.jpeg)
 
-![41](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG41.jpeg)
+![41](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG41.jpeg)
 
-![42](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG42.jpeg)
+![42](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG42.jpeg)
 
-![43](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG43.jpeg)
+![43](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG43.jpeg)
 
 然后在主干道，看了一会游街表演。
 
@@ -294,26 +294,26 @@ eg:墨鱼刺身、火烧鸟。
 
 [道顿堀(ku)](https://maps.app.goo.gl/bpDb7)  
 道顿堀不错，里面很多很有日本特色的店面，外面的商标都超级巨大，有的还有动作！  
-![44](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG44.jpeg)
+![44](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG44.jpeg)
 
-![45](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG45.jpeg)
+![45](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG45.jpeg)
 
-![46](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG46.jpeg)
+![46](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG46.jpeg)
 
 附近的商场开始买买买。  
 一楼化妆品，人多到爆炸，还需要预约时间段。  
 店员有很多中国人，顾客也是。  
 买完东西去退税，长龙队伍，绝大部分都是国人。
-![47](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG48.jpeg)
+![47](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG48.jpeg)
 
-![48](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG49.jpeg)
+![48](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG49.jpeg)
 
 中午吃了附近的回转寿司，感觉超级便宜，好吃。  
 
 下午去了[Orange Street](https://maps.app.goo.gl/f9CST)  
 感觉并没有什么东西，和网上说的不太一样，不过人少一点，可能适合拍一些街拍吧。  
 随便逛了逛。  
-![49](https://raw.githubusercontent.com/skybrim/AllImages/dev/WechatIMG50.jpeg)
+![49](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/WechatIMG50.jpeg)
 
 17:30 DOTON PLAZA，坐巴士，去[关西机场](https://maps.app.goo.gl/U7pyi)  
 机场的免税店里，买了SK2，和一些日本点心。

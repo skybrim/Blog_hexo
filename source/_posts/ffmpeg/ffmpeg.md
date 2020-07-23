@@ -5,4 +5,4 @@ tags: ffmpeg
 comments: true
 ---
 
-![FFmpeg 处理音视频流程](https://raw.githubusercontent.com/skybrim/AllImages/dev/FFmpeg.jpg)
+![FFmpeg 处理音视频流程](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/FFmpeg.jpg)

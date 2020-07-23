@@ -10,7 +10,7 @@ ffmpeg command
 
 ## 基本信息查询
 
-![基本信息查询](https://raw.githubusercontent.com/skybrim/AllImages/dev/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4.jpg)
+![基本信息查询](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4.jpg)
 
 ## 录制
 

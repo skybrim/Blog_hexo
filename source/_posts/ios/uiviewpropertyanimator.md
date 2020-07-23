@@ -76,7 +76,7 @@ Apple 提供了三种快速创建的方法。
 	* Stopped  
 	在 stopAnimation() 被调用之后动画对象就处于停止状态，并且保留当前的所有属性值。如下图所示，停止状态无法反向回到激活态。
 
-	![](https://raw.githubusercontent.com/skybrim/AllImages/dev/UIVIewPropertyAnimator-state.png)
+	![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/UIVIewPropertyAnimator-state.png)
 
 * 添加新动画  
 UIViewPropertyAnimator 可以在中途加入新的动画。

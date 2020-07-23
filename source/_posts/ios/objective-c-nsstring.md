@@ -80,6 +80,6 @@ test3&test4，类型是 __NSCFString，是对象，和 OC 中的普通对象基�
 test5 是对 test3 的深拷贝，从 NSMutableString 转变为 NSString  
 test6 和 test7 都是 stringWithFormat 创建的短字符串，小于 8 个字节  
 test5、test6、test7 ，类型都是 NSTaggedPointerString，tagged pointer 实际是一个伪对象，他的地址就是他的值，如下图可以看出，这三个并没有 isa 指针  
-![isa](https://raw.githubusercontent.com/skybrim/AllImages/dev/20191014112326.png)
+![isa](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/20191014112326.png)
 
 关于 tagged pointer ，可以看唐巧大佬的文章:[深入理解 Tagged Pointer](https://www.infoq.cn/article/deep-understanding-of-tagged-pointer/)

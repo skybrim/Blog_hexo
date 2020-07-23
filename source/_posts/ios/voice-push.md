@@ -18,10 +18,10 @@ UNNotificationServiceExtension，可以拦截到远程推送的信息，调用se
 ## 添加 Notification Service Extension
 
 打开 Xcode ，File -> New -> Target  
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/Screen%20Shot%202019-06-20%20at%2014.05.54.png)  
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/Screen%20Shot%202019-06-20%20at%2014.05.54.png)  
 自定 Product Name  
 Xcode会为你的项目生成新的 target。 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/Screen%20Shot%202019-06-20%20at%2014.07.00.png)  
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/Screen%20Shot%202019-06-20%20at%2014.07.00.png)  
 在NotificationService 中，-didReceiveNotificationRequest:withContentHandler:,此方法可以获取到推送相关信息。  
 注意，需要在推送的格式中，写入参数 mutable-content ，示例如下：
 ```
@@ -46,7 +46,7 @@ Xcode会为你的项目生成新的 target。
 ## 真机运行
 
 真机运行时，请注意，除了运行原工程 target ，也要选择新的 target 重新运行一遍。
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/Screen%20Shot%202019-06-20%20at%2014.15.49.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/Screen%20Shot%202019-06-20%20at%2014.15.49.png)
 
 ## iOS 12.1 及之后版本
 

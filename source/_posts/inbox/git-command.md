@@ -12,11 +12,11 @@ git 命令备忘
 
 ## 状态模型
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/git_0.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/git_0.png)
 
 ## 仓库结构
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/git_1.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/git_1.png)
 
 
 ## 基础

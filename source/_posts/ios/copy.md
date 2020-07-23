@@ -20,7 +20,7 @@ Copy 分为 shadow copy 和 deep copy，这两种 copy 的区别，主要在堆�
 1. shadow copy 仅复制对象的引用指针
 2. deep copy 复制新的对象
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/copy_01.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/copy_01.png)
 
 **注意**：
 
@@ -133,7 +133,7 @@ block 使用 copy 是从 MRC 遗留下来的“传统”。
 
 当我们对集合类型的对象，使用 copy 或者 mutableCopy，都是对集合对象本身的拷贝，集合中的元素，都仅仅是一个 retain 操作。
 
-![array copy](https://raw.githubusercontent.com/skybrim/AllImages/dev/CopyingCollections_2x.png)  
+![array copy](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/CopyingCollections_2x.png)  
 
 ```objectivec
 UIView *view1 = [UIView new];

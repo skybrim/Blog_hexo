@@ -11,7 +11,7 @@ tags: [iOS, swift]
 
 ## 标准库中的结合协议架构
 
-![标准库中的结合协议架构](https://raw.githubusercontent.com/skybrim/AllImages/dev/swift-collection-protocol-1.jpg)
+![标准库中的结合协议架构](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/swift-collection-protocol-1.jpg)
 
 * Sequence
 

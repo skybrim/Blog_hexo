@@ -116,7 +116,7 @@ union isa_t
 
 ### hash 表存储
 
-![SideTables](https://raw.githubusercontent.com/skybrim/AllImages/dev/weak_point_0.png)
+![SideTables](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/weak_point_0.png)
 
 从上往下分析结构
 

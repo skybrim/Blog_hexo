@@ -40,7 +40,7 @@ label.font = UIFont.preferredFont(forTextStyle: .Title1)
 ```
 
 下面是系统支持的相关字号
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/font.png)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/font.png)
 
 
 ## UIFontMetrics

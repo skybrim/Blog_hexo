@@ -119,7 +119,7 @@ int main(int argc, char *argv[]) {
 
 * 指针变量占用多少字节内存空间  
 
-![指针变量占用的内存空间](https://raw.githubusercontent.com/skybrim/AllImages/dev/%E6%8C%87%E9%92%88%E5%8D%A0%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4.png)
+![指针变量占用的内存空间](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/%E6%8C%87%E9%92%88%E5%8D%A0%E7%94%A8%E7%9A%84%E5%86%85%E5%AD%98%E7%A9%BA%E9%97%B4.png)
 
 * 指针类型的作用
 

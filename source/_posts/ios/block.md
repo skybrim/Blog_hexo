@@ -330,7 +330,7 @@ int main() {
   | _NSConcreteGlobalBlock | 程序的数据区域（.data 区）|
   | _NSConcreteMallocBlock | 堆 |
 
-  ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/block_0.png)
+  ![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/block_0.png)
 
 * _NSConcreteGlobalBlock
   
@@ -355,13 +355,13 @@ int main() {
 
   impl.isa = &_NSConcreteMallocBlock;
 
-  ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/block_1.png)
+  ![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/block_1.png)
 
   当 block 被复制到堆上时，block 使用的所有 __block 变量，也会被复制到堆上，此时 block 持有 __block 变量。
 
   __block 对象的 __forwarding 指针，则会在复制到堆上后，指向堆上的 __block 结构体实例的地址。
 
-  ![](https://raw.githubusercontent.com/skybrim/AllImages/dev/block_2.png)
+  ![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/block_2.png)
 
 * 什么时候栈上的 block 会被复制到堆上呢？
 

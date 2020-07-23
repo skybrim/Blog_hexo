@@ -19,7 +19,7 @@ debug
 
 ## 常用命令
 
-![lldb/gdb-调试命令](https://raw.githubusercontent.com/skybrim/AllImages/dev/gdb%3Alldb-command.jpg)
+![lldb/gdb-调试命令](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/gdb%3Alldb-command.jpg)
 
 ## 开始调试
 

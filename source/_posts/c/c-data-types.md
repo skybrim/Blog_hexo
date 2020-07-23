@@ -10,7 +10,7 @@ comments: true
 
 ## 不同编译器环境下基本数据类型的存储长度
 
-![不同编译器环境下基本数据类型的存储长度](https://raw.githubusercontent.com/skybrim/AllImages/dev/%E4%B8%8D%E5%90%8C%E7%BC%96%E8%AF%91%E5%99%A8%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AD%98%E5%82%A8%E9%95%BF%E5%BA%A6.png)
+![不同编译器环境下基本数据类型的存储长度](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/%E4%B8%8D%E5%90%8C%E7%BC%96%E8%AF%91%E5%99%A8%E7%8E%AF%E5%A2%83%E4%B8%8B%E5%9F%BA%E6%9C%AC%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B%E7%9A%84%E5%AD%98%E5%82%A8%E9%95%BF%E5%BA%A6.png)
 
 ## 基本数据类型
 

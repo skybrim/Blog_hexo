@@ -57,7 +57,7 @@ class AutoreleasePoolPage
 }
 ```
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/autorelease_0.jpg)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_0.jpg)
 
 向一个对象发送- autorelease消息，就是将这个对象加入到当前AutoreleasePoolPage的栈顶next指针指向的位置
 
@@ -69,7 +69,7 @@ class AutoreleasePoolPage
 
 objc_autoreleasePoolPush的返回值正是这个哨兵对象的地址
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/autorelease_1.jpg)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_1.jpg)
 
 * objc_autoreleasePoolPop(哨兵对象)
 
@@ -79,7 +79,7 @@ objc_autoreleasePoolPush的返回值正是这个哨兵对象的地址
 
 3. 补充2：从最新加入的对象一直向前清理，可以向前跨越若干个page，直到哨兵所在的page
 
-![](https://raw.githubusercontent.com/skybrim/AllImages/dev/autorelease_2.jpg)
+![](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_2.jpg)
 
 ### 嵌套的 AutoreleasePool
 
