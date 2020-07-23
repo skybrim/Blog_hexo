@@ -93,7 +93,7 @@ B-->D;
 C-->D;
 ```
 
-![1](https://raw.githubusercontent.com/skybrim/AllImages/master/flow.png)
+![1](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/flow.png)
 
 ### Sequence diagram
 
@@ -111,7 +111,7 @@ John->>Bob: How about you?
 Bob-->>John: Jolly good!
 ```
 
-![2](https://raw.githubusercontent.com/skybrim/AllImages/master/sequence.png)
+![2](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/sequence.png)
 
 ### Gantt diagram
 
@@ -127,7 +127,7 @@ Future task               :         des3, after des2, 5d
 Future task2               :         des4, after des3, 5d
 ```
 
-![3](https://raw.githubusercontent.com/skybrim/AllImages/master/gantt.png)
+![3](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/gantt.png)
 
 ### Class diagram - :exclamation: experimental
 
@@ -148,7 +148,7 @@ Class01 : int gorilla
 Class08 <--> C2: Cool label
 ```
 
-![4](https://raw.githubusercontent.com/skybrim/AllImages/master/class.png)
+![4](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/class.png)
 
 ### Git graph - :exclamation: experimental
 
@@ -171,4 +171,4 @@ commit
 merge newbranch
 ```
 
-![5](https://raw.githubusercontent.com/skybrim/AllImages/master/git.png)
+![5](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/git.png)

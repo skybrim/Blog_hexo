@@ -55,7 +55,7 @@ bash <(curl -L -s https://install.direct/go.sh)
 
 复制并保存 PORT 、 UUID，即可使用。
 
-![4](https://raw.githubusercontent.com/skybrim/AllImages/master/20190314154947.png)
+![4](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/20190314154947.png)
 
 * 配置文件
 
