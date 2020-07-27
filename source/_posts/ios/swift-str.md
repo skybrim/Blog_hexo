@@ -175,9 +175,158 @@ extension Collection where Element: Equatable {
 
 String 和 Substring 都遵守 StringProtocol 协议，字符串几乎所有 API 都定义在这个协议里。
 
-但是，Swift 团队不建议将 API 从接受 String 实例转换为遵守 StringProtocol 的类型。
+不建议长期持有子字符串，这是因为子字符串会一直持有整个原始字符串。
 
-不建议长期存储子字符串，这是因为子字符串会一直持有整个原始字符串。
+通常，在一个操作内部使用子字符串，而只在结束时创建新字符串，将赋值操作推迟到最后一刻，这样可以确保是最低开销。
 
-通过在一个操作内部使用子字符串，而只在结束时创建新字符串，我们将赋值操作推迟到最后一刻，这样可以保证由这些赋值操作所带来的开销是实际需要的。
+如果想扩展 String，可以将这个扩展放在 StringProtocol，可以保持 String 和 Substring 的 API 统一性。
+
+
+## String 与 NSString
+
+任意的 String 实例，可以通过 as 操作桥接为 NSString，那些接受或者返回 NSString 的 Objective-C API 也会把类型自动转换为 String。
+
+Swift 中 String 的编译器优化：引入 Foundation 后，NSString 成员可以在 String 的实例上进行访问。
+
+由于 Swift String 在内存中的原生编码是 UTF-8，而 NSString 是 UTF-16，因此频繁的在 string 和 NSString 之间桥接会有额外性能开销。
+
+举例：
+
+NSAttributeString 的 API ```attributes(at: Int, effectiveRange: NSRangePointer?)``` 
+
+接受的是一个整数索引（UTF-16 测量），非 String.Index
+
+通过指针返回的 effectiveRange，是一个 NSRange 结构体，而非 Range<String.Index>
+
+```swift
+// 为字符串中的 “Click here” 添加一个链接
+
+let text = "👉 Click here for more info."
+let linkTarget = URL(string: "https://www.baidu.com")!
+let formatter = NSMutableAttributedString(string: text)
+
+//修改文本的部分属性
+if let linkRange = formatted.string.range(of: "Click here") {
+    let nsRange = NSRange(linkRange, in: formatted.string) // {3, 10}
+    formatted.addAttribute(.link, value:linkTarget, range: nsRange)
+}
+```
+
+```swift
+if let queryRange = formatted.string.range(of: "here") {
+    let nsRange = NSRange(queryRange, in: formatted.string)
+    var attributesRange = NSRange()
+    let attributes = formatted.attributes(at: nsRange.location, effectiveRange: &attributesRange)
+
+    attributesRange // {3, 10}
+
+    // 把 NSRange 转为 Range<String.Index>
+    if let effectiveRange = Range(attributesRange, in: formatted.string) {
+        formatted.string[effectiveRange] // Click here
+    }
+}
+```
+
+* CharacterSet
+
+CharacterSet 是 Foundation 中的类型，实际上它表示一系列 Unicode 标量的数据结构体，和 Character 类型不兼容。
+
+CharacterSet 提供了一些工厂初始化方法，.alphanumerics 、 .whitespacesAndNewlines。
+
+```swift
+// 因为 emoji 中，女人 + ZWJ + 消防车 = 女消防员
+// ZWJ 零连接符:U+200D
+let  favoriteEmoji = CharacterSet("👩‍🚒".unicodeScalars)
+favoriteEmoji.contains("🚒") // true
+```
+
+
+## Unicode 属性
+
+* Unicode.Scalar
+
+Swift5 中，CharacterSet 的部分功能移植到了 Unicode.Scalar
+
+```swift
+("😀" as Unicode.Scalar).properties.isEmoji // true
+("∬" as Unicode.Scalar).properties.isMath // true
+```
+
+
+## String 和 Character 的内部结构
+
+* String
+
+Swift5 里，原生字符串的内存是使用 UTF-8 格式表示的。因此遍历 UTF-8 视图会比遍历 UTF-16 或 Unicode标量 视图更快。
+
+小于 16 个（32 位平台是 11 个）UTF-8 编码单元的小型字符串，Swift 不会为其创建专门的存储缓冲区，而是直接使用内连的方式存储。
+
+* Character
+
+```swift
+public struct Character {
+    internal var _str: String
+
+    internal init(unchecked str: String) {
+        self._str = str
+        // ...
+    }
+}
+```
+
+通过源码可知，一个 Character 在内部被表示为长度为 1 的字符串。
+
+Swift5 之后，Character 的优化通过 String 自身的优化实现小字符串优化。
+
+
+## 字符串字面量
+
+""是字符串字面量，通过 ExpressibleByStringLiteral 协议实现。
+
+字符串字面量是 ExpressibleByStringLiteral，ExpressibleByExtendedGraphemeClusterLiteral 和 ExpressibleByUnicodeScalarLiteral 三个协议的一部分。其中，每个协议都约束了一个用它们各自表示的字面量 创建对象的 init方法。但除非你真的需要根据 Unicode标量还是字位族仔细调整初始化逻辑， 否则，只需要实现字符串的版本就好。
+
+```swift
+// 自定义类型 SafeHTML 支持字符串字面量创建。
+extension String {
+    var htmlEscaped: String {
+        // 简单的 仅替换所有开闭尖括号
+        return replacingOccurrences(of: "<", with: "&lt;").replacingOccurrences(of: ">", with: "&gt;")
+    }
+}
+
+struct SafeHTML {
+    private(set) var value: String
+
+    init(unsafe html: String) {
+        self.value = html.htmlEscaped
+    }
+}
+
+extension SafeHTML: ExpressibleByStringLiteral {
+    public init(stringLiteral value: StringLiteralType) {
+        self.value = value
+    }
+}
+
+let safe: SafeHTML = "<p>Angle brackets in literals are not escaped</p>"
+// SafeHTML(value: "<p>Angle brackets in literals are not escaped</p>")
+```
+
+
+## 定制字符串描述
+
+```swift
+extension SafeHTML: CustomStringConvertible {
+    var description: String {
+        return value
+    }
+}
+
+extension SafeHTML: CustomeDebugStringConvertible {
+    var debugDescription: String {
+        return "SafeHTML:\(value)"
+    }
+}
+print(safe)
+```
 
