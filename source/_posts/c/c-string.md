@@ -1,7 +1,7 @@
 ---
 title: C语言字符和字符串
 date: 2019/10/13
-tags: C
+tags: c
 comments: true
 ---
 

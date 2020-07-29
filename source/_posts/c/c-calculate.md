@@ -1,7 +1,7 @@
 ---
 title: C语言基本语句和基本运算
 date: 2019/10/13
-tags: C
+tags: c
 comments: true
 ---
 

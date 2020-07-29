@@ -1,7 +1,7 @@
 ---
 title: 关键字：static 和 extern
 date: 2019/10/13
-tags: C
+tags: c
 comments: true
 ---
 

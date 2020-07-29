@@ -1,7 +1,7 @@
 ---
 title: RaspberryPi NAS
 date: 2019/12/12
-tags: [RaspberryPi, inbox]
+tags: [raspberrypi, inbox]
 comments: true
 ---
 

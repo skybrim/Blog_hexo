@@ -1,7 +1,7 @@
 ---
 title: typedef
 date: 2019/10/13
-tags: C
+tags: c
 comments: true
 ---
 

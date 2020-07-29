@@ -1,7 +1,7 @@
 ---
 title: C语言数据类型
 date: 2019/10/13
-tags: C
+tags: c
 comments: true
 ---
 

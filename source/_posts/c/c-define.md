@@ -1,7 +1,7 @@
 ---
 title: 预处理指令
 date: 2019/10/13
-tags: C
+tags: c
 comments: true
 ---
 

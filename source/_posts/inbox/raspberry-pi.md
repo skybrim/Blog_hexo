@@ -1,7 +1,7 @@
 ---
 title: Raspbery Pi 初始化
 date: 2019/12/12
-tags: [RaspberryPi, inbox]
+tags: [raspberrypi, inbox]
 comments: true
 ---
 
