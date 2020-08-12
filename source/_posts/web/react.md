@@ -2,7 +2,7 @@
 title: React
 comments: true
 date: 2019-06-15 15:16:09
-tags: react
+tags: [web, react]
 ---
 
 react 学习笔记
