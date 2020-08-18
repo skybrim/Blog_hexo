@@ -63,8 +63,6 @@ esc 进入普通模式
 bash <(curl -L -s https://install.direct/go.sh)
 ```
 
-复制并保存 PORT 、 UUID，即可使用。
-
 ![4](https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/20190314154947.png)
 
 * 配置文件
@@ -117,15 +115,18 @@ vim /etc/tls-shunt-proxy/config.yaml
 ```
 listen: 0.0.0.0:443
 vhosts:
-    # 将 domain.me 改为你的域名
+
+# 将 domain.me 改为你的域名
 - name: domain.me
     tlsoffloading: true
     managedcert: true
     alpn: h2,http/1.1
+    
     # 如果不需要兼容 tls12, 可改为 tls13
     protocols: tls12,tls13
     http:
     handler: fileServer
+
     # /var/www/html 是静态网站目录
     args: /var/www/html
     default:
