@@ -45,6 +45,16 @@ ssh username@xxx.xxx.x.x
 
 使用一些SSH工具即可。如：Putty。
 
+### vim
+
+中间有一些需要使用 vim 编辑，简单说几个命令
+
+i 进入编辑模式
+
+esc 进入普通模式 
+
+:wq 编辑好后，在普通模式下，保存退出
+
 ### v2ray
 
 * 执行安装脚本
@@ -62,12 +72,6 @@ bash <(curl -L -s https://install.direct/go.sh)
 ```bash
 vim /etc/v2ray/config.json
 ```
-
-进入配置文件界面，按一下 i 键，开始编辑，下面给一套配置好的格式，照着编辑即可
-
-注意，必须是在英文输入法状态下编辑，json格式一定要正确，否则不会运行。
-
-编辑完后，按下esc，然后输入:wq，保存退出
 
 ```json
 {
@@ -106,9 +110,11 @@ bash <(curl -L -s https://raw.githubusercontent.com/liberal-boy/tls-shunt-proxy/
 
 * 配置文件
 
-```vim /etc/tls-shunt-proxy/config.yaml```
-
 ```bash
+vim /etc/tls-shunt-proxy/config.yaml
+```
+
+```
 listen: 0.0.0.0:443
 vhosts:
     # 将 domain.me 改为你的域名
