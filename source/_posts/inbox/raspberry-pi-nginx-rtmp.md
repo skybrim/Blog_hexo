@@ -1,7 +1,7 @@
 ---
 title: 树莓派 + nginx + rtmp
 date: 2019/12/12
-tags: [raspberrypi, inbox]
+tags: [raspberry-pi, inbox]
 comments: true
 ---
 
