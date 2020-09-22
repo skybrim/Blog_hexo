@@ -32,7 +32,7 @@ O #在当前行上面插入新的一行
 ```bash
 :vs #竖分屏 vertical split
 :sp #横分屏 split
-% s/from/to/g #全局替换
+:% s/from/to/g #全局替换
 v #可视化选择，选中当前位置
 V #选中当前行
 control+v #块状选择
@@ -208,29 +208,13 @@ yy   #复制一行
 * insert
 
 ```bash
-ctrl+c
-ctrl+v
-# 缩进混乱
-:set paste   # 等于关闭 autoindent
-:set nopaste # 重新打开 autoindent
-# 简单方法
-"+p          # 直接粘贴系统剪切板内容
+# 复制到系统剪切板
+"+y
+    
+# 粘贴系统剪切板内容
+"+p          
 ```
 
-* 寄存器
-
-```bash
-"{register}+命令  # 前面加双引号，指定寄存器
-#eg
-"ayiw  #复制一个单词到寄存器 a
-"bdd   #剪切当前行到寄存器 b
-
-#不指定寄存器，使用默认的无名寄存器
-
-"0    #默认的复制寄存器
-"+    #系统剪切板
-set clipboard=unname #系统剪切板=无名寄存器
-```
 
 ## macro
 
