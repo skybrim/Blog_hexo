@@ -1,27 +1,12 @@
 ---
-title: css-box-model
+title: css 盒模型
 comments: true
 date: 2020-09-24 10:28:02
 tags: [web, css]
 ---
 
-css box model
+css 盒模型
 <!--more-->
-
-## block inline
-
-```
-display: inline; // 内联
-display: block; // 块
-display: inline-block; // 中间状态
-```
-
-一个元素使用 display: inline-block，实现我们需要的块级的部分效果：
-
-设置width 和height 属性会生效；padding, margin, 以及border 会推开其他元素。
-
-但是，它不会跳转到新行，如果显式添加 width 和 height 属性，它只会变得比其内容更大。
-
 
 ## 标准盒模型
 
