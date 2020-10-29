@@ -64,6 +64,55 @@ def sort_array_quick_single(nums):
     return nums
 ```
 
+```c
+#include <stdio.h>
+#include <stdlib.h>
+
+int* sortArray(int*, int, int*);
+void quickSort(int *, int, int);
+
+int main(void) {
+    int *nums = (int *)malloc(sizeof(int) * 5);
+    for (int j = 0; j < 5; j ++) {
+        nums[j] = 5 - j;
+    }
+    int len;
+    sortArray(nums, 5, &len);
+    for (int i = 0; i < len; i ++) {
+        printf("%d\n", nums[i]);
+    }
+    return 0;
+}
+
+int* sortArray(int* nums, int numsSize, int* returnSize){
+    *returnSize = numsSize;
+    quickSort(nums, 0, numsSize-1);
+    return nums;
+}
+
+void quickSort(int *nums, int l, int r) {
+    if (l >= r) {
+        return;
+    }
+    int pivot = nums[l];
+    int index = l;
+    int t;
+    for (int k = l + 1; k < r + 1; k ++) {
+        if (nums[k] < pivot) {
+            index ++;
+            t = nums[index];
+            nums[index] = nums[k];
+            nums[k] = t;
+        }
+    }
+    t = nums[l];
+    nums[l] = nums[index];
+    nums[index] = t;
+    quickSort(nums, l, index - 1);
+    quickSort(nums, index + 1, r);
+}
+```
+
 
 ## 归并排序
 
