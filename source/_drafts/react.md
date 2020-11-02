@@ -12,7 +12,7 @@ react 学习笔记
 ## 基础
 
 ### 元素
-```js
+```
 // 可以加括号也可以不加
 const element = <h1>Hello, world!</h1>;
 const element = (
@@ -40,7 +40,7 @@ React 会将以小写字母开头的组件视为原生 DOM 标签。例如，<di
 
 组件中，states 是私有的，完全受控于组件。
 
-```javascript
+```
 // 下面两种组件在 react 中等效
 // 组件名称必须大写字母开头
 // 函数组件
@@ -108,7 +108,7 @@ this.setState(function(state, props) {
 
 React 事件的命名采用小驼峰式（camelCase），而不是纯小写。
 
-```javascript
+```
 // 在 React 中另一个不同点是你不能通过返回 false 的方式阻止默认行为。
 // 你必须显式的使用 preventDefault
 function ActionLink() {
@@ -122,7 +122,6 @@ function ActionLink() {
         </a>
     );
 }
-
 // 绑定事件
 class Toggle extends React.Component {
     constructor(props) {
@@ -147,7 +146,6 @@ class Toggle extends React.Component {
         );
     }
 }
-
 // 传递参数
 <button onClick={this.deleteRow.bind(this, id)}>Delete Row</button>
 ```
@@ -156,7 +154,7 @@ class Toggle extends React.Component {
 
 在 JavaScript 中，true && expression 总是会返回 expression, 而 false && expression 总是会返回 false。
 
-```javascript
+```
 function Mailbox(props) {
   const unreadMessages = props.unreadMessages;
   return (
@@ -174,7 +172,7 @@ function Mailbox(props) {
 
 ### 列表 key
 
-```javascript
+```
 function ListItem(props) {
   // 正确！这里不需要指定 key：
   return <li>{props.value}</li>;
@@ -201,7 +199,7 @@ ReactDOM.render(
 
 ### 表单
 
-```javascript
+```
 // input 输入
 class Example extends React.Component {
   constructor(props) {
@@ -299,7 +297,7 @@ class Reservation extends React.Component {
 
 ### 状态提升
 
-```javascript
+```
 function toCelsius(fahrenheit) {
     return (fahrenheit -32) * 5 / 9;
 }
@@ -393,7 +391,7 @@ ReactDOM.render(
 
 ### 组合
 
-```javascript
+```
 // 包含
 function SplitPane(props) {
   return (
@@ -445,7 +443,7 @@ function WelcomeDialog() {
 
 ### Context
 
-```javascript
+```
 // Context 可以让我们无须明确地传遍每一个组件，就能将值深入传递进组件树。
 // 为当前的 theme 创建一个 context（“light”为默认值）。
 const ThemeContext = React.createContext('light');
@@ -484,7 +482,7 @@ class ThemedButton extends React.Component {
 
 ### 错误边界
 
-```javascript
+```
 // 异常捕获边界（Error boundaries）
 // import MyErrorBoundary from './MyErrorBoundary';
 const MyComponent = () => (
@@ -503,7 +501,7 @@ const MyComponent = () => (
 
 ### React API
 
-```javascript
+```
 // React.Component
 class Greeting extends React.Component {
   render() {
@@ -578,7 +576,7 @@ function MyComponent() {
 
 ### hook
 
-```javascript
+```
 // State Hook
 import React, { useState } from 'react';
 
