@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>icon font | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="icon font">
+<meta property="og:type" content="article">
+<meta property="og:title" content="icon font">
+<meta property="og:url" content="https://skybrim.top/2019/01/01/ios/icon-font/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="icon font">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.066Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/icon-font" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/01/ios/icon-font/" class="article-date">
+  <time datetime="2018-12-31T16:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      icon font
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>icon font  </p>
+<a id="more"></a>
+
+<p>优点：<br>1、减少包的体积<br>2、无需2x或者3x<br>3、颜色修改方便准确<br>缺点：<br>1、只有单色<br>2、使用时需要使用 unicode 字符<br>3、维护 ttf 字体库  </p>
+<!--more-->
+
+<h2 id="获取-iconfont"><a href="#获取-iconfont" class="headerlink" title="获取 iconfont"></a>获取 iconfont</h2><ul>
+<li>1 <a href="https://www.iconfont.cn/" target="_blank" rel="noopener">iconfont.cn</a><br>  Iconfont阿里的矢量图标库，可以直接使用里面的免费的iconfont，设计师也可以将自己的矢量图 svg 上传到 iconfont，在线管理。<br>  开发人员将需要的 iconfont 加入购物车，下载代码，找到 ttf 文件；  </li>
+<li>2 本地管理<br>  使用第三方工具，如 iconfount、FontForge，通过 svg 矢量图，生成 ttf 文件。</li>
+</ul>
+<h2 id="iOS-开发使用-iconfont"><a href="#iOS-开发使用-iconfont" class="headerlink" title="iOS 开发使用 iconfont"></a>iOS 开发使用 iconfont</h2><ul>
+<li><p>1 注册字体<br>  iOS中加入字体文件，需要先把 ttf 文件加入项目，然后注册字体。<br>  注册字体分两种：<br>  1、info.plist 中， Fonts provided by application<br>  2、使用 API 注册<br>  建议使用 API 注册，方便下载字体注册  </p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UIFont</span> </span>&#123;</span><br><span class="line">   		<span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">registerFont</span><span class="params">(fontName: String)</span></span> &#123;</span><br><span class="line">       		<span class="keyword">if</span> <span class="keyword">let</span> url = <span class="type">Bundle</span>.main.url(forResource: fontName, withExtension: <span class="string">"ttf"</span>),</span><br><span class="line">           			<span class="keyword">let</span> fontDataProvider = <span class="type">CGDataProvider</span>(url: url <span class="keyword">as</span> <span class="type">NSURL</span>),</span><br><span class="line">           			<span class="keyword">let</span> newFont = <span class="type">CGFont</span>(fontDataProvider) &#123;</span><br><span class="line">           				<span class="type">CTFontManagerRegisterGraphicsFont</span>(newFont, <span class="literal">nil</span>)</span><br><span class="line">       			&#125;</span><br><span class="line">   			&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>2 使用 iconfont<br>  一般采用 UIImage 的形式使用</p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">UIImage</span> </span>&#123;</span><br><span class="line">   		<span class="keyword">static</span> <span class="function"><span class="keyword">func</span> <span class="title">image</span><span class="params">(iconCode: String, fontName: String, size: CGFloat, color: UIColor)</span></span> -&gt; <span class="type">UIImage?</span> &#123;</span><br><span class="line">       		<span class="keyword">let</span> imageSize = <span class="type">CGSize</span>(width: size, height: size)</span><br><span class="line">       		<span class="type">UIGraphicsBeginImageContextWithOptions</span>(imageSize, <span class="literal">false</span>, <span class="type">UIScreen</span>.main.scale)</span><br><span class="line">       		<span class="keyword">let</span> label = <span class="type">UILabel</span>(frame: <span class="type">CGRect</span>(x: <span class="number">0</span>, y: <span class="number">0</span>, width: size, height: size))</span><br><span class="line">       		label.font = <span class="type">UIFont</span>(name: fontName, size: size)</span><br><span class="line">       		label.text = iconCode</span><br><span class="line">       		label.textColor = color</span><br><span class="line">       		label.layer.render(<span class="keyword">in</span>: <span class="type">UIGraphicsGetCurrentContext</span>()!)</span><br><span class="line">       		<span class="keyword">let</span> retImage = <span class="type">UIGraphicsGetImageFromCurrentImageContext</span>()</span><br><span class="line">       		<span class="keyword">return</span> retImage</span><br><span class="line">   		&#125;		</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>  iconfont 使用时，需要使用 Unicode 编码，打开从 iconfont.cn 下载的文件夹，找到 html 文件，打开，会看到 &amp;#xXXXX 的 Unicode 编码。<br>  在 Swift 中，使用 \u{XXXX} ,将上面的 XXXX 替换一下即可。<br>  建议在工程中，维护一个 enum ，方便使用。<br>  在 iconfont.cn 的项目页面，打开 chrome 开发者工具的 console ，执行如下 JavaScript 脚本，获取枚举结构。  </p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">function camelCase(text, separator) &#123;</span><br><span class="line">   		<span class="keyword">var</span> arr = text.<span class="built_in">split</span>(separator);</span><br><span class="line">   		<span class="keyword">for</span>(<span class="keyword">var</span> i = <span class="number">1</span>; i &lt; arr.length; i++) &#123;</span><br><span class="line">       		  <span class="keyword">var</span> s = arr[i].slice(<span class="number">0</span>, <span class="number">1</span>).toUpperCase(); </span><br><span class="line">       		  <span class="keyword">var</span> h = arr[i].slice(<span class="number">1</span>);</span><br><span class="line">       		  arr[i] = s + h;</span><br><span class="line">   		&#125;</span><br><span class="line">   		<span class="keyword">return</span> arr.<span class="built_in">join</span>('')</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> items = document.getElementsByClassName('icon-item')</span><br><span class="line"><span class="keyword">var</span> result = <span class="string">""</span></span><br><span class="line"><span class="keyword">for</span>(<span class="keyword">let</span> i = <span class="number">0</span>, len = items.length; i &lt; len; i++) &#123;</span><br><span class="line">   		<span class="keyword">let</span> item = items[i]</span><br><span class="line">   		<span class="keyword">var</span> name = item.getElementsByClassName('icon-name')[<span class="number">0</span>].innerHTML</span><br><span class="line">   		name = camelCase(name, ' ')</span><br><span class="line">   		name = camelCase(name, '-')</span><br><span class="line">   		<span class="keyword">var</span> code = item.getElementsByClassName('icon-code')[<span class="number">0</span>].innerHTML</span><br><span class="line">   		code = code.replace('&amp;amp;#x', '')</span><br><span class="line">   		code = code.replace(';', '')</span><br><span class="line">   		result = result + <span class="string">"case "</span> + name + <span class="string">" = "</span> + <span class="string">"\"\\u&#123;"</span> + code + <span class="string">"&#125;\""</span> + <span class="string">"\n"</span></span><br><span class="line">&#125;</span><br><span class="line">console.log(result)</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="EFIconFont"><a href="#EFIconFont" class="headerlink" title="EFIconFont"></a>EFIconFont</h2><p>在 GitHub 上，找到了一个第三方库 EFIconFont ，可以辅助开发在工程中使用 iconfont。<br><a href="https://github.com/XiangWuShuo/EFIconFont" target="_blank" rel="noopener">EFIconFont</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/01/01/ios/icon-font/" data-id="ckiia424i003amobmgaij7oun" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/01/ios/copy/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Copy
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/01/ios/image-resizing/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">图片渲染</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Hexo 实现 Mermaid 流程图 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="hexo-filter-mermaid-diagrams,这个插件可以帮助 Hexo 实现各种 mermaid 流程图。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Hexo 实现 Mermaid 流程图">
+<meta property="og:url" content="https://skybrim.top/2018/11/11/inbox/hexo-mermaid/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="hexo-filter-mermaid-diagrams,这个插件可以帮助 Hexo 实现各种 mermaid 流程图。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/flow.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/sequence.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/gantt.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/class.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/git.png">
+<meta property="article:published_time" content="2018-11-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.064Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="inbox">
+<meta property="article:tag" content="hexo">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/flow.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-inbox/hexo-mermaid" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/11/11/inbox/hexo-mermaid/" class="article-date">
+  <time datetime="2018-11-10T16:00:00.000Z" itemprop="datePublished">2018-11-11</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Hexo 实现 Mermaid 流程图
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>hexo-filter-mermaid-diagrams,这个插件可以帮助 Hexo 实现各种 mermaid 流程图。</p>
+<a id="more"></a>
+
+<h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><ul>
+<li><p>进入Blog目录</p>
+<p>  yarn 安装</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yarn add hexo-filter-mermaid-diagrams</span><br></pre></td></tr></table></figure>
+
+<p>  npm 安装</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-filter-mermaid-diagrams</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Step2 Edit Config</p>
+<p>  打开站点配置文件</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># mermaid chart</span></span><br><span class="line">mermaid: <span class="comment">## mermaid url https://github.com/knsv/mermaid</span></span><br><span class="line">    <span class="built_in">enable</span>: <span class="literal">true</span>  <span class="comment"># default true</span></span><br><span class="line">    version: <span class="string">"7.1.2"</span> <span class="comment"># default v7.1.2</span></span><br><span class="line">    options:  <span class="comment"># find more api options from https://github.com/knsv/mermaid/blob/master/src/mermaidAPI.js</span></span><br><span class="line">        <span class="comment">#startOnload: true  // default true</span></span><br></pre></td></tr></table></figure>
+
+<p>  <strong>注意: 如果你想使用 ‘Class diagram’ , 请编辑 **站点配置文件</strong> 文件, 设置 external_link: false。hexo的bug.**</p>
+</li>
+<li><p>Step3 include mermaid.js in pug or ejs</p>
+<p>  找到主题里面的页脚文件，也即 themes/主题/layout/_partials， after_footer.pug , after-footer.ejs 或者 .swig</p>
+<p>  after_footer.pug</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> theme.mermaid.enable == <span class="literal">true</span></span><br><span class="line">    script(<span class="built_in">type</span>=<span class="string">'text/javascript'</span>, id=<span class="string">'maid-script'</span> mermaidoptioins=theme.mermaid.options src=<span class="string">'https://unpkg.com/mermaid@'</span>+ theme.mermaid.version + <span class="string">'/dist/mermaid.min.js'</span> + <span class="string">'?v='</span> + theme.version)</span><br><span class="line">    script.</span><br><span class="line">        <span class="keyword">if</span> (window.mermaid) &#123;</span><br><span class="line">            var options = JSON.parse(document.getElementById(<span class="string">'maid-script'</span>).getAttribute(<span class="string">'mermaidoptioins'</span>));</span><br><span class="line">            mermaid.initialize(options);</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+<p>  after-footer.ejs</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&lt;% <span class="keyword">if</span> (theme.mermaid.enable) &#123; %&gt;</span><br><span class="line">&lt;script src=<span class="string">'https://unpkg.com/mermaid@&lt;%= theme.mermaid.version %&gt;/dist/mermaid.min.js'</span>&gt;&lt;/script&gt;</span><br><span class="line">&lt;script&gt;</span><br><span class="line"><span class="keyword">if</span> (window.mermaid) &#123;</span><br><span class="line">    mermaid.initialize(&#123;theme: <span class="string">'forest'</span>&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">&lt;/script&gt;</span><br><span class="line">&lt;% &#125; %&gt;</span><br></pre></td></tr></table></figure>
+
+<p>  .swig</p>
+  <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;% <span class="keyword">if</span> theme.mermaid.enable %&#125;</span><br><span class="line">    &lt;script src=<span class="string">'https://unpkg.com/mermaid@&#123;&#123; theme.mermaid.version &#125;&#125;/dist/mermaid.min.js'</span>&gt;&lt;/script&gt;</span><br><span class="line">    &lt;script&gt;</span><br><span class="line">    <span class="keyword">if</span> (window.mermaid) &#123;</span><br><span class="line">        mermaid.initialize(&#123;&#123; JSON.stringify(theme.mermaid.options) &#125;&#125;);</span><br><span class="line">    &#125;</span><br><span class="line">    &lt;/script&gt;</span><br><span class="line">&#123;% endif %&#125;</span><br></pre></td></tr></table></figure>
+
+</li>
+</ul>
+<h2 id="mermaid-演示"><a href="#mermaid-演示" class="headerlink" title="mermaid 演示"></a>mermaid 演示</h2><h3 id="Flowchart"><a href="#Flowchart" class="headerlink" title="Flowchart"></a>Flowchart</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">graph TD;</span><br><span class="line">A--&gt;B;</span><br><span class="line">A--&gt;C;</span><br><span class="line">B--&gt;D;</span><br><span class="line">C--&gt;D;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/flow.png" alt="1"></p>
+<h3 id="Sequence-diagram"><a href="#Sequence-diagram" class="headerlink" title="Sequence diagram"></a>Sequence diagram</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">participant Alice</span><br><span class="line">participant Bob</span><br><span class="line">Alice-&gt;&gt;John: Hello John, how are you?</span><br><span class="line">loop Healthcheck</span><br><span class="line">John-&gt;&gt;John: Fight against hypochondria</span><br><span class="line">end</span><br><span class="line">Note right of John: Rational thoughts &lt;br/&gt;prevail...</span><br><span class="line">John--&gt;&gt;Alice: Great!</span><br><span class="line">John-&gt;&gt;Bob: How about you?</span><br><span class="line">Bob--&gt;&gt;John: Jolly good!</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/sequence.png" alt="2"></p>
+<h3 id="Gantt-diagram"><a href="#Gantt-diagram" class="headerlink" title="Gantt diagram"></a>Gantt diagram</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">gantt</span><br><span class="line">dateFormat  YYYY-MM-DD</span><br><span class="line">title Adding GANTT diagram to mermaid</span><br><span class="line"></span><br><span class="line">section A section</span><br><span class="line">Completed task            :<span class="keyword">done</span>,    des1, 2014-01-06,2014-01-08</span><br><span class="line">Active task               :active,  des2, 2014-01-09, 3d</span><br><span class="line">Future task               :         des3, after des2, 5d</span><br><span class="line">Future task2               :         des4, after des3, 5d</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/gantt.png" alt="3"></p>
+<h3 id="Class-diagram-exclamation-experimental"><a href="#Class-diagram-exclamation-experimental" class="headerlink" title="Class diagram - :exclamation: experimental"></a>Class diagram - :exclamation: experimental</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">classDiagram</span><br><span class="line">Class01 &lt;|-- AveryLongClass : Cool</span><br><span class="line">Class03 *-- Class04</span><br><span class="line">Class05 o-- Class06</span><br><span class="line">Class07 .. Class08</span><br><span class="line">Class09 --&gt; C2 : Where am i?</span><br><span class="line">Class09 --* C3</span><br><span class="line">Class09 --|&gt; Class07</span><br><span class="line">Class07 : equals()</span><br><span class="line">Class07 : Object[] elementData</span><br><span class="line">Class01 : size()</span><br><span class="line">Class01 : int chimp</span><br><span class="line">Class01 : int gorilla</span><br><span class="line">Class08 &lt;--&gt; C2: Cool label</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/class.png" alt="4"></p>
+<h3 id="Git-graph-exclamation-experimental"><a href="#Git-graph-exclamation-experimental" class="headerlink" title="Git graph - :exclamation: experimental"></a>Git graph - :exclamation: experimental</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">gitGraph:</span><br><span class="line">options</span><br><span class="line">&#123;</span><br><span class="line"><span class="string">"nodeSpacing"</span>: 150,</span><br><span class="line"><span class="string">"nodeRadius"</span>: 10</span><br><span class="line">&#125;</span><br><span class="line">end</span><br><span class="line">commit</span><br><span class="line">branch newbranch</span><br><span class="line">checkout newbranch</span><br><span class="line">commit</span><br><span class="line">commit</span><br><span class="line">checkout master</span><br><span class="line">commit</span><br><span class="line">commit</span><br><span class="line">merge newbranch</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/git.png" alt="5"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2018/11/11/inbox/hexo-mermaid/" data-id="ckiia424a002dmobm7k746528" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/11/11/inbox/hexo-blog/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          hexo 搭建 blog
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/09/01/ios/runloop/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Objective-C runloop</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

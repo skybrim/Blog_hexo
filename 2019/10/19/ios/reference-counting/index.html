@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Objective-C 引用计数 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Objective-C 引用计数">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective-C 引用计数">
+<meta property="og:url" content="https://skybrim.top/2019/10/19/ios/reference-counting/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="Objective-C 引用计数">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/weak_point_0.png">
+<meta property="article:published_time" content="2019-10-19T03:08:50.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.067Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/weak_point_0.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/reference-counting" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/10/19/ios/reference-counting/" class="article-date">
+  <time datetime="2019-10-19T03:08:50.000Z" itemprop="datePublished">2019-10-19</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Objective-C 引用计数
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Objective-C 引用计数</p>
+<a id="more"></a>
+
+<h2 id="存储引用计数"><a href="#存储引用计数" class="headerlink" title="存储引用计数"></a>存储引用计数</h2><ul>
+<li><p>TaggedPointer</p>
+<p>  直接将其指针值作为引用计数返回</p>
+</li>
+<li><p>64位 &amp;&amp; Objective-C 2.0</p>
+<p>  isa 指针的一部分会用来存储引用计数</p>
+<p>  如果 isa 的引用计数溢出，使用一张 hash 表来存储</p>
+</li>
+</ul>
+<h3 id="TaggedPointer"><a href="#TaggedPointer" class="headerlink" title="TaggedPointer"></a>TaggedPointer</h3><p>判断当前对象是否在使用 TaggedPointer 是看标志位是否为 1 ：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SUPPORT_MSB_TAGGED_POINTERS</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> TAG_MASK (1ULL&lt;&lt;63)</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> TAG_MASK 1</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">inline</span> <span class="keyword">bool</span> </span><br><span class="line">objc_object::isTaggedPointer()  <span class="comment">// objc_object * 就是 id</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SUPPORT_TAGGED_POINTERS</span></span><br><span class="line">    <span class="keyword">return</span> ((uintptr_t)<span class="keyword">this</span> &amp; TAG_MASK);</span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="isa-指针"><a href="#isa-指针" class="headerlink" title="isa 指针"></a>isa 指针</h3><p>优化的 isa 指针并不是就一定会存储引用计数，毕竟用 19bit （iOS 系统）保存引用计数不一定够。</p>
+<p>需要注意的是这 19 位保存的是 <strong>引用计数的值减一</strong>。</p>
+<p>has_sidetable_rc 的值如果为 1，那么引用计数会存储在一个叫 SideTable 的类的属性中</p>
+<p>看源码</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// Define SUPPORT_NONPOINTER_ISA=1 to enable extra data in the isa field.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> !__LP64__  ||  TARGET_OS_WIN32  ||  TARGET_IPHONE_SIMULATOR  ||  __x86_64__</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> SUPPORT_NONPOINTER_ISA 0 <span class="comment">// iOS 中 arm64 支持优化后的指针</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> SUPPORT_NONPOINTER_ISA 1</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">union</span> isa_t </span><br><span class="line">&#123;</span><br><span class="line">    isa_t() &#123; &#125;</span><br><span class="line">    isa_t(uintptr_t value) : bits(value) &#123; &#125;</span><br><span class="line"></span><br><span class="line">    Class cls;</span><br><span class="line">    uintptr_t bits;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> SUPPORT_NONPOINTER_ISA</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">if</span> __arm64__</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MASK        0x00000001fffffff8ULL</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MAGIC_MASK  0x000003fe00000001ULL</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MAGIC_VALUE 0x000001a400000001ULL</span></span><br><span class="line">    <span class="keyword">struct</span> &#123;</span><br><span class="line">        uintptr_t nonpointer        : <span class="number">1</span>;  <span class="comment">// 0 表示普通的 isa 指针；1 表示优化后的 isa 指针，存储引用计数</span></span><br><span class="line">        uintptr_t has_assoc         : <span class="number">1</span>;  <span class="comment">// 表示该对象是否包含 associated object，如果没有，则析构时会更快</span></span><br><span class="line">        uintptr_t has_cxx_dtor      : <span class="number">1</span>;  <span class="comment">// 表示该对象是否有 C++ 或 ARC 的析构函数，如果没有，则析构时更快</span></span><br><span class="line">        uintptr_t shiftcls          : <span class="number">33</span>; <span class="comment">// MACH_VM_MAX_ADDRESS 0x1000000000 类的指针</span></span><br><span class="line">        uintptr_t magic             : <span class="number">6</span>;  <span class="comment">// 固定值为 0xd2，用于在调试时分辨对象是否未完成初始化。</span></span><br><span class="line">        uintptr_t weakly_referenced : <span class="number">1</span>;  <span class="comment">// 表示该对象是否有过 weak 对象，如果没有，则析构时更快</span></span><br><span class="line">        uintptr_t deallocating      : <span class="number">1</span>;  <span class="comment">// 表示该对象是否正在析构</span></span><br><span class="line">        uintptr_t has_sidetable_rc  : <span class="number">1</span>;  <span class="comment">// 表示该对象的引用计数值是否过大无法存储在 isa 指针  </span></span><br><span class="line">        uintptr_t extra_rc          : <span class="number">19</span>; <span class="comment">// 存储引用计数值减一后的结果</span></span><br><span class="line"><span class="meta">#       <span class="meta-keyword">define</span> RC_ONE   (1ULL&lt;&lt;45)</span></span><br><span class="line"><span class="meta">#       <span class="meta-keyword">define</span> RC_HALF  (1ULL&lt;&lt;18)</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">elif</span> __x86_64__</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MASK        0x00007ffffffffff8ULL</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MAGIC_MASK  0x0000000000000001ULL</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">define</span> ISA_MAGIC_VALUE 0x0000000000000001ULL</span></span><br><span class="line">    <span class="keyword">struct</span> &#123;</span><br><span class="line">        uintptr_t indexed           : <span class="number">1</span>;</span><br><span class="line">        uintptr_t has_assoc         : <span class="number">1</span>;</span><br><span class="line">        uintptr_t has_cxx_dtor      : <span class="number">1</span>;</span><br><span class="line">        uintptr_t shiftcls          : <span class="number">44</span>; <span class="comment">// MACH_VM_MAX_ADDRESS 0x7fffffe00000</span></span><br><span class="line">        uintptr_t weakly_referenced : <span class="number">1</span>;</span><br><span class="line">        uintptr_t deallocating      : <span class="number">1</span>;</span><br><span class="line">        uintptr_t has_sidetable_rc  : <span class="number">1</span>;</span><br><span class="line">        uintptr_t extra_rc          : <span class="number">14</span>;</span><br><span class="line"><span class="meta">#       <span class="meta-keyword">define</span> RC_ONE   (1ULL&lt;&lt;50)</span></span><br><span class="line"><span class="meta">#       <span class="meta-keyword">define</span> RC_HALF  (1ULL&lt;&lt;13)</span></span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line"><span class="meta"># <span class="meta-keyword">else</span></span></span><br><span class="line">    <span class="comment">// Available bits in isa field are architecture-specific.</span></span><br><span class="line"><span class="meta">#   <span class="meta-keyword">error</span> unknown architecture</span></span><br><span class="line"><span class="meta"># <span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">// SUPPORT_NONPOINTER_ISA</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+<h3 id="hash-表存储"><a href="#hash-表存储" class="headerlink" title="hash 表存储"></a>hash 表存储</h3><p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/weak_point_0.png" alt="SideTables"></p>
+<p>从上往下分析结构</p>
+<ul>
+<li><p>SideTables</p>
+<p>  SideTables 是一个64（iPhone真机的情况下是 8）个元素长度的 hash 表，里面存储了 SideTable</p>
+<p>  键是对象的地址，值是对象的 SideTable</p>
+<p>  所以，<strong>一个 SideTable 可能对应多个对象</strong></p>
+<p>  SideTables 在系统中是全局唯一的。</p>
+<p>  SideTables的类型是是template<typename T> class StripedMap，StripedMap<SideTable> 。</p>
+<p>  可以简单的理解为一个64 * sizeof(SideTable) 的哈希线性数组</p>
+  <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">&#x2F;&#x2F; SideTabls 可以通过全局的静态函数获取，实质是 StripedMap</span><br><span class="line">static StripedMap&lt;SideTable&gt;&amp; SideTables() &#123;</span><br><span class="line">    return *reinterpret_cast&lt;StripedMap&lt;SideTable&gt;*&gt;(SideTableBuf);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; ...</span><br><span class="line"></span><br><span class="line">enum &#123; CacheLineSize &#x3D; 64 &#125;;</span><br><span class="line"></span><br><span class="line">&#x2F;&#x2F; StripedMap 定义</span><br><span class="line">&#x2F;&#x2F; void* -&gt; T</span><br><span class="line">&#x2F;&#x2F; StripedMap&lt;T&gt; is a map of void* -&gt; T, sized appropriately </span><br><span class="line">&#x2F;&#x2F; for cache-friendly lock striping. </span><br><span class="line">&#x2F;&#x2F; For example, this may be used as StripedMap&lt;spinlock_t&gt;</span><br><span class="line">&#x2F;&#x2F; or as StripedMap&lt;SomeStruct&gt; where SomeStruct stores a spin lock.</span><br><span class="line"></span><br><span class="line">template&lt;typename T&gt;</span><br><span class="line">class StripedMap &#123;</span><br><span class="line">#if TARGET_OS_IPHONE &amp;&amp; !TARGET_OS_SIMULATOR</span><br><span class="line">    enum &#123; StripeCount &#x3D; 8 &#125;; &#x2F;&#x2F; 真机 8</span><br><span class="line">#else</span><br><span class="line">    enum &#123; StripeCount &#x3D; 64 &#125;;</span><br><span class="line">#endif</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 封装 T </span><br><span class="line">    struct PaddedT &#123;</span><br><span class="line">        T value alignas(CacheLineSize);</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; PaddedT 类型的数组，长度是 StripeCount</span><br><span class="line">    PaddedT array[StripeCount];</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; hash 定位算法</span><br><span class="line">    &#x2F;&#x2F; 以 void* 作为 key，返回 void* 对应的 SideTable 的位置</span><br><span class="line">    static unsigned int indexForPointer(const void *p) &#123;</span><br><span class="line">        uintptr_t addr &#x3D; reinterpret_cast&lt;uintptr_t&gt;(p);</span><br><span class="line">        return ((addr &gt;&gt; 4) ^ (addr &gt;&gt; 9)) % StripeCount; &#x2F;&#x2F; 对 StripeCount 取余，防止越界</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">public:</span><br><span class="line">    &#x2F;&#x2F; 对外的存取数据的方法</span><br><span class="line">    T&amp; operator[] (const void *p) &#123; </span><br><span class="line">        return array[indexForPointer(p)].value; </span><br><span class="line">    &#125;</span><br><span class="line">    const T&amp; operator[] (const void *p) const &#123; </span><br><span class="line">        return const_cast&lt;StripedMap&lt;T&gt;&gt;(this)[p]; </span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    &#x2F;&#x2F; 锁的相关操作，核心都是直接操作 array[i].value</span><br><span class="line">    &#x2F;&#x2F; Shortcuts for StripedMaps of locks.</span><br><span class="line">    void lockAll() &#123;</span><br><span class="line">        for (unsigned int i &#x3D; 0; i &lt; StripeCount; i++) &#123;</span><br><span class="line">            array[i].value.lock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void unlockAll() &#123;</span><br><span class="line">        for (unsigned int i &#x3D; 0; i &lt; StripeCount; i++) &#123;</span><br><span class="line">            array[i].value.unlock();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void forceResetAll() &#123;</span><br><span class="line">        for (unsigned int i &#x3D; 0; i &lt; StripeCount; i++) &#123;</span><br><span class="line">            array[i].value.forceReset();</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void defineLockOrder() &#123;</span><br><span class="line">        for (unsigned int i &#x3D; 1; i &lt; StripeCount; i++) &#123;</span><br><span class="line">            lockdebug_lock_precedes_lock(&amp;array[i-1].value, &amp;array[i].value);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void precedeLock(const void *newlock) &#123;</span><br><span class="line">        &#x2F;&#x2F; assumes defineLockOrder is also called</span><br><span class="line">        lockdebug_lock_precedes_lock(&amp;array[StripeCount-1].value, newlock);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    void succeedLock(const void *oldlock) &#123;</span><br><span class="line">        &#x2F;&#x2F; assumes defineLockOrder is also called</span><br><span class="line">        lockdebug_lock_precedes_lock(oldlock, &amp;array[0].value);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    const void *getLock(int i) &#123;</span><br><span class="line">        if (i &lt; StripeCount) return &amp;array[i].value;</span><br><span class="line">        else return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">#if DEBUG</span><br><span class="line">    StripedMap() &#123;</span><br><span class="line">        &#x2F;&#x2F; Verify alignment expectations.</span><br><span class="line">        uintptr_t base &#x3D; (uintptr_t)&amp;array[0].value;</span><br><span class="line">        uintptr_t delta &#x3D; (uintptr_t)&amp;array[1].value - base;</span><br><span class="line">        ASSERT(delta % CacheLineSize &#x3D;&#x3D; 0);</span><br><span class="line">        ASSERT(base % CacheLineSize &#x3D;&#x3D; 0);</span><br><span class="line">    &#125;</span><br><span class="line">#else</span><br><span class="line">    constexpr StripedMap() &#123;&#125;</span><br><span class="line">#endif</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>SideTable</p>
+</li>
+</ul>
+<p>从上面的 SideTables 的结构，可以得出一个结论：</p>
+<p><strong>一个 SideTable 可以对应多个对象</strong></p>
+<p>RefcountMap 是一个 hash 表，key 是对象的地址，值是引用计数减一</p>
+<pre><code><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> SideTable &#123;</span><br><span class="line">    spinlock_t slock;        <span class="comment">// 保证原子操作的自旋锁</span></span><br><span class="line">    RefcountMap refcnts;     <span class="comment">// 保存引用计数的 hash 表，也就是 DenseMap</span></span><br><span class="line">    weak_table_t weak_table; <span class="comment">// 保存弱引用的 hash 表</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 构造函数</span></span><br><span class="line">    SideTable() &#123;</span><br><span class="line">        memset(&amp;weak_table, <span class="number">0</span>, <span class="keyword">sizeof</span>(weak_table));</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 析构函数 （实际上不能被析构）</span></span><br><span class="line">    ~SideTable() &#123;</span><br><span class="line">        _objc_fatal(<span class="string">"Do not delete SideTable."</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 一些锁的操作</span></span><br><span class="line">    <span class="keyword">void</span> lock() &#123; slock.lock(); &#125;</span><br><span class="line">    <span class="keyword">void</span> unlock() &#123; slock.unlock(); &#125;</span><br><span class="line">    <span class="keyword">void</span> forceReset() &#123; slock.forceReset(); &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// Address-ordered lock discipline for a pair of side tables.</span></span><br><span class="line"></span><br><span class="line">    template&lt;HaveOld, HaveNew&gt;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> lockTwo(SideTable *lock1, SideTable *lock2);</span><br><span class="line">    template&lt;HaveOld, HaveNew&gt;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">void</span> unlockTwo(SideTable *lock1, SideTable *lock2);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></code></pre><ul>
+<li><p>RefcountMap</p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> RefcountMapValuePurgeable &#123;</span><br><span class="line">    <span class="keyword">static</span> <span class="keyword">inline</span> <span class="keyword">bool</span> isPurgeable(size_t x) &#123;</span><br><span class="line">        <span class="keyword">return</span> x == <span class="number">0</span>;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="keyword">typedef</span> objc::DenseMap&lt;DisguisedPtr&lt;objc_object&gt;,size_t,RefcountMapValuePurgeable&gt; RefcountMap;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>DenseMap</p>
+<p>  key：DisguisedPtr<objc_object>，是对 objc_object * 指针及其一些操作进行的封装</p>
+<p>  value：__darwin_size_t，等价于 unsigned long，内容也是 <strong>引用计数减一</strong></p>
+</li>
+<li><p>weak_table_t</p>
+<p>  关于 weak_table_t 的详细分析，见 <a href="https://skybrim.top/2019/10/21/iOS/weak-point/">Objective-C 弱引用</a>，这里只展示源码</p>
+  <details>
+  <summary>weak_table_t</summary>
+
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* The global weak references table. Stores object ids as keys,</span></span><br><span class="line"><span class="comment">* and weak_entry_t structs as their values.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">struct</span> weak_table_t &#123;</span><br><span class="line">    weak_entry_t *weak_entries;</span><br><span class="line">    size_t    num_entries;</span><br><span class="line">    uintptr_t mask;</span><br><span class="line">    uintptr_t max_hash_displacement;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+  </details>
+
+
+</li>
+</ul>
+<ul>
+<li><p>weak_entry_t</p>
+<p>  关于 weak_entry_t 的详细分析，见 <a href="https://skybrim.top/2019/10/21/iOS/weak-point/">Objective-C 弱引用</a>，这里展示下源码</p>
+  <details>
+  <summary>weak_entry_t</summary>
+
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">if</span> __LP64__</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PTR_MINUS_2 62</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PTR_MINUS_2 30</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line"></span><br><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">* The internal structure stored in the weak references table. </span></span><br><span class="line"><span class="comment">* It maintains and stores</span></span><br><span class="line"><span class="comment">* a hash set of weak references pointing to an object.</span></span><br><span class="line"><span class="comment">* If out_of_line_ness != REFERRERS_OUT_OF_LINE then the set</span></span><br><span class="line"><span class="comment">* is instead a small inline array.</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> WEAK_INLINE_COUNT 4</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// out_of_line_ness field overlaps with the low two bits of inline_referrers[1].</span></span><br><span class="line"><span class="comment">// inline_referrers[1] is a DisguisedPtr of a pointer-aligned address.</span></span><br><span class="line"><span class="comment">// The low two bits of a pointer-aligned DisguisedPtr will always be 0b00</span></span><br><span class="line"><span class="comment">// (disguised nil or 0x80..00) or 0b11 (any other address).</span></span><br><span class="line"><span class="comment">// Therefore out_of_line_ness == 0b10 is used to mark the out-of-line state.</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> REFERRERS_OUT_OF_LINE 2</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">struct</span> weak_entry_t &#123;</span><br><span class="line">    DisguisedPtr&lt;objc_object&gt; referent;</span><br><span class="line">    <span class="keyword">union</span> &#123;</span><br><span class="line">        <span class="keyword">struct</span> &#123;</span><br><span class="line">            weak_referrer_t *referrers;</span><br><span class="line">            uintptr_t        out_of_line_ness : <span class="number">2</span>;</span><br><span class="line">            uintptr_t        num_refs : PTR_MINUS_2;</span><br><span class="line">            uintptr_t        mask;</span><br><span class="line">            uintptr_t        max_hash_displacement;</span><br><span class="line">        &#125;;</span><br><span class="line">        <span class="keyword">struct</span> &#123;</span><br><span class="line">            <span class="comment">// out_of_line_ness field is low bits of inline_referrers[1]</span></span><br><span class="line">            weak_referrer_t  inline_referrers[WEAK_INLINE_COUNT];</span><br><span class="line">        &#125;;</span><br><span class="line">    &#125;;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">bool</span> out_of_line() &#123;</span><br><span class="line">        <span class="keyword">return</span> (out_of_line_ness == REFERRERS_OUT_OF_LINE);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    weak_entry_t&amp; operator=(<span class="keyword">const</span> weak_entry_t&amp; other) &#123;</span><br><span class="line">        memcpy(<span class="keyword">this</span>, &amp;other, <span class="keyword">sizeof</span>(other));</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    weak_entry_t(objc_object *newReferent, objc_object **newReferrer)</span><br><span class="line">        : referent(newReferent)</span><br><span class="line">    &#123;</span><br><span class="line">        inline_referrers[<span class="number">0</span>] = newReferrer;</span><br><span class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt; WEAK_INLINE_COUNT; i++) &#123;</span><br><span class="line">            inline_referrers[i] = <span class="literal">nil</span>;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+
+  </details>    
+
+</li>
+</ul>
+<h2 id="获取引用计数"><a href="#获取引用计数" class="headerlink" title="获取引用计数"></a>获取引用计数</h2><h3 id="MRC"><a href="#MRC" class="headerlink" title="MRC"></a>MRC</h3><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (<span class="built_in">NSUInteger</span>)retainCount &#123;</span><br><span class="line">    <span class="keyword">return</span> ((<span class="keyword">id</span>)<span class="keyword">self</span>)-&gt;rootRetainCount();</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ARC"><a href="#ARC" class="headerlink" title="ARC"></a>ARC</h3><p>Core Foundation 库的 CFGetRetainCount()</p>
+<p>Runtime 的 _objc_rootRetainCount(id obj)</p>
+<h2 id="修改引用计数"><a href="#修改引用计数" class="headerlink" title="修改引用计数"></a>修改引用计数</h2><h3 id="retain"><a href="#retain" class="headerlink" title="retain"></a>retain</h3><p>引用计数 +1</p>
+<p>_objc_rootRetain(id obj)</p>
+<h3 id="release"><a href="#release" class="headerlink" title="release"></a>release</h3><p>引用计数 -1</p>
+<p>_objc_rootRelease(id obj)</p>
+<h3 id="alloc-new-copy-mutableCopy"><a href="#alloc-new-copy-mutableCopy" class="headerlink" title="alloc, new, copy, mutableCopy"></a>alloc, new, copy, mutableCopy</h3><p>引用计数 +1</p>
+<h3 id="autorelease"><a href="#autorelease" class="headerlink" title="autorelease"></a>autorelease</h3><p><a href="https://skybrim.top/2017/06/01/iOS/autorelease/">autorelease</a></p>
+<h2 id="引用-amp-参考"><a href="#引用-amp-参考" class="headerlink" title="引用&amp;参考"></a>引用&amp;参考</h2><p><a href="http://yulingtianxia.com/blog/2015/12/06/The-Principle-of-Refenrence-Counting/" target="_blank" rel="noopener">Objective-C 引用计数原理 by:杨潇玉</a><br><a href="https://blog.csdn.net/u013378438/article/details/80733391" target="_blank" rel="noopener">Objective-C runtime机制(5)</a><br><a href="https://blog.csdn.net/u013378438/article/details/82790332" target="_blank" rel="noopener">Objective-C runtime机制(7)</a> </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/10/19/ios/reference-counting/" data-id="ckiia424l003kmobmd07s6w3v" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/10/21/ios/weak-point/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Objective-C 弱引用
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/07/13/algorithm/dynamic-programming/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">动态规划</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>autorelease | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="黑幕背后的Autorelease">
+<meta property="og:type" content="article">
+<meta property="og:title" content="autorelease">
+<meta property="og:url" content="https://skybrim.top/2017/06/01/ios/autorelease/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="黑幕背后的Autorelease">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_0.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_1.jpg">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_2.jpg">
+<meta property="article:published_time" content="2017-06-01T05:40:30.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.066Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_0.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/autorelease" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/06/01/ios/autorelease/" class="article-date">
+  <time datetime="2017-06-01T05:40:30.000Z" itemprop="datePublished">2017-06-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      autorelease
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="https://blog.sunnyxx.com/2014/10/15/behind-autorelease/" target="_blank" rel="noopener">黑幕背后的Autorelease</a></p>
+<a id="more"></a>
+
+<h2 id="autorelease-对象释放时机"><a href="#autorelease-对象释放时机" class="headerlink" title="autorelease 对象释放时机"></a>autorelease 对象释放时机</h2><p>在没有手加Autorelease Pool的情况下，Autorelease对象是在当前的runloop迭代结束时释放的，而它能够释放的原因是系统在每个runloop迭代中都加入了自动释放池Push和Pop</p>
+<h2 id="autorelease-原理"><a href="#autorelease-原理" class="headerlink" title="autorelease 原理"></a>autorelease 原理</h2><h3 id="AutoreleasePoolPage"><a href="#AutoreleasePoolPage" class="headerlink" title="AutoreleasePoolPage"></a>AutoreleasePoolPage</h3><p>ARC下，我们使用@autoreleasepool{}来使用一个AutoreleasePool，随后编译器将其改写成下面的样子：</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> *context = objc_autoreleasePoolPush();</span><br><span class="line"><span class="comment">// &#123;&#125;中的代码</span></span><br><span class="line">objc_autoreleasePoolPop(context);</span><br></pre></td></tr></table></figure>
+<p>AutoreleasePoolPage是一个C++实现的类</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">define</span> PROTECT_AUTORELEASEPOOL 0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> AutoreleasePoolPage </span><br><span class="line">&#123;</span><br><span class="line"></span><br><span class="line"><span class="meta">#<span class="meta-keyword">define</span> POOL_SENTINEL 0</span></span><br><span class="line">    <span class="keyword">static</span> pthread_key_t <span class="keyword">const</span> key = AUTORELEASE_POOL_KEY;</span><br><span class="line">    <span class="keyword">static</span> uint8_t <span class="keyword">const</span> SCRIBBLE = <span class="number">0xA3</span>;  <span class="comment">// 0xA3A3A3A3 after releasing</span></span><br><span class="line">    <span class="keyword">static</span> size_t <span class="keyword">const</span> SIZE = </span><br><span class="line"></span><br><span class="line">    <span class="comment">// AutoreleasePoolPage 每个对象会开辟4096字节内存</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">if</span> PROTECT_AUTORELEASEPOOL</span></span><br><span class="line">        <span class="number">4096</span>;  <span class="comment">// must be multiple of vm page size</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">else</span></span></span><br><span class="line">        <span class="number">4096</span>;  <span class="comment">// size and alignment, power of 2</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br><span class="line">    <span class="keyword">static</span> size_t <span class="keyword">const</span> COUNT = SIZE / <span class="keyword">sizeof</span>(<span class="keyword">id</span>);</span><br><span class="line"></span><br><span class="line">    magic_t <span class="keyword">const</span> magic;</span><br><span class="line">    <span class="keyword">id</span> *next;                               <span class="comment">// 指向栈顶最新add进来的autorelease对象的下一个位置</span></span><br><span class="line">    pthread_t <span class="keyword">const</span> thread;                 <span class="comment">// 当前线程</span></span><br><span class="line">    AutoreleasePoolPage * <span class="keyword">const</span> parent;     <span class="comment">// 双向链表，pre 指针</span></span><br><span class="line">    AutoreleasePoolPage *child;             <span class="comment">// 双向链表，next 指针</span></span><br><span class="line">    uint32_t <span class="keyword">const</span> depth;</span><br><span class="line">    uint32_t hiwat;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 其他相关方法</span></span><br><span class="line">    <span class="comment">// ...</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_0.jpg" alt=""></p>
+<p>向一个对象发送- autorelease消息，就是将这个对象加入到当前AutoreleasePoolPage的栈顶next指针指向的位置</p>
+<h3 id="释放"><a href="#释放" class="headerlink" title="释放"></a>释放</h3><ul>
+<li>objc_autoreleasePoolPush()</li>
+</ul>
+<p>每当进行一次 objc_autoreleasePoolPush 调用时，runtime向当前的AutoreleasePoolPage中add进一个哨兵对象，值为0（也就是个nil）</p>
+<p>objc_autoreleasePoolPush的返回值正是这个哨兵对象的地址</p>
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_1.jpg" alt=""></p>
+<ul>
+<li>objc_autoreleasePoolPop(哨兵对象)</li>
+</ul>
+<ol>
+<li><p>根据传入的哨兵对象地址找到哨兵对象所处的page</p>
+</li>
+<li><p>在当前page中，将晚于哨兵对象插入的所有 autorelease 对象都发送一次 - release 消息，并向回移动next指针到正确位置</p>
+</li>
+<li><p>补充2：从最新加入的对象一直向前清理，可以向前跨越若干个page，直到哨兵所在的page</p>
+</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/autorelease_2.jpg" alt=""></p>
+<h3 id="嵌套的-AutoreleasePool"><a href="#嵌套的-AutoreleasePool" class="headerlink" title="嵌套的 AutoreleasePool"></a>嵌套的 AutoreleasePool</h3><p>pop的时候总会释放到上次push的位置为止，多层的pool就是多个哨兵对象而已，就像剥洋葱一样，每次一层，互不影响</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2017/06/01/ios/autorelease/" data-id="ckiia424g0030mobm20r90umz" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/09/01/ios/runloop/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Objective-C runloop
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2017/05/18/ios/responder-chain/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">iOS 事件传递与响应链</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

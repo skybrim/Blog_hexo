@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>swift 集合类型 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="swift 集合类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift 集合类型">
+<meta property="og:url" content="https://skybrim.top/2020/07/06/ios/swift-collection/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="swift 集合类型">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-06T06:50:24.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.068Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="swift">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/swift-collection" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/06/ios/swift-collection/" class="article-date">
+  <time datetime="2020-07-06T06:50:24.000Z" itemprop="datePublished">2020-07-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      swift 集合类型
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>swift 集合类型</p>
+<a id="more"></a>
+
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// array 方法</span></span><br><span class="line"><span class="keyword">var</span> array = [<span class="type">Int</span>]()</span><br><span class="line"><span class="comment">// 指定数组容量大小</span></span><br><span class="line">array.reserveCapacity(<span class="number">20</span>)</span><br><span class="line"><span class="comment">// 数组是否为空</span></span><br><span class="line">array.isEmpty</span><br><span class="line"></span><br><span class="line"><span class="comment">// 迭代</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 迭代除了第一个元素以外的数组</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropFirst</span>() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 迭代除了最后 5 个元素以外的数组</span></span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> array.<span class="built_in">dropLast</span>(<span class="number">5</span>) &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 迭代索引和元素</span></span><br><span class="line"><span class="keyword">for</span> (index, element) <span class="keyword">in</span> array.enumerated() &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据匹配逻辑找指定内容</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> index = array.firstIndex&#123; someMatchingLogic($<span class="number">0</span>) &#125; &#123;&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> index = array.lastIndex &#123; someMatchingLogic($<span class="number">0</span>) &#125; &#123;&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> element = array.first &#123; someMatchingLogic($<span class="number">0</span>) &#125; &#123;&#125;</span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> element = array.last &#123; someMatchingLogic($<span class="number">0</span>) &#125; &#123;&#125;</span><br><span class="line"><span class="keyword">if</span> array.<span class="built_in">contains</span> &#123; someMatchingLogic($<span class="number">0</span>) &#125; &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 对数组元素进行变形，生成新数组</span></span><br><span class="line">array.<span class="built_in">map</span> &#123; someTransformation($<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// flatMap</span></span><br><span class="line"><span class="comment">// 场景 1：压平数组</span></span><br><span class="line"><span class="keyword">let</span> values = [[<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>],[<span class="number">9</span>]]</span><br><span class="line"><span class="keyword">let</span> flattenResult = values.flatMap&#123; $<span class="number">0</span> &#125; <span class="comment">// [1, 3, 5, 7, 9]</span></span><br><span class="line"><span class="comment">// 场景 2：过滤 nil</span></span><br><span class="line"><span class="keyword">let</span> values:[<span class="type">Int?</span>] = [<span class="number">1</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">7</span>,<span class="number">9</span>,<span class="literal">nil</span>]</span><br><span class="line"><span class="keyword">let</span> flattenResult = values.flatMap&#123; $<span class="number">0</span> &#125; <span class="comment">/// [1, 3, 5, 7, 9]</span></span><br><span class="line"><span class="comment">// 场景 3：不同数组合并</span></span><br><span class="line"><span class="keyword">let</span> words = [<span class="string">"a"</span>, <span class="string">"b"</span>]</span><br><span class="line"><span class="keyword">let</span> nums = [<span class="string">"1"</span>, <span class="string">"2"</span>]</span><br><span class="line"><span class="keyword">let</span> result = words.flatMap &#123; word <span class="keyword">in</span></span><br><span class="line">    nums.<span class="built_in">map</span> &#123; num <span class="keyword">in</span></span><br><span class="line">        (word, num)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;<span class="comment">// [("a", "1"), ("a", "2"), ("b", "1"), ("b", "2")]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对数组中元素执行操作，不生成新数组</span></span><br><span class="line"><span class="comment">// <span class="doctag">NOTE:</span> forEach 使用 return 时不会中断外部函数，此时请使用 for in 代替</span></span><br><span class="line">array.forEach &#123; doSomething($<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 测试所有元素</span></span><br><span class="line">array.allSatisfy &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 筛选符合规定的元素</span></span><br><span class="line">array.<span class="built_in">filter</span> &#123; someCriteria($<span class="number">0</span>) &#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 将元素聚合成一个值</span></span><br><span class="line">array.<span class="built_in">reduce</span>(<span class="number">0</span>) &#123; total, num <span class="keyword">in</span> total + num &#125;</span><br><span class="line">array.<span class="built_in">reduce</span>(<span class="number">0</span>, +)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 排序</span></span><br><span class="line"><span class="comment">// sort 无返回值，修改原数组</span></span><br><span class="line"><span class="built_in">sort</span>(by:)</span><br><span class="line"><span class="comment">// sorted 返回新的排好序的数组</span></span><br><span class="line">sorted(by:)</span><br><span class="line"><span class="comment">// 按照顺序比较两个集合元素的大小。</span></span><br><span class="line">lexicographicallyPrecedes(<span class="number">_</span>:by:)</span><br><span class="line"><span class="comment">// 根据条件把集合里的元素重新排序，符合条件的元素移动到最后，返回两个部分分界元素的索引</span></span><br><span class="line"><span class="built_in">partition</span>(by:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 最大值和最小值</span></span><br><span class="line"><span class="built_in">min</span>(by:)</span><br><span class="line"><span class="built_in">max</span>(by:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 判断两个队列的是否拥有相同的元素，并且顺序是一致的</span></span><br><span class="line">elementsEqual(<span class="number">_</span>:by:)</span><br><span class="line"><span class="comment">// 序列的前几个元素是否和另一个序列相同</span></span><br><span class="line">starts(with:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 分割数组</span></span><br><span class="line"><span class="built_in">split</span>(whereSeparator:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从头取元素知道条件不成立</span></span><br><span class="line"><span class="keyword">prefix</span>(<span class="keyword">while</span>:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 从头遍历，条件为真，丢弃元素；条件不成立，返回剩余元素</span></span><br><span class="line">drop(<span class="keyword">while</span>:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 删除所有条件为真的元素</span></span><br><span class="line">removeAll(<span class="keyword">where</span>:)</span><br><span class="line"></span><br><span class="line"><span class="comment">// slice，类型是 ArraySlice</span></span><br><span class="line"><span class="comment">// slice 和 array 使用相同索引来随机访问元素</span></span><br><span class="line"><span class="keyword">let</span> slice = array[<span class="number">1</span>...]</span><br></pre></td></tr></table></figure>
+
+<p>自己实现一些不在标准库中的函数</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Array</span> </span>&#123;</span><br><span class="line">    <span class="comment">// 累加，将所有元素合并到一个数组，保留合并时每一步的值</span></span><br><span class="line">    <span class="comment">// [1, 2, 3, 4].accumulate(0, +) // [1, 3, 6, 10]</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">accumulate</span>&lt;Result&gt;<span class="params">(<span class="number">_</span> initialResult: Result,</span></span></span><br><span class="line"><span class="function"><span class="params">                            <span class="number">_</span> nextPartialResult:<span class="params">(Result, Element)</span></span></span> -&gt; <span class="type">Result</span>) -&gt; [<span class="type">Result</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> running = initialResult</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">map</span> &#123; next <span class="keyword">in</span></span><br><span class="line">            running = nextPartialResult(running, next)</span><br><span class="line">            <span class="keyword">return</span> running</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 计算满足条件的元素的个数</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">count</span><span class="params">(<span class="keyword">where</span> predicate: <span class="params">(Element)</span></span></span> -&gt; <span class="type">Bool</span>) -&gt; <span class="type">Int</span> &#123;</span><br><span class="line">        <span class="keyword">var</span> result = <span class="number">0</span></span><br><span class="line">        <span class="keyword">for</span> element <span class="keyword">in</span> <span class="keyword">self</span> &#123;</span><br><span class="line">            <span class="keyword">if</span> predicate(element) &#123; result += <span class="number">1</span> &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">// 返回一个满足某个条件的所有元素的索引列表</span></span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">indices</span><span class="params">(<span class="keyword">where</span> predicate: <span class="params">(Element)</span></span></span> -&gt; <span class="type">Bool</span>) -&gt; [<span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> result = [<span class="type">Int</span>]()</span><br><span class="line">        <span class="keyword">for</span> (index, element) <span class="keyword">in</span> <span class="keyword">self</span>.enumerated() &#123;</span><br><span class="line">            <span class="keyword">if</span> predicate(element) &#123; result.append(index) &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> result</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Dictionry"><a href="#Dictionry" class="headerlink" title="Dictionry"></a>Dictionry</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> fooDic = [<span class="string">"a"</span>: <span class="number">1</span>, <span class="string">"b"</span>: <span class="number">2</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据键值对创建字典</span></span><br><span class="line"><span class="keyword">let</span> temp = <span class="type">Dictionary</span>(<span class="string">"abb"</span>.<span class="built_in">map</span>&#123;(<span class="type">String</span>($<span class="number">0</span>), <span class="number">1</span>)&#125;, uniquingKeysWith: +) <span class="comment">// ["a": 1, "b": 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// merge</span></span><br><span class="line"><span class="comment">// 第一个参数：需要合并的字典</span></span><br><span class="line"><span class="comment">// 第二个参数：相同键的两个值如何合并的函数</span></span><br><span class="line">fooDic.merge([temp, uniquingKeysWith: &#123; $<span class="number">1</span> &#125;) <span class="comment">// fooDic = ["a": 1, "b": 2]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对字典的值做映射</span></span><br><span class="line"><span class="comment">// 保持字典结构，只对值进行变换</span></span><br><span class="line">fooDic.mapValues( &#123; doSomething() &#125; )</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 计算序列的频率</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Sequence</span> <span class="title">where</span> <span class="title">Element</span>: <span class="title">Hashable</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> frequencies: [<span class="type">Element</span>: <span class="type">Int</span>] &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="type">Dictionary</span>(<span class="keyword">self</span>.<span class="built_in">map</span> &#123;($<span class="number">0</span>, <span class="number">1</span>)&#125;, uniquingKeysWith: +)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Set"><a href="#Set" class="headerlink" title="Set"></a>Set</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> iPods: <span class="type">Set</span> = [<span class="string">"iPod touch"</span>, <span class="string">"iPod nano"</span>, <span class="string">"iPod mini"</span>, <span class="string">"iPod shuffle"</span>, <span class="string">"iPod Classic"</span>]</span><br><span class="line"><span class="keyword">let</span> discontinuedIPods: <span class="type">Set</span> = [<span class="string">"iPod mini"</span>, <span class="string">"iPod Classic"</span>, <span class="string">"iPod nano"</span>, <span class="string">"iPod shuffle"</span>]</span><br><span class="line"></span><br><span class="line"><span class="comment">// 补集</span></span><br><span class="line"><span class="keyword">let</span> currentIPods = iPods.subtracting(discontinuedIPods) <span class="comment">// ["iPod touch"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 交集</span></span><br><span class="line"><span class="keyword">let</span> touchscreen: <span class="type">Set</span> = [<span class="string">"iPhone"</span>, <span class="string">"iPad"</span>, <span class="string">"iPod touch"</span>, <span class="string">"iPod nano"</span>]</span><br><span class="line"><span class="keyword">let</span> iPodsWithTouch = iPods.intersection(touchscreen)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 并集</span></span><br><span class="line"><span class="keyword">var</span> discontinued: <span class="type">Set</span> = [<span class="string">"iBook"</span>, <span class="string">"Powerbook"</span>, <span class="string">"Power Mac"</span>]</span><br><span class="line">discontinued.formUnion(discontinuedIPods) <span class="comment">// ["iPod mini", "iPod Classic", "iPod nano", "iPod shuffle", "iBook", "Powerbook", "Power Mac"]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取序列中所有唯一的元素</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Sequence</span> <span class="title">where</span> <span class="title">Element</span>: <span class="title">Hashable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">unique</span><span class="params">()</span></span> -&gt; [<span class="type">Element</span>] &#123;</span><br><span class="line">        <span class="keyword">var</span> seen: <span class="type">Set</span>&lt;<span class="type">Element</span>&gt; = []</span><br><span class="line">        <span class="keyword">return</span> <span class="built_in">filter</span> &#123; element <span class="keyword">in</span></span><br><span class="line">            <span class="keyword">if</span> seen.<span class="built_in">contains</span>(element) &#123;</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">false</span></span><br><span class="line">            &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">                seen.insert(element)</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Swift 的标准库中，Set 和 OptionSet 实现了 SetAlgebra 协议。</p>
+<p>Foundation 中， IndexSet 和 CharacterSet 也实现了 SetAlgebra 协议。</p>
+<ul>
+<li><p>IndexSet </p>
+<p>  IndexSet 是一个正整数的集合。其内部使用了一组范围列表进行实现，比 Set<Int> 更高效。</p>
+</li>
+<li><p>CharacterSet</p>
+<p>  CharacterSet 是一个高效存储 Unicode 编码的集合。</p>
+</li>
+</ul>
+<h2 id="Range"><a href="#Range" class="headerlink" title="Range"></a>Range</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> singleDigitNumbers = <span class="number">0</span>..&lt;<span class="number">10</span></span><br><span class="line"><span class="keyword">let</span> lowercaseLetters = <span class="type">Character</span>(<span class="string">"a"</span>)...<span class="type">Character</span>(<span class="string">"z"</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 根据 range 创建 array</span></span><br><span class="line"><span class="keyword">let</span> array = <span class="type">Array</span>(singleDigitNumbers) <span class="comment">// [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 半开 range 表示 空间隔</span></span><br><span class="line"><span class="number">5</span>..&lt;<span class="number">5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 闭合 range 可以包含 最大值</span></span><br><span class="line"><span class="number">0</span>...<span class="type">Int</span>.<span class="built_in">max</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 对 range 遍历</span></span><br><span class="line"><span class="comment">// Range 要满足 collection 协议，它的元素要满足 Strideable 协议，且 stride step 是整数</span></span><br><span class="line"><span class="comment">// Strideable 协议，可以通过增加偏移从一个元素移动到另一个元素</span></span><br><span class="line"><span class="comment">// Character 没有实现 Strideable 协议，所以 for c in lowercaseLetters 编译错误</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="number">0</span>..&lt;<span class="number">10</span> &#123;</span><br><span class="line">    doSomething()</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 范围表达式</span></span><br><span class="line"><span class="keyword">let</span> arr = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>]</span><br><span class="line">arr[<span class="number">2</span>...] <span class="comment">// [3, 4]</span></span><br><span class="line">arr[..&lt;<span class="number">1</span>] <span class="comment">// [1]</span></span><br><span class="line">arr[<span class="number">1</span>...<span class="number">2</span>] <span class="comment">// [2, 3]</span></span><br><span class="line">arr[...] <span class="comment">// [1, 2, 3, 4]</span></span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2020/07/06/ios/swift-collection/" data-id="ckiia424o003wmobmg1bu2uxx" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift/" rel="tag">swift</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/07/ios/swift-collection-protocol/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          swift 集合协议
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/05/ios/swift-source/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">swift-source</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

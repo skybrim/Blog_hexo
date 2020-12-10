@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Objective-C NSString | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="研究了一下 Objective-C 中 NSSting">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Objective-C NSString">
+<meta property="og:url" content="https://skybrim.top/2019/01/01/ios/objective-c-nsstring/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="研究了一下 Objective-C 中 NSSting">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/20191014112326.png">
+<meta property="article:published_time" content="2018-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.067Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/20191014112326.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/objective-c-nsstring" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/01/ios/objective-c-nsstring/" class="article-date">
+  <time datetime="2018-12-31T16:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Objective-C NSString
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>研究了一下 Objective-C 中 NSSting </p>
+<a id="more"></a>
+
+<ul>
+<li>代码</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// __NSCFConstantString</span></span><br><span class="line"><span class="comment">// retainCount (-1,实际是4294967295),</span></span><br><span class="line"><span class="comment">// 无法被释放</span></span><br><span class="line"><span class="comment">// 内存地址相同，低地址，猜测存放在常量区</span></span><br><span class="line"><span class="comment">// 指针地址不同</span></span><br><span class="line"><span class="built_in">NSString</span> *test1 = [[<span class="built_in">NSString</span> alloc] initWithString:<span class="string">@"123"</span>];</span><br><span class="line"><span class="built_in">NSString</span> *test2 = <span class="string">@"123"</span>;</span><br><span class="line"><span class="keyword">self</span>.testStr = [test2 <span class="keyword">copy</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// __NSCFString</span></span><br><span class="line"><span class="comment">// retainCount 1</span></span><br><span class="line"><span class="comment">// 内存地址不同，在 heap 上</span></span><br><span class="line"><span class="comment">// 指针地址不同，指针在 stack</span></span><br><span class="line"><span class="built_in">NSMutableString</span> *test3 = [[<span class="built_in">NSMutableString</span> alloc] initWithString:<span class="string">@"123"</span>];</span><br><span class="line"><span class="built_in">NSString</span> *test4 = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"11111111111111111111111111111111123"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// NSTaggedPointerString</span></span><br><span class="line"><span class="comment">// 内存地址相同，地址就是值，并非真正的对象，是一个伪对象</span></span><br><span class="line"><span class="comment">// 指针地址不同，指针在栈上</span></span><br><span class="line"><span class="built_in">NSString</span> *test5 = [test3 <span class="keyword">copy</span>];</span><br><span class="line"><span class="built_in">NSString</span> *test6 = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"123"</span>];</span><br><span class="line"><span class="built_in">NSString</span> *test7 = [<span class="built_in">NSString</span> stringWithFormat:<span class="string">@"%@"</span>, <span class="string">@"123"</span>];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 用 stringWithFormat 创建的 NSString</span></span><br><span class="line"><span class="comment">// 字符串短，类型是 NSTaggedPointerString， 字符串长，类型是 __NSCFString</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test1 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test1 <span class="keyword">class</span>],test1,&amp;test1);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test2 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test2 <span class="keyword">class</span>],test2,&amp;test2);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"self.testStr class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[<span class="keyword">self</span>.testStr <span class="keyword">class</span>],<span class="keyword">self</span>.testStr,&amp;_testStr);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"\n"</span>);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test3 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test3 <span class="keyword">class</span>],test3,&amp;test3);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test4 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test4 <span class="keyword">class</span>],test4,&amp;test4);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"\n"</span>);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test5 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test5 <span class="keyword">class</span>],test5,&amp;test5);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test6 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test6 <span class="keyword">class</span>],test6,&amp;test6);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"test7 class:%@ ++ 内存地址：%p ++ 指针地址：%p"</span>,[test7 <span class="keyword">class</span>],test7,&amp;test7);</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>输出</li>
+</ul>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">test1 <span class="keyword">class</span>:__NSCFConstantString ++ 内存地址：<span class="number">0x100df9668</span> ++ 指针地址：<span class="number">0x7ffeeee194c8</span></span><br><span class="line">test2 <span class="keyword">class</span>:__NSCFConstantString ++ 内存地址：<span class="number">0x100df9668</span> ++ 指针地址：<span class="number">0x7ffeeee194c0</span></span><br><span class="line"><span class="keyword">self</span>.testStr <span class="keyword">class</span>:__NSCFConstantString ++ 内存地址：<span class="number">0x100df9668</span> ++ 指针地址：<span class="number">0x7f8043604978</span></span><br><span class="line"></span><br><span class="line">test3 <span class="keyword">class</span>:__NSCFString ++ 内存地址：<span class="number">0x600001f6fa50</span> ++ 指针地址：<span class="number">0x7ffeeee194b8</span></span><br><span class="line">test4 <span class="keyword">class</span>:__NSCFString ++ 内存地址：<span class="number">0x60000045bd40</span> ++ 指针地址：<span class="number">0x7ffeeee194b0</span></span><br><span class="line"></span><br><span class="line">test5 <span class="keyword">class</span>:<span class="built_in">NSTaggedPointerString</span> ++ 内存地址：<span class="number">0xfad007b675b0e973</span> ++ 指针地址：<span class="number">0x7ffee03e34a8</span></span><br><span class="line">test6 <span class="keyword">class</span>:<span class="built_in">NSTaggedPointerString</span> ++ 内存地址：<span class="number">0xfad007b675b0e973</span> ++ 指针地址：<span class="number">0x7ffee03e34a0</span></span><br><span class="line">test7 <span class="keyword">class</span>:<span class="built_in">NSTaggedPointerString</span> ++ 内存地址：<span class="number">0xfad007b675b0e973</span> ++ 指针地址：<span class="number">0x7ffee03e3498</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分析</li>
+</ul>
+<p>test1 的创建 NSString 方式，在编译器中已经完全被字面量的创建方式取代了，编译器会自动帮你。<br>test2 字面量创建 NSString<br>test3 是对 test2 的指针拷贝<br>这三种方式穿件的 NSString，类型都是 __NSCFConstantString，应该是放在常量区，指针存放在 stack<br>内容相同的时候，内存地址也相同  </p>
+<p>test3 NSMutableString 对象<br>test4 stringWithFormat 创建，注意，其内容一定要大于 8 个字节<br>test3&amp;test4，类型是 __NSCFString，是对象，和 OC 中的普通对象基本一致，存储在 heap 中，指针在 stack<br>内存地址不会相同  </p>
+<p>test5 是对 test3 的深拷贝，从 NSMutableString 转变为 NSString<br>test6 和 test7 都是 stringWithFormat 创建的短字符串，小于 8 个字节<br>test5、test6、test7 ，类型都是 NSTaggedPointerString，tagged pointer 实际是一个伪对象，他的地址就是他的值，如下图可以看出，这三个并没有 isa 指针<br><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/20191014112326.png" alt="isa"></p>
+<p>关于 tagged pointer ，可以看唐巧大佬的文章:<a href="https://www.infoq.cn/article/deep-understanding-of-tagged-pointer/" target="_blank" rel="noopener">深入理解 Tagged Pointer</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/01/01/ios/objective-c-nsstring/" data-id="ckiia424k003fmobmdx1l02a3" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/01/ios/image-resizing/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          图片渲染
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/01/ios/popover/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Popover</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

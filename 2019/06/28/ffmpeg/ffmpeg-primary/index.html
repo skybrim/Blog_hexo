@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>FFmpeg 初级开发内容 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ffmpeg primary">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg 初级开发内容">
+<meta property="og:url" content="https://skybrim.top/2019/06/28/ffmpeg/ffmpeg-primary/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="ffmpeg primary">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/FFmpeg%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84.jpg">
+<meta property="article:published_time" content="2019-06-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.064Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="ffmpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/FFmpeg%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ffmpeg/ffmpeg-primary" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/28/ffmpeg/ffmpeg-primary/" class="article-date">
+  <time datetime="2019-06-27T16:00:00.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      FFmpeg 初级开发内容
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ffmpeg primary</p>
+<a id="more"></a>
+
+<h2 id="FFmpeg-日志的使用及目录操作"><a href="#FFmpeg-日志的使用及目录操作" class="headerlink" title="FFmpeg 日志的使用及目录操作"></a>FFmpeg 日志的使用及目录操作</h2><h3 id="开启日志"><a href="#开启日志" class="headerlink" title="开启日志"></a>开启日志</h3><ul>
+<li><p>#include &lt;libavutil/log.h&gt;</p>
+</li>
+<li><p>设置日志级别<br>avi_log_set_level(AV_LOG_DEBUG)<br>常见日志级别：<br>AV_LOG_ERROR<br>AV_LOG_WARNING<br>AV_LOG_INFO<br>AV_LOG_DEBUG  </p>
+</li>
+<li><p>av_log(NULL,AV_LOG_INFO,”…%s\n”, op) </p>
+</li>
+</ul>
+<h3 id="操作文件"><a href="#操作文件" class="headerlink" title="操作文件"></a>操作文件</h3><ul>
+<li><p>#include &lt;libavformat/avformat.h&gt;<br>指定库文件位置： pkg-config –libs libavformat  </p>
+</li>
+<li><p>删除<br>avpriv_io_delete(“1.txt”);  </p>
+</li>
+<li><p>重命名<br>avpriv_io_move(“111.txt”, “222.txt”);  </p>
+</li>
+</ul>
+<h3 id="操作目录"><a href="#操作目录" class="headerlink" title="操作目录"></a>操作目录</h3><ul>
+<li><p>#include &lt;libavformat/avformat.h&gt;  </p>
+</li>
+<li><p>打开目录<br>avio_open_dir()</p>
+</li>
+<li><p>读<br>avio_read_dir()  </p>
+</li>
+<li><p>关闭<br>avio_close_dir()  </p>
+</li>
+<li><p>重要结构体<br>操作目录的上下文 AVIODirContext<br>目录项 AVIODirEntry  </p>
+</li>
+</ul>
+<h3 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h3><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavutil/log.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">include</span> <span class="meta-string">&lt;libavformat/avformat.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">int</span> <span class="title">main</span><span class="params">(<span class="keyword">int</span> argc, <span class="keyword">char</span> *argv[])</span> </span>&#123;</span><br><span class="line">	av_log_set_level(AV_LOG_INFO);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">int</span> ret;</span><br><span class="line"></span><br><span class="line">	<span class="comment">//操作目录</span></span><br><span class="line">	AVIODirContext *ctx = <span class="literal">NULL</span>;</span><br><span class="line">	AVIODirEntry *entry = <span class="literal">NULL</span>;</span><br><span class="line">	ret = avio_open_dir(&amp;ctx, <span class="string">"./"</span>, <span class="literal">NULL</span>);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Cant open dir:%s\n"</span>, av_err2str(ret));</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">while</span>(<span class="number">1</span>) &#123;</span><br><span class="line">		ret = avio_read_dir(ctx, &amp;entry);</span><br><span class="line">		<span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">			av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Cant read dir:%s.\n"</span>, av_err2str(ret));</span><br><span class="line">			<span class="comment">//报错后，跳转到__fail 标记，释放 ctx</span></span><br><span class="line">			<span class="keyword">goto</span> __fail;</span><br><span class="line">		&#125;</span><br><span class="line">		<span class="keyword">if</span> (!entry) &#123;</span><br><span class="line">			<span class="keyword">break</span>;</span><br><span class="line">		&#125;</span><br><span class="line">		av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"%12"</span>PRId64<span class="string">" %s \n"</span>, entry-&gt;<span class="built_in">size</span>, entry-&gt;name);</span><br><span class="line">		<span class="comment">//释放 entry</span></span><br><span class="line">		avio_free_directory_entry(&amp;entry);</span><br><span class="line">	&#125;</span><br><span class="line">__fail;</span><br><span class="line">	avio_close_dir(&amp;ctx);</span><br><span class="line">	</span><br><span class="line">	<span class="comment">// move rename</span></span><br><span class="line">	ret = avpriv_io_move(<span class="string">"111.txt"</span>, <span class="string">"222.txt"</span>);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Failed to rename.\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"Success to rename.\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="comment">// delete</span></span><br><span class="line">	ret = avpriv_io_delete(<span class="string">"./222.txt"</span>);</span><br><span class="line">	<span class="keyword">if</span> (ret &lt; <span class="number">0</span>) &#123;</span><br><span class="line">		av_log(<span class="literal">NULL</span>, AV_LOG_ERROR, <span class="string">"Failed to delete.\n"</span>);</span><br><span class="line">		<span class="keyword">return</span> <span class="number">-1</span>;</span><br><span class="line">	&#125;</span><br><span class="line">	av_log(<span class="literal">NULL</span>, AV_LOG_INFO, <span class="string">"Success to delete.\n"</span>);</span><br><span class="line"></span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="FFmpeg-基本概念以及常用结构体"><a href="#FFmpeg-基本概念以及常用结构体" class="headerlink" title="FFmpeg 基本概念以及常用结构体"></a>FFmpeg 基本概念以及常用结构体</h2><ul>
+<li><p>概念<br>多媒体文件本质是一个容器<br>在容器里有很多流（Stream/Track）<br>每种流是由不同的编码器编码的<br>从流中读取的数据，称为包<br>在一个包中包含着一个或多个帧，包是压缩后的数据  </p>
+</li>
+<li><p>常用结构体<br>AVFormatContext<br>AVStream<br>AVPacket  </p>
+</li>
+<li><p>FFmpeg操作流数据的基本步骤<br>解复用 –&gt; 获取流 –&gt; 读取数据包 –&gt; 操作 –&gt; 释放资源  </p>
+</li>
+</ul>
+<h2 id="对复用-解复用及流操作的各种实践"><a href="#对复用-解复用及流操作的各种实践" class="headerlink" title="对复用/解复用及流操作的各种实践"></a>对复用/解复用及流操作的各种实践</h2><ul>
+<li>打印音视频信息（meta）  </li>
+</ul>
+<h2 id="FFmpeg-代码结构"><a href="#FFmpeg-代码结构" class="headerlink" title="FFmpeg 代码结构"></a>FFmpeg 代码结构</h2><p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/FFmpeg%E4%BB%A3%E7%A0%81%E7%BB%93%E6%9E%84.jpg" alt="FFmpeg-代码结构"></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/06/28/ffmpeg/ffmpeg-primary/" data-id="ckiia42480028mobmec0h36b5" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/28/ffmpeg/ffmpeg/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          FFmpeg 处理音视频的流程
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/05/11/inbox/japan-travel/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">日本自由行</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

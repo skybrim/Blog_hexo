@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>View | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="View">
+<meta property="og:url" content="https://skybrim.top/2017/01/01/ios/view/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="记录">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2016-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.068Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/view" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2017/01/01/ios/view/" class="article-date">
+  <time datetime="2016-12-31T16:00:00.000Z" itemprop="datePublished">2017-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      View
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>记录</p>
+<a id="more"></a>
+
+<ul>
+<li><p>storyboard 分模块使用，尽量一个模块一个 storyboard， 不要整个工程混杂在一个里面。不仅可以尽量减少冲突，也有助于清晰整个工程的结构。</p>
+</li>
+<li><p>勾选 Is Initial View Controller 确定 storyboard 的主VC入口，主入口的左侧会有一个箭头</p>
+</li>
+<li><p>三大容器（container view controller，Tab Bar Controller，Navigation Controller，Split View Controller）。</p>
+</li>
+<li><p>容器与其他VC关联： relationship segue。</p>
+</li>
+<li><p>TableViewController 中 Dynamic Propotype 与 Static Cells 混用：<br>在 Storyboard 中，设置类型为 Static Cells ，在需要使用 Dynamic Propotype 的 section 中，留一个 cell ，并设置好 Identifier 。<br>代码中需要实现 UITableView 的代理方法。<br>以下方法必须实现。</p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">tableView(tableView: <span class="type">UITableView</span>, cellForRowAtIndexPath indexPath: <span class="type">NSIndexPath</span>) -&gt; <span class="type">UITableViewCell</span>  </span><br><span class="line">tableView(tableView: <span class="type">UITableView</span>, numberOfRowsInSection section: <span class="type">Int</span>) -&gt; <span class="type">Int</span>  </span><br><span class="line">tableView(tableView: <span class="type">UITableView</span>, heightForRowAtIndexPath indexPath: <span class="type">NSIndexPath</span>) -&gt; <span class="type">CGFloat</span>  </span><br><span class="line"><span class="comment">// *** ***</span></span><br><span class="line">tableView(tableView: <span class="type">UITableView</span>, indentationLevelForRowAtIndexPath indexPath: <span class="type">NSIndexPath</span>) -&gt; <span class="type">Int</span></span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Static Cell，不重用cell，比如个人信息页面。可以直接在 storyboard 里设置，更方便。</p>
+</li>
+<li><p>Dynamic Prototypes，可重用cell。需要确定 cell 的 identifier，并在在代码中设置代理。</p>
+</li>
+<li><p>Selection Segue 的意思是当用户点击table view cell的任何部分，都会产生反应。<br>Accessory Action 的意思是只有当用户点击table view cell右边的圆圈箭头按钮时，才会产生的反应。</p>
+</li>
+<li><p>apple建议使用segue来进行跳转，项较于push等操作，支持形式更多，并且在不同设备（iPad和iPhone），会有更好的体验。<br>  Segue的类型  </p>
+<ul>
+<li>Show  <blockquote>
+<p>使用方法 showViewController: sender:<br>该方法为VC提供了自适应、灵活的呈现方式；<br>用在 UINavigationController 堆栈视图时，presentedViewController 进入时由右向左，退出时由左向右。新压入的VC有返回按钮，单击可以返回；<br>用在 UIViewController 实例时，和 presentViewController: animated: completion: 效果一致。  </p>
+</blockquote>
+</li>
+<li>Show Detail   <blockquote>
+<p>使用方法 showDetailViewController: sender:；<br>只适用于嵌入在 UISplitViewController 对象内的VC，分割控制器用以替换详细控制器（DetailViewController)；<br>不提供返回按钮；<br>用于 UISplitViewController 以外的控制器时，和 showViewController:sender用法一样。  </p>
+</blockquote>
+</li>
+<li>Present Modally  <blockquote>
+<p>使用方法 presentViewController: animated: completion:；<br>有多种不同呈现方式，可根据需要设置。在 iPhone 中，一般以动画的形式自下向上覆盖整个屏幕，用户无法与上一个VC交互，除非关闭当前VC；在 iPad 中，常见呈现为一个中心框，中心框以动画形式自下向上弹出，同时使底层VC变暗；<br>不提供返回按钮。  </p>
+</blockquote>
+</li>
+<li>Present as Popover  <blockquote>
+<p>在 iPad 中，目标VC以浮动窗样式呈现，点击目标VC以外区域，目标VC消失；在 iPhone 中，默认目标VC以模态覆盖整个屏幕。  </p>
+</blockquote>
+</li>
+<li>Exit Segue  <blockquote>
+<p>在需要返回到的界面实现方法 @IBAction func xxxx(segue: UIStoryboardSegue)，方法名字任意，参数类型必须为 UIStoryboardSegue，一定要加上 @IBAction 关键字。<br>右键返回界面上方的 Exit，弹出菜单中可以看到刚才在返回到的界面中加的那个方法的名称；<br>连线，选择实现动作的控件，或者连接到当前界面选择手动代码实现返回（需要指定 identifier）；<br>使用 exit segue 的好处是可以跳转到任意打开过的界面比如从3-&gt;1，而不是只能返回上级界面从2-&gt;1。</p>
+</blockquote>
+</li>
+<li>Embed Segue<blockquote>
+<p>Container View，将容器 MVC 的 View 放入到另一个 MVC 中。</p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>获取 storyboard 的实例：UIStoryboard(name: &lt;#T##String#&gt;, bundle: &lt;#T##Bundle?#&gt;)。</p>
+</li>
+<li><p>获取 storyboard 中 VC 的实例，通过 VC 的 Storyboard ID：  </p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIStoryboard</span>(name: <span class="string">"Main"</span>, bundle: <span class="literal">nil</span>).instantiateViewController(withIdentifier: <span class="string">""</span>);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>通过 storyboard reference，可以拆分成多个 storyboard，方便开发。<br>选中需要拆分的 VC，菜单栏干中 Editor-&gt;Refactor to Storyboard。</p>
+</li>
+<li><p>加载其他 storyboard 的指定 VC：<br>拖入控件 Storyboard Reference；<br>填写 storyboard 的名字；<br>填写 Reference ID，即目标 storyboard 中目标VC的 Storyboard ID。  </p>
+</li>
+<li><p>UIStackView，快速进行水平或者垂直布局。</p>
+</li>
+<li><p>如何对两个已经和边界拉好约束的相邻控件进行约束：<br>先设置约束距离为0，然后设置约束  greater than or equal。</p>
+</li>
+<li><p>关键字 IBDesignable，可以将 code 实现的 view 显示到 storyboard 上。<br>如果有 image，需要使用下面的方法，才能正确显示  </p>
+  <figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIImage</span>(named: <span class="string">"xxx"</span>, <span class="keyword">in</span>: <span class="type">Bundle</span>(<span class="keyword">for</span>: <span class="keyword">self</span>.classForCoder), compatibleWith: traitCollection);</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>关键字 IBInspectable，可以将代码写好的 property 显示到 storyboard 右边的 inspect 上。</p>
+</li>
+<li><p>setNeedsDisplay()，当需要重新绘制的时候，需要主动调用这个方法，不要调用 UIView 的 draw() 方法。</p>
+</li>
+<li><p>setNeedsLayout()，当需要 subView 重新布局的时候，调用这个方法。</p>
+</li>
+<li><p>如果 UIView 需要重新绘制，content mode 需要设置为 Redraw 。</p>
+</li>
+<li><p>当 UITraitCollection 改变时，系统会调用此方法，用来更新UI。在方法里实现 setNeedsDisplay() 和 setNeedsLayout()。  </p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//To be overridden as needed to provide custom behavior when the environment's traits change.</span></span><br><span class="line">-(<span class="keyword">void</span>)traitCollectionDidChange:(<span class="keyword">nullable</span> <span class="built_in">UITraitCollection</span> *)previousTraitCollection;</span><br></pre></td></tr></table></figure>
+<p>  e.g. UIImage(named: “name”, in: Bundle(for: self.classForCoder), compatibleWith: traitCollection)，并使用draw绘制图片，此时屏幕翻转，需要重新绘制，系统会调用上面方法。</p>
+</li>
+<li><p>子视图的布局写在此方法中，当视图需要重新绘制布局时，调用 setNeedsLayout()，会自动调用此方法。  </p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//override point. called by layoutIfNeeded automatically.</span></span><br><span class="line"><span class="comment">// As of iOS 6.0, when constraints-based layout is used the base implementation applies the constraints-based layout, otherwise it does nothing.</span></span><br><span class="line">-(<span class="keyword">void</span>)layoutSubviews;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>自定义绘制实现的方法，当视图需要重新绘制（Redraw）的时候调用 setNeedsDisplay()，会自动调用此方法。</p>
+  <figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-(<span class="keyword">void</span>)drawRect:(<span class="built_in">CGRect</span>)rect;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>Core Graphics属于更底层<br>  UIKit依赖于Core Graphics框架<br>  UIBezierPath属于UIKit，是对Core Graphics框架中的CGPath的封装<br>  补充：UIGraphicsGetCurrentContext()画出的线，被使用了就被消耗掉。</p>
+</li>
+<li><p>三种动画方式：  </p>
+<ul>
+<li>UIViewPropertyAnimator(iOS 10.0)  <blockquote>
+<p>iOS 10.0，apple 封装好的动画API，更精细的控制动画，可以通过 startAnimation、 pauseAnimation 和 stopAnimation 控制动画。</p>
+</blockquote>
+</li>
+<li>Transitions  </li>
+<li>Dynamic Animator  <blockquote>
+<p>给对象添加各种物理属性（重力、加速度等）  </p>
+</blockquote>
+</li>
+</ul>
+</li>
+<li><p>Auto Layout</p>
+<ul>
+<li>通过 Interface Builder 来实现是好的选择；  </li>
+<li>通过代码实现 Auto Layout；  <blockquote>
+<p>在 -init 或者 -viewDidLoad 方法中，实现固定不变的约束<br>在 -updateConstraints 中，实现程序运行时可能改变的约束<br>当需要改变约束的时候，按顺序调用下面方法  </p>
+</blockquote>
+<pre><code class="swift">setNeedsUpdateConstraints()  
+updateConstraintsIfNeeded()  </code></pre>
+</li>
+<li>view 的子类布局同理</li>
+</ul>
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2017/01/01/ios/view/" data-id="ckiia424r004bmobm26ee4igy" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2017/05/18/ios/responder-chain/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          iOS 事件传递与响应链
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

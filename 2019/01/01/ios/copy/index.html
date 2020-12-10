@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>Copy | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Copy 在 Objective-C 中的使用，一些个人理解。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Copy">
+<meta property="og:url" content="https://skybrim.top/2019/01/01/ios/copy/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="Copy 在 Objective-C 中的使用，一些个人理解。">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/copy_01.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/CopyingCollections_2x.png">
+<meta property="article:published_time" content="2018-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.066Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/copy_01.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/copy" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/01/ios/copy/" class="article-date">
+  <time datetime="2018-12-31T16:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Copy
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Copy 在 Objective-C 中的使用，一些个人理解。</p>
+<a id="more"></a>
+
+<h2 id="Object-Copying"><a href="#Object-Copying" class="headerlink" title="Object Copying"></a>Object Copying</h2><p>OC 中，一个<strong>对象</strong>，如果遵循 NSCopying 协议，且实现了 <code>copyWihtZone:</code> 方法，就可以被拷贝。</p>
+<p>如果<strong>类</strong>具有不可变和可变两种变体，通过遵循 NSMutableCopying 协议，并实现 <code>mutableCopyWithZone:</code> 来确保<strong>可变对象</strong>的拷贝也是可变的</p>
+<p>Copy 分为 shadow copy 和 deep copy，这两种 copy 的区别，主要在堆指针的处理：</p>
+<ol>
+<li>shadow copy 仅复制对象的引用指针</li>
+<li>deep copy 复制新的对象</li>
+</ol>
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/copy_01.png" alt=""></p>
+<p><strong>注意</strong>：</p>
+<p>对象的 copy，不能仅仅看内存地址来分辨是 shadow 还是 deep。</p>
+<p>比如 NSString，对其使用 copy，返回地址与原对象相同，但是两个对象是完全独立的，相互修改不影响</p>
+<h2 id="Object-Copying-Memory-Management"><a href="#Object-Copying-Memory-Management" class="headerlink" title="Object Copying Memory Management"></a>Object Copying Memory Management</h2><p>对象复制，会返回一个引用计数为 1 的新对象。</p>
+<p>这个复制的对象的内存管理，谁引用谁负责释放。</p>
+<h2 id="copy-修饰属性"><a href="#copy-修饰属性" class="headerlink" title="copy 修饰属性"></a>copy 修饰属性</h2><p>copy 作为 内存管理语义 ，在 @property 中声明，其目的是：复制外部的传过来的值并隔断之后外界值修改对属性的影响。</p>
+<p>对应的， strong(retain) 修饰词，只是将外部值或者指针赋值给属性（shadow copy），如果是对象指针，之后外部值修改会影响属性。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//copy 修饰</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">copy</span>) <span class="built_in">NSString</span> *copyStr;</span><br><span class="line">- (<span class="keyword">void</span>)setCopyStr:(<span class="built_in">NSString</span> *)copyStr &#123;</span><br><span class="line">    <span class="keyword">if</span> (_copyStr != copyStr) &#123;</span><br><span class="line">        [_copyStr release];</span><br><span class="line">        _copyStr = [copyStr <span class="keyword">copy</span>];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// strong(retain) 修饰</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">strong</span>) <span class="built_in">NSString</span> *strongStr;</span><br><span class="line">- (<span class="keyword">void</span>)setStrongStr:(<span class="built_in">NSString</span> *)strongStr &#123;</span><br><span class="line">    <span class="keyword">if</span> (_strongStr != strongStr) &#123;</span><br><span class="line">        [_strongStr release];</span><br><span class="line">        [strongStr <span class="keyword">retain</span>];</span><br><span class="line">        _strongStr = strongStr;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>观察赋值方法，引申出一个小知识点：</p>
+<p>使用<code>self.foo = foo;</code>语法赋值，调用了 setter 方法；使用<code>_foo = foo;</code>则只是改变指针指向。</p>
+<p>如果只是简单的变更指针指向，可能会导致可变对象和不可变对象混淆。</p>
+<p>因此，更推荐使用<code>self.</code>语法进行赋值</p>
+<ul>
+<li>NSString</li>
+</ul>
+<p>在 OC 中，因为父类指针可以指向子类对象，使用 copy 的目的是为了让本对象的属性不受外界影响。</p>
+<p>使用 copy 修饰 NSString，无论传入是一个可变对象还是不可对象，对象持有的就是一个不可变的副本.  </p>
+<p>注意：无论原来的 string 类型是否可变，copy 后的类型均为不可变类型。</p>
+<ul>
+<li>collection</li>
+</ul>
+<p>NSArray、NSDictionary、NSSet 属于 collection 集合类对象。</p>
+<p>这些集合类的属性，使用 copy 修饰，只能保证容器本身的不变，如果容器内的引用对象，发生了变化，这些容器属性中的对象也会发生变化。</p>
+<ul>
+<li>block</li>
+</ul>
+<p>block 使用 copy 是从 MRC 遗留下来的“传统”。</p>
+<p>在 MRC 中,方法内部的 block 是在栈区的,使用 copy 可以把它放到堆区。</p>
+<p>在 ARC 中写不写都行：对于 block 使用 copy 还是 strong 效果是一样的，但写上 copy 可以提示：编译器自动对 block 进行了 copy 操作。</p>
+<p>如果block块没有访问处于栈区的变量（比如局部变量），也没有访问堆区的变量（比如我们alloc创建的对象），那就存在代码区(低地址)，即使访问了全局变量，也依然存在代码区。</p>
+<p>如果访问了栈区或者堆区的变量，那就会被存在堆区（实际存在栈区，ARC下会自动拷贝到堆区）。</p>
+<h2 id="copy-mutableCopy-方法"><a href="#copy-mutableCopy-方法" class="headerlink" title="copy mutableCopy 方法"></a>copy mutableCopy 方法</h2><p>主动调用 <code>copy</code> 方法，其<strong>目的</strong>是为了 copy 一个新对象。</p>
+<p>此时需要根据对象的类实现的 <code>copyWithZone:</code> 方法来判断是 shadow 还是 deep。</p>
+<ul>
+<li>非集合类对象</li>
+</ul>
+<p>对 immutable 对象进行 copy 操作， 执行结果类似 retain 操作，但操作的目的是为了 copy 对象。</p>
+<p>对 immutable 对象进行 mutableCopy 操作时内容复制。</p>
+<p>对 mutable 对象进行 copy 和 mutableCopy 都是内容复制。</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[immutableObject <span class="keyword">copy</span>] <span class="comment">// 类似 retain</span></span><br><span class="line">[immutableObject mutableCopy] <span class="comment">//深复制</span></span><br><span class="line">[mutableObject <span class="keyword">copy</span>] <span class="comment">//深复制</span></span><br><span class="line">[mutableObject mutableCopy] <span class="comment">//深复制</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>集合类对象</li>
+</ul>
+<p>和上面非集合类对象十分类似。</p>
+<p>但是无论是 copy 还是 mutableCopy，集合中的元素，都是仅仅执行了一次 retain 操作，依然是原对象</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">[immutableCollection <span class="keyword">copy</span>]</span><br><span class="line">[immutableCollection mutableCopy] <span class="comment">//深复制</span></span><br><span class="line">[mutableCollection <span class="keyword">copy</span>] <span class="comment">//深复制</span></span><br><span class="line">[mutableCollection mutableCopy] <span class="comment">//深复制</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="copy-collection"><a href="#copy-collection" class="headerlink" title="copy collection"></a>copy collection</h2><p>当我们对集合类型的对象，使用 copy 或者 mutableCopy，都是对集合对象本身的拷贝，集合中的元素，都仅仅是一个 retain 操作。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/CopyingCollections_2x.png" alt="array copy">  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">UIView</span> *view1 = [<span class="built_in">UIView</span> new];</span><br><span class="line"><span class="built_in">UIView</span> *view2 = [<span class="built_in">UIView</span> new];</span><br><span class="line"><span class="built_in">UIView</span> *view3 = [<span class="built_in">UIView</span> new];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSArray</span> *array = @[view1, view2, view3,];</span><br><span class="line"><span class="built_in">NSArray</span> *copyArray = [array <span class="keyword">copy</span>];</span><br><span class="line"><span class="built_in">NSMutableArray</span> *mCopyArray = [array mutableCopy];</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"array %p \n %@"</span>, array, array);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"copy %p \n %@"</span>, copyArray, copyArray);</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"mutableCopy %p \n %@"</span>, mCopyArray, mCopyArray);</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">array <span class="number">0x600003da2ca0</span></span><br><span class="line">(</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feca0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033fede0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feda0&gt;"</span></span><br><span class="line">)</span><br><span class="line"><span class="keyword">copy</span> <span class="number">0x600003da2ca0</span></span><br><span class="line">(</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feca0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033fede0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feda0&gt;"</span></span><br><span class="line">)</span><br><span class="line">mutableCopy <span class="number">0x600003da2af0</span></span><br><span class="line">(</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feca0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033fede0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feda0&gt;"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>如何对集合对象进行 deep copy 呢？</p>
+<p><strong>首先，需要集合对象中的元素，实现 NSCopying 协议</strong></p>
+<p>使用 <code>initWithArray:copyItems:</code></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *oneLevelDeepCopy = [[<span class="built_in">NSArray</span> alloc] initWithArray:array copyItems:<span class="literal">YES</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"oneLevelDeepCopy %p \n %@"</span>, oneLevelDeepCopy, oneLevelDeepCopy);</span><br><span class="line"></span><br><span class="line">输出结果：</span><br><span class="line">oneLevelDeepCopy <span class="number">0x600003d9ef10</span></span><br><span class="line">(</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033b47a0&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033b4780&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033b4760&gt;"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p><strong>注意</strong>：<code>initWithArray:copyItems:</code> 这个方法，只能对一元数组进行 deep copy。</p>
+<p>apple 推荐使用 NSKeyedArchiver 实现 true deep copy。<strong>需要集合对象中的元素，实现 NSCoding 协议</strong></p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">NSArray</span> *twoLevelArray = @[@[obj1, obj2, obj3,]];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"twoLevelArray %p \n %@"</span>, twoLevelArray, twoLevelArray);</span><br><span class="line"><span class="built_in">NSArray</span> *oneLevelDeepCopy2 = [[<span class="built_in">NSArray</span> alloc] initWithArray:twoLevelArray copyItems:<span class="literal">YES</span>];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"oneLevelDeepCopy2 %p \n %@"</span>, oneLevelDeepCopy2, oneLevelDeepCopy2);</span><br><span class="line"></span><br><span class="line"><span class="built_in">NSArray</span>* trueDeepCopyArray = [<span class="built_in">NSKeyedUnarchiver</span> unarchiveObjectWithData:</span><br><span class="line">[<span class="built_in">NSKeyedArchiver</span> archivedDataWithRootObject:array]];</span><br><span class="line"><span class="built_in">NSLog</span>(<span class="string">@"trueDeepCopyArray %p \n %@"</span>, trueDeepCopyArray, trueDeepCopyArray);</span><br><span class="line"></span><br><span class="line">输出结果</span><br><span class="line">twoLevelArray <span class="number">0x6000031f07e0</span></span><br><span class="line">(</span><br><span class="line">        (</span><br><span class="line">        <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feca0&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;ObjectCopyingCoding: 0x6000033fede0&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feda0&gt;"</span></span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line">oneLevelDeepCopy2 <span class="number">0x6000031e3c20</span></span><br><span class="line">(</span><br><span class="line">        (</span><br><span class="line">        <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feca0&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;ObjectCopyingCoding: 0x6000033fede0&gt;"</span>,</span><br><span class="line">        <span class="string">"&lt;ObjectCopyingCoding: 0x6000033feda0&gt;"</span></span><br><span class="line">    )</span><br><span class="line">)</span><br><span class="line">trueDeepCopyArray <span class="number">0x600003d9ae80</span></span><br><span class="line">(</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033e6e00&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033e6e20&gt;"</span>,</span><br><span class="line">    <span class="string">"&lt;ObjectCopyingCoding: 0x6000033e4e40&gt;"</span></span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="参考文档"><a href="#参考文档" class="headerlink" title="参考文档"></a>参考文档</h2><p><a href="https://developer.apple.com/library/archive/documentation/General/Conceptual/DevPedia-CocoaCore/ObjectCopying.html" target="_blank" rel="noopener">Object Copying</a></p>
+<p><a href="https://developer.apple.com/library/archive/documentation/Cocoa/Conceptual/Collections/Articles/Copying.html#//apple_ref/doc/uid/TP40010162-SW3" target="_blank" rel="noopener">Copying Collections</a>  </p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/01/01/ios/copy/" data-id="ckiia424i0037mobm5zltd8qn" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/01/ios/aspects/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Aspects 原理简析
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/01/01/ios/icon-font/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">icon font</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

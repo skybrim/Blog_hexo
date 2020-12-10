@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>鸡蛋掉落 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="鸡蛋掉落问题，双蛋问题延伸">
+<meta property="og:type" content="article">
+<meta property="og:title" content="鸡蛋掉落">
+<meta property="og:url" content="https://skybrim.top/2020/06/15/algorithm/super-egg/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="鸡蛋掉落问题，双蛋问题延伸">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-06-15T02:37:01.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.063Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="algorithm">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-algorithm/super-egg" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/06/15/algorithm/super-egg/" class="article-date">
+  <time datetime="2020-06-15T02:37:01.000Z" itemprop="datePublished">2020-06-15</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      鸡蛋掉落
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>鸡蛋掉落问题，双蛋问题延伸</p>
+<a id="more"></a>
+
+<h2 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h2><p>你将获得 K 个鸡蛋，并可以使用一栋从 1 到 N  共有 N 层楼的建筑。</p>
+<p>每个蛋的功能都是一样的，如果一个蛋碎了，你就不能再把它掉下去。</p>
+<p>你知道存在楼层 F ，满足 0 &lt;= F &lt;= N 任何从高于 F 的楼层落下的鸡蛋都会碎，从 F 楼层或比它低的楼层落下的鸡蛋都不会破。</p>
+<p>每次移动，你可以取一个鸡蛋（如果你有完整的鸡蛋）并把它从任一楼层 X 扔下（满足 1 &lt;= X &lt;= N）。</p>
+<p>你的目标是确切地知道 F 的值是多少。</p>
+<p>无论 F 的初始值如何，你确定 F 的值的最小移动次数是多少？</p>
+<h2 id="示例"><a href="#示例" class="headerlink" title="示例"></a>示例</h2><p>输入：K = 1, N = 2</p>
+<p>输出：2</p>
+<p>解释：</p>
+<p>鸡蛋从 1 楼掉落。如果它碎了，我们肯定知道 F = 0 。</p>
+<p>否则，鸡蛋从 2 楼掉落。如果它碎了，我们肯定知道 F = 1 。</p>
+<p>如果它没碎，那么我们肯定知道 F = 2 。</p>
+<p>因此，在最坏的情况下我们需要移动 2 次以确定 F 是多少。</p>
+<h2 id="题解思路"><a href="#题解思路" class="headerlink" title="题解思路"></a>题解思路</h2><p>思路：动态规划 + 二分搜索</p>
+<h3 id="状态转移方程式"><a href="#状态转移方程式" class="headerlink" title="状态转移方程式"></a>状态转移方程式</h3><p>K 个鸡蛋，N 层楼，即 f(K, N)</p>
+<p>假设从 X 层扔下，两种情况：</p>
+<ol>
+<li><p>鸡蛋不碎</p>
+<p> 鸡蛋个数仍然是 K，楼层是 X 层到 N 层，即 N-X 层楼。</p>
+<p> 状态为 f(K, N-X)</p>
+</li>
+<li><p>鸡蛋碎了</p>
+<p> 鸡蛋个数为 K-1，楼层为 1 层到 X-1 层，即 X-1 层楼。</p>
+<p> 状态为 f(K-1, X-1)</p>
+</li>
+</ol>
+<p>若在 最坏情况下（也就是无论 F 的值如何） f(K, N) 的值最小</p>
+<p>我们必须保证 <strong>鸡蛋碎了之后接下来需要的步数</strong> 和 <strong>鸡蛋没碎之后接下来需要的步数</strong> 二者的最大值是最小的</p>
+<p>由于不知道具体的 F 值，X 取值范围是 1 到 N</p>
+<p>f(K, N) = 1 + max[1&lt;=X&lt;=N](min(f(K, N-X), f(K-1, X-1)))</p>
+<h3 id="寻找规律"><a href="#寻找规律" class="headerlink" title="寻找规律"></a>寻找规律</h3><ol>
+<li><p>f(K, N)</p>
+<p> 在鸡蛋数 K 固定的情况下，楼层数 N 越多，需要的步数一定不会变少</p>
+<p> 所以，<strong>当 K 不变时，f(K, N) 随着 N 单调递增</strong></p>
+</li>
+<li><p>f(K, N-X)</p>
+<p>  同上，K 和 N 不变时，<strong>f(K, N-X) 随 X 的增加而单调递减</strong></p>
+</li>
+<li><p>f(K-1, X-1)</p>
+<p> 同上，K 和 N 不变时，<strong>f(K-1, X-1) 随 X 的增加而单调递增</strong></p>
+</li>
+</ol>
+<p>由于我们相求的是 f(K, N-X) 和 f(K-1, X-1) 这两个函数的最小的最大值</p>
+<p>根据上述函数特性可知，求得 f(K, N-X) 和 f(K-1, X-1) 的交点即可</p>
+<p>由于 X 的取值只能是整数，所以我们需要取得这两个函数（想象中的）交点左右两侧最近的整数</p>
+<h2 id="题解"><a href="#题解" class="headerlink" title="题解"></a>题解</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">super_egg_drop</span><span class="params">(K, N)</span>:</span></span><br><span class="line">    <span class="string">"""</span></span><br><span class="line"><span class="string">    @param K: int</span></span><br><span class="line"><span class="string">    @return: int</span></span><br><span class="line"><span class="string">    """</span></span><br><span class="line">    store = &#123;&#125;</span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">dp</span><span class="params">(k, n)</span>:</span></span><br><span class="line">        <span class="keyword">if</span> (k, n) <span class="keyword">not</span> <span class="keyword">in</span> store:</span><br><span class="line">            <span class="keyword">if</span> n == <span class="number">0</span>:</span><br><span class="line">                <span class="comment"># 0 层楼</span></span><br><span class="line">                result = <span class="number">0</span></span><br><span class="line">            <span class="keyword">elif</span> k == <span class="number">1</span>:</span><br><span class="line">                <span class="comment"># 1 个鸡蛋，需要扔 n 次</span></span><br><span class="line">                result = n</span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                low, high = <span class="number">1</span>, n</span><br><span class="line">                <span class="comment"># 二分搜索</span></span><br><span class="line">                <span class="keyword">while</span> low + <span class="number">1</span> &lt; high:</span><br><span class="line">                    x = (low + high) // <span class="number">2</span></span><br><span class="line">                    t1 = dp(k<span class="number">-1</span>, x<span class="number">-1</span>)</span><br><span class="line">                    t2 = dp(k, n-x)</span><br><span class="line">                    <span class="keyword">if</span> t1 &lt; t2:</span><br><span class="line">                        low = x</span><br><span class="line">                    <span class="keyword">elif</span> t1 &gt; t2:</span><br><span class="line">                        hight = x</span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        low = hight = x</span><br><span class="line">                result = <span class="number">1</span> + min(max(dp(k<span class="number">-1</span>, x<span class="number">-1</span>), dp(k, n-x)) <span class="keyword">for</span> x <span class="keyword">in</span> (low, high))</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 记录已经算过的值</span></span><br><span class="line">            store[(k, n)] = result</span><br><span class="line">        <span class="keyword">return</span> store[(k, n)]</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">return</span> dp(K, N)</span><br></pre></td></tr></table></figure>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2020/06/15/algorithm/super-egg/" data-id="ckiia4245001wmobm49zgfeg4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/05/ios/swift-source/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          swift-source
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/05/22/ios/runtime/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Objective-C runtime</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

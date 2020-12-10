@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>VIM 基本命令备忘 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="vim command">
+<meta property="og:type" content="article">
+<meta property="og:title" content="VIM 基本命令备忘">
+<meta property="og:url" content="https://skybrim.top/2018/12/12/inbox/vim-command/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="vim command">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2018-12-11T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.065Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="inbox">
+<meta property="article:tag" content="vim">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-inbox/vim-command" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2018/12/12/inbox/vim-command/" class="article-date">
+  <time datetime="2018-12-11T16:00:00.000Z" itemprop="datePublished">2018-12-12</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      VIM 基本命令备忘
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>vim command</p>
+<a id="more"></a>
+
+<h2 id="退出"><a href="#退出" class="headerlink" title="退出"></a>退出</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:wq <span class="comment">#保存并退出</span></span><br><span class="line">:q  <span class="comment">#退出</span></span><br><span class="line">:q! <span class="comment">#放弃修改强制退出</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="插入"><a href="#插入" class="headerlink" title="插入"></a>插入</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">i <span class="comment">#当前位置插入</span></span><br><span class="line">a <span class="comment">#当前位置后插入</span></span><br><span class="line">o <span class="comment">#在当前行下面插入新的一行</span></span><br><span class="line">I <span class="comment">#在当前行行首插入 </span></span><br><span class="line">A <span class="comment">#在当前行行尾插入</span></span><br><span class="line">O <span class="comment">#在当前行上面插入新的一行</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="常用命令"><a href="#常用命令" class="headerlink" title="常用命令"></a>常用命令</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">:vs <span class="comment">#竖分屏 vertical split</span></span><br><span class="line">:sp <span class="comment">#横分屏 split</span></span><br><span class="line">:% s/from/to/g <span class="comment">#全局替换</span></span><br><span class="line">v <span class="comment">#可视化选择，选中当前位置</span></span><br><span class="line">V <span class="comment">#选中当前行</span></span><br><span class="line">control+v <span class="comment">#块状选择</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="插入模式"><a href="#插入模式" class="headerlink" title="插入模式"></a>插入模式</h2><ul>
+<li>删除</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 插入模式下</span></span><br><span class="line">ctrl+h <span class="comment">#删除一个字符</span></span><br><span class="line">ctrl+w <span class="comment">#删除一个单词</span></span><br><span class="line">ctrl+u <span class="comment">#删除一个行</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>切换模式</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctrl+c <span class="comment">#回到命令模式，可能会中断一些插件</span></span><br><span class="line">ctrl+[ <span class="comment">#回到命令模式</span></span><br><span class="line">gi <span class="comment">#快速回到最后一次进入编辑位置，并进入插入模式</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="快速移动"><a href="#快速移动" class="headerlink" title="快速移动"></a>快速移动</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hjkl</span><br><span class="line">w/W <span class="comment">#移动到下一个 word/WORD 开头</span></span><br><span class="line">e/E <span class="comment">#移动到下一个 word/WORD 尾部</span></span><br><span class="line">b/B <span class="comment">#移动到上一个 word/WORD 开头</span></span><br><span class="line"><span class="comment"># WORD 指用空格分隔的单词</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">f+(char) <span class="comment">#快速向后跳转到指定字符</span></span><br><span class="line">F+(char) <span class="comment">#快速先前跳转到指定字符</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">0 <span class="comment">#移动到行首</span></span><br><span class="line">$ <span class="comment">#移动到行尾</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">() <span class="comment">#句子之间移动</span></span><br><span class="line">[] <span class="comment">#段落之间移动</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gg <span class="comment">#文件开头</span></span><br><span class="line">G  <span class="comment">#文件的结尾</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">ctrl+u <span class="comment">#向上翻页</span></span><br><span class="line">ctrl+d <span class="comment">#向后翻页</span></span><br><span class="line">zz     <span class="comment">#把当前行放到中间</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="增删改查"><a href="#增删改查" class="headerlink" title="增删改查"></a>增删改查</h2><ul>
+<li>增</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a/i/o/A/I/O</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>删</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 插入模式 </span></span><br><span class="line">backspace </span><br><span class="line">ctrl+h</span><br><span class="line"><span class="comment"># normal模式</span></span><br><span class="line">x 		    <span class="comment">#向后删除一个字符，数字+命令</span></span><br><span class="line">X			<span class="comment">#向前删除一个字符</span></span><br><span class="line">dd			<span class="comment">#删除一行，数字+命令</span></span><br><span class="line">d0			<span class="comment">#删除到行首</span></span><br><span class="line">d$			<span class="comment">#删除到行尾</span></span><br><span class="line">d+(数字)+d  <span class="comment">#删除指定数的行</span></span><br><span class="line">dt+(char)   <span class="comment">#删除到指定字符</span></span><br><span class="line">daw 	    <span class="comment">#删除单词以及周围空格</span></span><br><span class="line">diw		    <span class="comment">#删除单词，不删除空格</span></span><br><span class="line">world worldw world world</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>修改</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">r(replace)   <span class="comment">#替换一个字符</span></span><br><span class="line">R			 <span class="comment">#向后连续替换字符</span></span><br><span class="line">s(subsitute) <span class="comment">#删除一个字符，并进入插入模式</span></span><br><span class="line">S			 <span class="comment">#删除整行，进入插入模式</span></span><br><span class="line">c(change)    <span class="comment">#ct+(char)删除到指定字符，并进入插入模式</span></span><br><span class="line">cw			 <span class="comment">#删除一个单词，并进入插入模式</span></span><br><span class="line">C			 <span class="comment">#和 S 一样</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>查</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">/+内容  <span class="comment">#向后搜索匹配</span></span><br><span class="line">?+内容  <span class="comment">#向前搜索匹配</span></span><br><span class="line">n       <span class="comment">#下一个</span></span><br><span class="line">N		<span class="comment">#上一个</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="搜索替换"><a href="#搜索替换" class="headerlink" title="搜索替换"></a>搜索替换</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">:[range]s[ubstitute]/&#123;pattern&#125;/&#123;string&#125;/[flags]</span><br><span class="line"><span class="comment"># range 范围，:10,20 表示 10-20 行；% 表示全部</span></span><br><span class="line"><span class="comment"># pattern 替换的文本</span></span><br><span class="line"><span class="comment"># string 替换后的文本</span></span><br><span class="line"><span class="comment"># flags 替换标志. g 全局；c 确认；n 报告匹配到的次数，不替换。</span></span><br><span class="line"><span class="comment"># 支持正则表达式</span></span><br><span class="line"></span><br><span class="line">:% s/abc/def/g</span><br><span class="line">:10,20 s/def/abc/g</span><br></pre></td></tr></table></figure>
+
+<h2 id="多文件操作"><a href="#多文件操作" class="headerlink" title="多文件操作"></a>多文件操作</h2><ul>
+<li>Buffer</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">:ls					   <span class="comment">#vim中列出所有 buffer</span></span><br><span class="line">:e+(FileName) 		   <span class="comment">#打开文件 </span></span><br><span class="line">:b+(FileName)/(number) <span class="comment">#跳转buffer</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>window</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">ctrl+w+s / :sp    <span class="comment">#水平分隔窗口</span></span><br><span class="line">ctrl+w+v / :vs	  <span class="comment">#竖直分隔窗口</span></span><br><span class="line">ctrl+w+w/h/j/k/l  <span class="comment">#跳转窗口</span></span><br><span class="line">ctrl+w+H/J/K/L    <span class="comment">#移动窗口</span></span><br><span class="line">ctrl+w+q/c		  <span class="comment">#关闭窗口</span></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line"><span class="comment">## Text Object</span></span><br><span class="line"></span><br><span class="line">```bash</span><br><span class="line">[number]&lt;<span class="built_in">command</span>&gt;[text object]</span><br><span class="line"><span class="comment"># number 次数</span></span><br><span class="line"><span class="comment"># command 命令，d(elete),c(hange),y(ank),v(isual)</span></span><br><span class="line"><span class="comment"># text object，文本对象，w 单词，s 句子，p 段落</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># eg</span></span><br><span class="line">c+i+(</span><br><span class="line">v+a+<span class="string">"</span></span><br><span class="line"><span class="string"># i表示 inner，内部</span></span><br><span class="line"><span class="string">ci( #删除小括号内容，不含小括号，并进入插入模式)</span></span><br><span class="line"><span class="string">vi"</span> <span class="comment">#选中引号内容</span></span><br><span class="line">diw <span class="comment">#删除单词</span></span><br><span class="line"><span class="comment"># a表示 around，包围</span></span><br><span class="line">ca( <span class="comment">#选中小括号及括号内的内容</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="复制粘贴"><a href="#复制粘贴" class="headerlink" title="复制粘贴"></a>复制粘贴</h2><ul>
+<li>normal</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">y    <span class="comment">#复制</span></span><br><span class="line">p    <span class="comment">#粘贴</span></span><br><span class="line">d    <span class="comment">#剪切</span></span><br><span class="line">yy   <span class="comment">#复制一行</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>insert</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 复制到系统剪切板</span></span><br><span class="line"><span class="string">"+y</span></span><br><span class="line"><span class="string">    </span></span><br><span class="line"><span class="string"># 粘贴系统剪切板内容</span></span><br><span class="line"><span class="string">"</span>+p</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="macro"><a href="#macro" class="headerlink" title="macro"></a>macro</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">q + 寄存器名字 		<span class="comment"># 开始录制</span></span><br><span class="line">执行操作</span><br><span class="line">q              		<span class="comment"># 退出录制</span></span><br><span class="line">@ + 寄存器名称 		<span class="comment"># 使用宏</span></span><br><span class="line">v              		<span class="comment"># 选中需要修改的地方</span></span><br><span class="line">:normal @+寄存器名  <span class="comment"># 批量操作</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 批量操作</span></span><br><span class="line">v/V 			<span class="comment">#选中需要批量的内容</span></span><br><span class="line">:normal + 操作  <span class="comment">#执行操作</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="补全"><a href="#补全" class="headerlink" title="补全"></a>补全</h2><p>单词补全<br>ctrl + n/p</p>
+<p>文件路径补全<br>ctrl + x + f</p>
+<p>上下选择<br>ctrl + n/p</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2018/12/12/inbox/vim-command/" data-id="ckiia424f002vmobm4jggb8ro" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/vim/" rel="tag">vim</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2018/12/12/inbox/v2ray/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Project V
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/12/inbox/vim-plugin/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">VIM Plugin</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

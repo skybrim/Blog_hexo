@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>swift string | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="swift string">
+<meta property="og:type" content="article">
+<meta property="og:title" content="swift string">
+<meta property="og:url" content="https://skybrim.top/2020/07/09/ios/swift-str/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="swift string">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-07-09T08:49:40.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.068Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta property="article:tag" content="swift">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/swift-str" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/07/09/ios/swift-str/" class="article-date">
+  <time datetime="2020-07-09T08:49:40.000Z" itemprop="datePublished">2020-07-09</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      swift string
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>swift string</p>
+<a id="more"></a>
+
+<p>Swift 中的 String 是 Character 值的集合，Character 是人在阅读文字时所理解的单个字符，与该字符由多少个 Unicode 标量组成无关。</p>
+<p>因此，count、prefix(5) 等标准 Collection 操作也会在人所理解的字符上进行。</p>
+<p>但是，也带来了一些性能问题：String 不支持随机访问，即跳到字符串某个随机的字符不是一个 O(1) 的操作，必须查看前面的所有字符，才能确定这个字符的位置。</p>
+<h2 id="Unicode"><a href="#Unicode" class="headerlink" title="Unicode"></a>Unicode</h2><p>下面列出 Unicode 的一些基本概念</p>
+<p><strong>编码点（code point）</strong>：Unicode 中最基础的原件叫做编码点。举例：欧元符合（€）：U+20AC</p>
+<p><strong>Unicode 标量（Unicode scalar）</strong>：编码点中除了 0xD800 - 0xDFFF 之外的值，都可以叫做 Unicode 标量。</p>
+<p><strong>代理编码点（surrogate code points）</strong>：0xD800 - 0xDFFF 这 2048 个值叫做代理编码点，在 UTF-16 编码中用于表示值大于 65535 的字符。</p>
+<p><strong>编码单元（code units）</strong>：Unicode 编码方式中使用的最小实体叫做编码单元。举例：UTF-8 的编码单元的宽度是 8 比特。</p>
+<p><strong>（扩展）字位簇（(extended)grapheme cluster）</strong>：即用户在屏幕上看到的“单个字符”，可能是一个或者多个 Unicode 标量组合起来的。</p>
+<p>Unicode 是一个可变长格式：</p>
+<pre><code>1. 一个 Unicode 字符（扩展字位簇），由一个或多个 Unicode 标量组成
+2. 一个 Unicode 标量，可以被编码成一个或多个编码单元</code></pre><h2 id="标准等价"><a href="#标准等价" class="headerlink" title="标准等价"></a>标准等价</h2><ul>
+<li>合并标记</li>
+</ul>
+<p>é，这个字位簇，在 Unicode 中可以使单一的标量（U+00E9），也可以是是普通字符 e 后面跟着（U+0301）。</p>
+<p>Unicode 规范将上述称作<strong>标准等价</strong>。</p>
+<p>Swift 中，Unicode 标量的形式如 \u{xxxx}，类型是 Unicode.Scalar，是一个 struct。举例：欧元符合（€）：\u{20AC}</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> single = <span class="string">"Pok\u&#123;00E9&#125;mon"</span></span><br><span class="line"><span class="keyword">let</span> double = <span class="string">"Poke\u&#123;0301&#125;mon"</span></span><br><span class="line"><span class="comment">// 显示一样 都是 Pokémon</span></span><br><span class="line">(single, douuble)</span><br><span class="line"><span class="comment">// 字符数一样</span></span><br><span class="line">single.<span class="built_in">count</span> <span class="comment">// 7</span></span><br><span class="line">double.<span class="built_in">count</span> <span class="comment">// 7</span></span><br><span class="line"><span class="comment">// 比较，结果相等</span></span><br><span class="line">single == double <span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Unicode 标量，不一样</span></span><br><span class="line">single.unicodeScalars.<span class="built_in">count</span> <span class="comment">// 7</span></span><br><span class="line">double.unicodeScalars.<span class="built_in">count</span> <span class="comment">// 8</span></span><br></pre></td></tr></table></figure>
+
+<p>如果将两个字符串转为 Foundation 框架的 NSString，两个字符串<strong>不相等</strong>，length 也不相同。</p>
+<p>因为 NSString（也包括其他语言大部分字符串 API），会在 UTF-16 编码单元的层面上，按照字面量比较，而不会将不同字符组合起来的等价性纳入考虑。优势就是<strong>速度快</strong>。如果按照标准等价比较，需要使用 NSString.compare(_:)方法。</p>
+<ul>
+<li>Emoji</li>
+</ul>
+<p>很多 Emoji 的 Unicode 标量，无法通过单个 UTF-16 编码单元来表示，因此 java 等其他语言会认为 😂 是两个“字符”长。</p>
+<p>但是 swift 可以正确处理：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> oneEmoji = <span class="string">"😂"</span> <span class="comment">//U+1F602</span></span><br><span class="line">oneEmoji.<span class="built_in">count</span> <span class="comment">// 1</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="字符串和集合"><a href="#字符串和集合" class="headerlink" title="字符串和集合"></a>字符串和集合</h2><p>Swift 4 后，String 重新成为了 Collection</p>
+<ul>
+<li>边界情况</li>
+</ul>
+<p>两个集合相连接，一般假设新集合的长度是两个相连集合的长度之和。</p>
+<p>但是对于字符串，如果前集合的末尾和后集合的开头可以组成一个新的字位簇，则可能不相等。</p>
+<ul>
+<li>双向索引，而非随机访问</li>
+</ul>
+<p>String 不支持随机访问，因此 String 只实现了 BidirectionalCollection。</p>
+<p>String 可以从字符串的头或者尾部开始，向后或者向前移动，每次只能迭代一个字符。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 获取字符串索引的集合 indices 是一个 O(n) 的操作</span></span><br><span class="line"><span class="comment">// 但是获取索引后的 map 中的下标操作就是 O(1) 了</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">String</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> allPrefixes: [<span class="type">Substring</span>] &#123;</span><br><span class="line">        <span class="keyword">return</span> [<span class="string">""</span>] + <span class="built_in">indices</span>.<span class="built_in">map</span>&#123; index <span class="keyword">in</span> <span class="keyword">self</span>[...index] &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="string">"Hello"</span>.allPrefixes <span class="comment">// ["", "H", "He", "Hel", "Hell", "Hello"]</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>范围可替换，而非可变</li>
+</ul>
+<p>String 还实现了 RangeReplaceableCollection 协议。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> greeting = <span class="string">"Hello, world!"</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> comma = greeting.index(of:<span class="string">","</span>) &#123;</span><br><span class="line">    greeting[..&lt;comma] <span class="comment">// hello</span></span><br><span class="line">    greeting.replaceSubrange(comma..., with:<span class="string">"again."</span>)</span><br><span class="line">&#125;</span><br><span class="line">greeting <span class="comment">// Hello again.</span></span><br></pre></td></tr></table></figure>
+
+<p>注意，用于替换的字符串，可能与原字符串相邻字符形成新的字位簇</p>
+<h2 id="字符串索引"><a href="#字符串索引" class="headerlink" title="字符串索引"></a>字符串索引</h2><p>String.Index 是 String 所使用的的索引类型，本质是一个存储了从字符串开头的字节偏移量的不透明值。</p>
+<p>一旦有了有效的索引，可以通过索引下标以 O(1) 的时间对字符串进行访问，通过已有索引来寻找下一个索引也更高效。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> s = <span class="string">"abcdef"</span></span><br><span class="line"><span class="keyword">let</span> second = s.index(after: s.startIndex)</span><br><span class="line">s[second] <span class="comment">//b</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//步进 4 个字符</span></span><br><span class="line"><span class="keyword">let</span> sixth = s.index(second, offsetBy: <span class="number">4</span>)</span><br><span class="line">s[sixth] <span class="comment">// f</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> safeIdx = s.index(s.startIndex, offsetBy: <span class="number">400</span>, limitedBy: s.endIndex)</span><br><span class="line">safeIdx <span class="comment">// nil</span></span><br><span class="line"></span><br><span class="line">s[..&lt;s.index(s.startIndex, offsetBy: <span class="number">4</span>)] <span class="comment">// abcd</span></span><br><span class="line">s.<span class="keyword">prefix</span>(<span class="number">4</span>) <span class="comment">// abcd</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> date = <span class="string">"2020-07-01"</span></span><br><span class="line">date.<span class="built_in">split</span>(separator: <span class="string">"-"</span>)[<span class="number">1</span>] <span class="comment">// 09</span></span><br><span class="line">date.<span class="built_in">dropFirst</span>(<span class="number">5</span>).<span class="keyword">prefix</span>(<span class="number">2</span>) <span class="comment">// 09</span></span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> hello = <span class="string">"Hello!"</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> idx = hello.firstIndex(of: <span class="string">"!"</span>) &#123;</span><br><span class="line">    hello.insert(contentsOf: <span class="string">", world"</span>, at: idx)</span><br><span class="line">&#125;</span><br><span class="line">hello <span class="comment">// Hello, world!</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="子字符串"><a href="#子字符串" class="headerlink" title="子字符串"></a>子字符串</h2><p>String 的 SubSequence 类型：Substring。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 扩展一个接受含有多个分隔符的序列作为参数的 spilt 方法</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">Collection</span> <span class="title">where</span> <span class="title">Element</span>: <span class="title">Equatable</span> </span>&#123;</span><br><span class="line">    <span class="function"><span class="keyword">func</span> <span class="title">split</span>&lt;S: Sequence&gt;<span class="params">(separators: S)</span></span> -&gt; [<span class="type">SubSequence</span>]</span><br><span class="line">        <span class="keyword">where</span> <span class="type">Element</span> == <span class="type">S</span>.<span class="type">Element</span> &#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="built_in">split</span> &#123; separators.<span class="built_in">contains</span>($<span class="number">0</span>) &#125;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>StringProtocol</li>
+</ul>
+<p>String 和 Substring 都遵守 StringProtocol 协议，字符串几乎所有 API 都定义在这个协议里。</p>
+<p>不建议长期持有子字符串，这是因为子字符串会一直持有整个原始字符串。</p>
+<p>通常，在一个操作内部使用子字符串，而只在结束时创建新字符串，将赋值操作推迟到最后一刻，这样可以确保是最低开销。</p>
+<p>如果想扩展 String，可以将这个扩展放在 StringProtocol，可以保持 String 和 Substring 的 API 统一性。</p>
+<h2 id="String-与-NSString"><a href="#String-与-NSString" class="headerlink" title="String 与 NSString"></a>String 与 NSString</h2><p>任意的 String 实例，可以通过 as 操作桥接为 NSString，那些接受或者返回 NSString 的 Objective-C API 也会把类型自动转换为 String。</p>
+<p>Swift 中 String 的编译器优化：引入 Foundation 后，NSString 成员可以在 String 的实例上进行访问。</p>
+<p>由于 Swift String 在内存中的原生编码是 UTF-8，而 NSString 是 UTF-16，因此频繁的在 string 和 NSString 之间桥接会有额外性能开销。</p>
+<p>举例：</p>
+<p>NSAttributeString 的 API <code>attributes(at: Int, effectiveRange: NSRangePointer?)</code> </p>
+<p>接受的是一个整数索引（UTF-16 测量），非 String.Index</p>
+<p>通过指针返回的 effectiveRange，是一个 NSRange 结构体，而非 Range&lt;String.Index&gt;</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 为字符串中的 “Click here” 添加一个链接</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> text = <span class="string">"👉 Click here for more info."</span></span><br><span class="line"><span class="keyword">let</span> linkTarget = <span class="type">URL</span>(string: <span class="string">"https://www.baidu.com"</span>)!</span><br><span class="line"><span class="keyword">let</span> formatter = <span class="type">NSMutableAttributedString</span>(string: text)</span><br><span class="line"></span><br><span class="line"><span class="comment">//修改文本的部分属性</span></span><br><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> linkRange = formatted.string.range(of: <span class="string">"Click here"</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> nsRange = <span class="type">NSRange</span>(linkRange, <span class="keyword">in</span>: formatted.string) <span class="comment">// &#123;3, 10&#125;</span></span><br><span class="line">    formatted.addAttribute(.link, value:linkTarget, range: nsRange)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> <span class="keyword">let</span> queryRange = formatted.string.range(of: <span class="string">"here"</span>) &#123;</span><br><span class="line">    <span class="keyword">let</span> nsRange = <span class="type">NSRange</span>(queryRange, <span class="keyword">in</span>: formatted.string)</span><br><span class="line">    <span class="keyword">var</span> attributesRange = <span class="type">NSRange</span>()</span><br><span class="line">    <span class="keyword">let</span> attributes = formatted.attributes(at: nsRange.location, effectiveRange: &amp;attributesRange)</span><br><span class="line"></span><br><span class="line">    attributesRange <span class="comment">// &#123;3, 10&#125;</span></span><br><span class="line"></span><br><span class="line">    <span class="comment">// 把 NSRange 转为 Range&lt;String.Index&gt;</span></span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">let</span> effectiveRange = <span class="type">Range</span>(attributesRange, <span class="keyword">in</span>: formatted.string) &#123;</span><br><span class="line">        formatted.string[effectiveRange] <span class="comment">// Click here</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>CharacterSet</li>
+</ul>
+<p>CharacterSet 是 Foundation 中的类型，实际上它表示一系列 Unicode 标量的数据结构体，和 Character 类型不兼容。</p>
+<p>CharacterSet 提供了一些工厂初始化方法，.alphanumerics 、 .whitespacesAndNewlines。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为 emoji 中，女人 + ZWJ + 消防车 = 女消防员</span></span><br><span class="line"><span class="comment">// ZWJ 零连接符:U+200D</span></span><br><span class="line"><span class="keyword">let</span>  favoriteEmoji = <span class="type">CharacterSet</span>(<span class="string">"👩‍🚒"</span>.unicodeScalars)</span><br><span class="line">favoriteEmoji.<span class="built_in">contains</span>(<span class="string">"🚒"</span>) <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="Unicode-属性"><a href="#Unicode-属性" class="headerlink" title="Unicode 属性"></a>Unicode 属性</h2><ul>
+<li>Unicode.Scalar</li>
+</ul>
+<p>Swift5 中，CharacterSet 的部分功能移植到了 Unicode.Scalar</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">(<span class="string">"😀"</span> <span class="keyword">as</span> <span class="type">Unicode</span>.<span class="type">Scalar</span>).properties.isEmoji <span class="comment">// true</span></span><br><span class="line">(<span class="string">"∬"</span> <span class="keyword">as</span> <span class="type">Unicode</span>.<span class="type">Scalar</span>).properties.isMath <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="String-和-Character-的内部结构"><a href="#String-和-Character-的内部结构" class="headerlink" title="String 和 Character 的内部结构"></a>String 和 Character 的内部结构</h2><ul>
+<li>String</li>
+</ul>
+<p>Swift5 里，原生字符串的内存是使用 UTF-8 格式表示的。因此遍历 UTF-8 视图会比遍历 UTF-16 或 Unicode标量 视图更快。</p>
+<p>小于 16 个（32 位平台是 11 个）UTF-8 编码单元的小型字符串，Swift 不会为其创建专门的存储缓冲区，而是直接使用内连的方式存储。</p>
+<ul>
+<li>Character</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">struct</span> <span class="title">Character</span> </span>&#123;</span><br><span class="line">    <span class="keyword">internal</span> <span class="keyword">var</span> _str: <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">internal</span> <span class="keyword">init</span>(unchecked str: <span class="type">String</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>._str = str</span><br><span class="line">        <span class="comment">// ...</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>通过源码可知，一个 Character 在内部被表示为长度为 1 的字符串。</p>
+<p>Swift5 之后，Character 的优化通过 String 自身的优化实现小字符串优化。</p>
+<h2 id="字符串字面量"><a href="#字符串字面量" class="headerlink" title="字符串字面量"></a>字符串字面量</h2><p>“”是字符串字面量，通过 ExpressibleByStringLiteral 协议实现。</p>
+<p>字符串字面量是 ExpressibleByStringLiteral，ExpressibleByExtendedGraphemeClusterLiteral 和 ExpressibleByUnicodeScalarLiteral 三个协议的一部分。其中，每个协议都约束了一个用它们各自表示的字面量 创建对象的 init方法。但除非你真的需要根据 Unicode标量还是字位族仔细调整初始化逻辑， 否则，只需要实现字符串的版本就好。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 自定义类型 SafeHTML 支持字符串字面量创建。</span></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">String</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> htmlEscaped: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="comment">// 简单的 仅替换所有开闭尖括号</span></span><br><span class="line">        <span class="keyword">return</span> replacingOccurrences(of: <span class="string">"&lt;"</span>, with: <span class="string">"&amp;lt;"</span>).replacingOccurrences(of: <span class="string">"&gt;"</span>, with: <span class="string">"&amp;gt;"</span>)</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">SafeHTML</span> </span>&#123;</span><br><span class="line">    <span class="keyword">private</span>(<span class="keyword">set</span>) <span class="keyword">var</span> value: <span class="type">String</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">init</span>(unsafe html: <span class="type">String</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.value = html.htmlEscaped</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SafeHTML</span>: <span class="title">ExpressibleByStringLiteral</span> </span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(stringLiteral value: <span class="type">StringLiteralType</span>) &#123;</span><br><span class="line">        <span class="keyword">self</span>.value = value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> safe: <span class="type">SafeHTML</span> = <span class="string">"&lt;p&gt;Angle brackets in literals are not escaped&lt;/p&gt;"</span></span><br><span class="line"><span class="comment">// SafeHTML(value: "&lt;p&gt;Angle brackets in literals are not escaped&lt;/p&gt;")</span></span><br></pre></td></tr></table></figure>
+
+
+<h2 id="定制字符串描述"><a href="#定制字符串描述" class="headerlink" title="定制字符串描述"></a>定制字符串描述</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SafeHTML</span>: <span class="title">CustomStringConvertible</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> description: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> value</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">extension</span> <span class="title">SafeHTML</span>: <span class="title">CustomeDebugStringConvertible</span> </span>&#123;</span><br><span class="line">    <span class="keyword">var</span> debugDescription: <span class="type">String</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> <span class="string">"SafeHTML:\(value)"</span></span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="built_in">print</span>(safe)</span><br></pre></td></tr></table></figure>
+
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2020/07/09/ios/swift-str/" data-id="ckiia424p0041mobmcko3ewdp" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/swift/" rel="tag">swift</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/07/27/algorithm/sort/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          排序算法
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/07/07/ios/swift-collection-protocol/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">swift 集合协议</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

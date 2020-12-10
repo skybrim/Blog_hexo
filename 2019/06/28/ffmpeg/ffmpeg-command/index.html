@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>FFmpeg 常用命令 | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="ffmpeg command">
+<meta property="og:type" content="article">
+<meta property="og:title" content="FFmpeg 常用命令">
+<meta property="og:url" content="https://skybrim.top/2019/06/28/ffmpeg/ffmpeg-command/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="ffmpeg command">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4.jpg">
+<meta property="article:published_time" content="2019-06-27T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.064Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="ffmpeg">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4.jpg">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ffmpeg/ffmpeg-command" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/06/28/ffmpeg/ffmpeg-command/" class="article-date">
+  <time datetime="2019-06-27T16:00:00.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      FFmpeg 常用命令
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>ffmpeg command</p>
+<a id="more"></a>
+
+<h2 id="基本信息查询"><a href="#基本信息查询" class="headerlink" title="基本信息查询"></a>基本信息查询</h2><p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF%E6%9F%A5%E8%AF%A2%E5%91%BD%E4%BB%A4.jpg" alt="基本信息查询"></p>
+<h2 id="录制"><a href="#录制" class="headerlink" title="录制"></a>录制</h2><ul>
+<li>查看支持的采集设备编号列表</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -f avfoundation -list_devices <span class="literal">true</span> -i <span class="string">""</span></span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>视频录制</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -f : 指定使用 AVfoundation 采集数据</span></span><br><span class="line"><span class="comment"># -i : 指定从哪里采集数据，文件索引号  0 摄像头 1 屏幕</span></span><br><span class="line"><span class="comment"># -r : 指定帧率</span></span><br><span class="line"><span class="comment"># out.yuv : 保存的文件名，yuv 无压缩的数据</span></span><br><span class="line">ffmpeg -f avfoundation -i 1 -r 30 out.yuv</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>视频播放</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -s : size，视频分辨率</span></span><br><span class="line"><span class="comment"># -pix_fmt : 像素格式，默认 yuv420p</span></span><br><span class="line">ffplay -s 4096x2304 -pix_fmt uyvy422 out.yuv</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>音频录制</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -i : 指定采集设备，冒号前面是视频采集设置，冒号后面是音频采集设备</span></span><br><span class="line">ffmpeg -f avfoundation -i :0 out.wav</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>音频播放</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffplay out.wav</span><br></pre></td></tr></table></figure>
+
+<h2 id="分解与复用"><a href="#分解与复用" class="headerlink" title="分解与复用"></a>分解与复用</h2><ul>
+<li>转换 复用</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 直接转格式 demuxer + muxer</span></span><br><span class="line"><span class="comment"># -vcodec copy : 视频编码处理方式，copy 指不改变</span></span><br><span class="line"><span class="comment"># -acodec copy : 音频编码处理方式，copy 指不改变</span></span><br><span class="line">ffmpeg -i input.mp4 -vcodec copy -acodec copy out.flv</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>分解</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">## 抽取视频</span></span><br><span class="line"><span class="comment"># -an : 不要音频</span></span><br><span class="line">ffmpeg -i input.mp4 -an -vcodec copy out.h264</span><br><span class="line"></span><br><span class="line"><span class="comment">## 抽取音频</span></span><br><span class="line"><span class="comment"># -vn :  不要音频</span></span><br><span class="line">ffmpeg -i input.mp4 -acodec copy -vn out.aac</span><br></pre></td></tr></table></figure>
+
+<h2 id="处理原始数据"><a href="#处理原始数据" class="headerlink" title="处理原始数据"></a>处理原始数据</h2><ul>
+<li>抽取视频原始数据 yuv</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -c:v rawvideo : 视频编码。rawvideo 原始视频</span></span><br><span class="line"><span class="comment"># -pix_fmt : 像素格式</span></span><br><span class="line">ffmpeg -i input.mp4 -an -c:v rawvideo -pix_fmt yuv420p out.yuv</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>抽取音频原始数据 pcm</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -ar : 音频采样率 44.1k</span></span><br><span class="line"><span class="comment"># -ac 2 : channel，2 是双声道</span></span><br><span class="line"><span class="comment"># -f s16le : 数据存储格式； s : 有符号； 16 : 16位表示； le 小</span></span><br><span class="line">ffmpeg -i input.mp4 -vn -ar 44100 -ac2 -f s16le out.pcm</span><br><span class="line"></span><br><span class="line"><span class="comment">## 播放原始音频</span></span><br><span class="line"><span class="comment"># 指定原始音频播放参数</span></span><br><span class="line">ffplay -ar 44100 -ac 2 -f s16le out.pcm</span><br></pre></td></tr></table></figure>
+
+<h2 id="剪裁与合并"><a href="#剪裁与合并" class="headerlink" title="剪裁与合并"></a>剪裁与合并</h2><ul>
+<li>裁剪</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -ss : 视频裁剪起始点</span></span><br><span class="line"><span class="comment"># -t : 裁剪时长，单位秒</span></span><br><span class="line">ffmpeg -i input.mp4 -ss 00:00:00 -t 10 out.ts</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>合并</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># inputs.txt : 想要合并的文件的文件名列表，内容格式为 file 'filename.xxx'</span></span><br><span class="line">ffmpeg -f concat -i inputs.txt out.flv</span><br><span class="line"><span class="comment"># 拼接 MP4</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="图片与视频互转"><a href="#图片与视频互转" class="headerlink" title="图片与视频互转"></a>图片与视频互转</h2><ul>
+<li>图片转视频</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i image-%3d.jpeg out.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>视频转图片</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -r : 指定转换图片帧率。 1 每秒转出1张</span></span><br><span class="line"><span class="comment"># -f : 指定格式 image2</span></span><br><span class="line">ffmpeg -i input.flv -r 1 -f image2 image-%3d.jpeg</span><br></pre></td></tr></table></figure>
+
+<h2 id="直播相关"><a href="#直播相关" class="headerlink" title="直播相关"></a>直播相关</h2><ul>
+<li>推流</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -re : Read input at native frame rate. Mainly used to simulate a grab device, or live input stream (e.g. when reading from a file). Should not be used with actual grab devices or live input streams (where it can cause packet loss). By default ffmpeg attempts to read the input(s) as fast as possible. This option will slow down the reading of the input(s) to the native frame rate of the input(s). It is useful for real-time output (e.g. live streaming).</span></span><br><span class="line"><span class="comment"># -c : 音视频编解码</span></span><br><span class="line"><span class="comment"># -f : 格式</span></span><br><span class="line"><span class="comment"># 推向的服务器地址</span></span><br><span class="line">ffmpeg -re -i out.mp4 -c copy -f flv rtmpt://server/live/streamName</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>拉流</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ffmpeg -i rtmp://server/live/streamName -c copy dump.flv</span><br></pre></td></tr></table></figure>
+
+<h2 id="滤镜"><a href="#滤镜" class="headerlink" title="滤镜"></a>滤镜</h2><ul>
+<li>视频裁剪</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -vf : vf,使用视频滤镜；crop 滤镜名；crop=in_w-200:in_h-200，滤镜参数，长宽减200；默认原点是中心</span></span><br><span class="line"><span class="comment"># crop 格式 : crop=xxxx_w:xxxx_h:x:y</span></span><br><span class="line"><span class="comment"># -c:v : 视频编码器，libx264</span></span><br><span class="line"><span class="comment"># -c:a : 音频编码器，copy</span></span><br><span class="line">ffmpeg -i input.mp4 -vf crop=input_w-200:input_h-200 -c:v libx264 -c:a copy out.mp4</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>添加水印</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/06/28/ffmpeg/ffmpeg-command/" data-id="ckiia42470023mobmgdmz5ev4" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/06/28/ffmpeg/compile-ffmpeg/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          编译 FFmpeg 源码
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2019/06/28/ffmpeg/ffmpeg/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">FFmpeg 处理音视频的流程</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

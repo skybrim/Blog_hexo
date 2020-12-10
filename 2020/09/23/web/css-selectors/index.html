@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>css-selectors | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="css selectors 备忘">
+<meta property="og:type" content="article">
+<meta property="og:title" content="css-selectors">
+<meta property="og:url" content="https://skybrim.top/2020/09/23/web/css-selectors/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="css selectors 备忘">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2020-09-23T08:14:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.069Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="web">
+<meta property="article:tag" content="css">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-web/css-selectors" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2020/09/23/web/css-selectors/" class="article-date">
+  <time datetime="2020-09-23T08:14:00.000Z" itemprop="datePublished">2020-09-23</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      css-selectors
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>css selectors 备忘</p>
+<a id="more"></a>
+
+<p>基础</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* id选择器 */</span></span><br><span class="line"><span class="selector-id">#unique</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* class选择器 */</span></span><br><span class="line"><span class="selector-class">.box</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* tag选择器 */</span></span><br><span class="line"><span class="selector-tag">h1</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>延伸写法</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* space 后代选择器 */</span></span><br><span class="line"><span class="comment">/* 当使用 空格 连接两个元素时，</span></span><br><span class="line"><span class="comment">使得该选择器可以只匹配那些由第一个元素作为祖先元素的所有第二个元素(后代元素)，</span></span><br><span class="line"><span class="comment">不包含第一个元素 */</span></span><br><span class="line"><span class="selector-tag">div</span> <span class="selector-tag">span</span> &#123;&#125; <span class="comment">/* 每一个 &lt;div&gt; 下的 &lt;span&gt; 元素 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* &gt; 子选择器 */</span></span><br><span class="line"><span class="comment">/* 使用 &gt; 选择符分隔两个元素时,它只会匹配那些作为第一个元素的直接后代(子元素)的第二元素 */</span></span><br><span class="line"><span class="selector-tag">div</span> &gt; <span class="selector-tag">span</span> &#123;&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/* + 相邻兄弟选择器  */</span></span><br><span class="line"><span class="comment">/* 使用 + 介于两个选择器之间，当第二个元素紧跟在第一个元素之后，</span></span><br><span class="line"><span class="comment">并且两个元素都是属于同一个父元素的子元素，则第二个元素将被选中。 */</span></span><br><span class="line"><span class="selector-tag">img</span> + <span class="selector-tag">p</span> &#123;&#125; <span class="comment">/* 图片后面紧跟着的段落将被选中 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* ~ 兄弟选择器 */</span></span><br><span class="line"><span class="comment">/* 位置无须紧邻，只须同层级，A~B 选择A元素之后所有同层级B元素 */</span></span><br><span class="line"><span class="selector-tag">p</span> ~ <span class="selector-tag">span</span> &#123;&#125; <span class="comment">/* &lt;p&gt; 后面跟着的 &lt;span&gt; 被选中*/</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* * */</span></span><br><span class="line"><span class="comment">/* 所有的 html 元素，一般搭配其他符号进行筛选使用 */</span></span><br><span class="line"><span class="selector-class">.container</span> ~ * &#123;&#125; <span class="comment">/* class="container" 元素同层的所有 html 元素 */</span></span><br></pre></td></tr></table></figure>
+
+<p>属性选择器</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[title]</span> &#123;&#125; <span class="comment">/* 存在title属性的&lt;a&gt; 元素 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[href=<span class="string">"https://example.com"</span>]</span> &#123;&#125; <span class="comment">/* 存在href属性并且属性值匹配"https://example.org"的&lt;a&gt; 元素 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[href*=<span class="string">"example"</span>]</span> &#123;&#125; <span class="comment">/* 存在href属性并且属性值包含"example"的&lt;a&gt; 元素 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[href*=<span class="string">"insensitive"</span> i]</span> &#123;&#125; <span class="comment">/* 包含 "insensitive" 的链接,不区分大小写 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[href*=<span class="string">"cAsE"</span> s]</span> &#123;&#125; <span class="comment">/* 包含 "cAsE" 的链接，区分大小写 */</span> </span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[href^=<span class="string">"#"</span>]</span> &#123;&#125; <span class="comment">/* 以 "#" 开头的页面本地链接 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[href$=<span class="string">".org"</span>]</span> &#123;&#125; <span class="comment">/* 存在href属性并且属性值结尾是".org"的&lt;a&gt; 元素 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-attr">[class~=<span class="string">"logo"</span>]</span> &#123;&#125; <span class="comment">/* 存在class属性并且属性值包含以空格分隔的"logo"的&lt;a&gt;元素 */</span></span><br></pre></td></tr></table></figure>
+
+<p>伪类选择器</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/* 伪类选择器 */</span></span><br><span class="line"><span class="comment">/* 指定要选择的元素的特殊状态 */</span></span><br><span class="line"><span class="comment">/* https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-classes */</span></span><br><span class="line"><span class="selector-tag">button</span><span class="selector-pseudo">:hover</span> &#123;&#125; <span class="comment">/* 所有用户指针悬停的按钮 */</span></span><br><span class="line"><span class="selector-tag">a</span><span class="selector-pseudo">:visited</span> &#123;&#125; <span class="comment">/* 浏览过的 a 标签 */</span></span><br><span class="line"><span class="selector-tag">div</span><span class="selector-pseudo">:nth-child(2)</span> &#123;&#125; <span class="comment">/* 第 2 个子元素 */</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* 伪元素选择器 */</span></span><br><span class="line"><span class="comment">/* 指定被选择元素的特定部分 */</span></span><br><span class="line"><span class="comment">/* https://developer.mozilla.org/zh-CN/docs/Web/CSS/Pseudo-elements */</span></span><br><span class="line"><span class="selector-tag">p</span><span class="selector-pseudo">::first-line</span> &#123;&#125; <span class="comment">/* 每一个 &lt;p&gt; 元素的第一行。 */</span></span><br></pre></td></tr></table></figure>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2020/09/23/web/css-selectors/" data-id="ckiia424w004nmobm2qgffn8y" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2020/09/23/web/react-useReducer-useContext/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          react-useReducer-useContext
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2020/08/08/inbox/homebrew-source/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">homebrew-source</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>

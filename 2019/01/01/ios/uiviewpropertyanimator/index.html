@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+
+  
+  <title>UIViewPropertyAnimator | Skybrim</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="UIViewPropertyAnimator">
+<meta property="og:type" content="article">
+<meta property="og:title" content="UIViewPropertyAnimator">
+<meta property="og:url" content="https://skybrim.top/2019/01/01/ios/uiviewpropertyanimator/index.html">
+<meta property="og:site_name" content="Skybrim">
+<meta property="og:description" content="UIViewPropertyAnimator">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/UIVIewPropertyAnimator-state.png">
+<meta property="article:published_time" content="2018-12-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2020-12-10T02:48:42.068Z">
+<meta property="article:author" content="Wiley">
+<meta property="article:tag" content="iOS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/UIVIewPropertyAnimator-state.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Skybrim" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Skybrim</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Practice makes perfect. Always.</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://skybrim.top"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ios/uiviewpropertyanimator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/2019/01/01/ios/uiviewpropertyanimator/" class="article-date">
+  <time datetime="2018-12-31T16:00:00.000Z" itemprop="datePublished">2019-01-01</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      UIViewPropertyAnimator
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>UIViewPropertyAnimator</p>
+<a id="more"></a>
+
+<h2 id="Demo"><a href="#Demo" class="headerlink" title="Demo"></a>Demo</h2><p><a href="https://github.com/skybrim/iOS_practice/tree/master/Animation" target="_blank" rel="noopener">demo</a></p>
+<h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>先说一下对别的结论，然后列出代码。  </p>
+<ul>
+<li>优点：  <ul>
+<li>1、精细控制动画状态 start pase stop finish  </li>
+<li>2、精细控制动画进度 fractionComplete  </li>
+<li>3、可以中间加入动画 addAnimations  </li>
+<li>4、自定义 curve  </li>
+</ul>
+</li>
+<li>缺点：  <ul>
+<li>1、无法重复动画: .repeat 无效（-iOS12）  </li>
+<li>2、无法自动翻转动画： .autoreverse 无效（-iOS12）  </li>
+</ul>
+</li>
+</ul>
+<h2 id="UIView-animationDuration-…"><a href="#UIView-animationDuration-…" class="headerlink" title="UIView.animationDuration:…"></a>UIView.animationDuration:…</h2><figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIView</span>.animate(</span><br><span class="line">    withDuration: <span class="number">3</span>,</span><br><span class="line">    delay: <span class="number">0</span>,</span><br><span class="line">    options: [.curveLinear], <span class="comment">// [.repeat, .autoreverse]</span></span><br><span class="line">    animations: &#123;</span><br><span class="line">        <span class="comment">// code...</span></span><br><span class="line">&#125;) &#123; (<span class="number">_</span>) <span class="keyword">in</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">"UIView.animate -- completion"</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="UIViewPropertyAnimator"><a href="#UIViewPropertyAnimator" class="headerlink" title="UIViewPropertyAnimator"></a>UIViewPropertyAnimator</h2><p>iOS 10 以后 Apple 新加入的动画 API，主要用来取代 UIView.animationWithDuration:…</p>
+<ul>
+<li><p>类似 [UIView animationWithDuration:…] 的使用形式<br>UIViewPropertyAnimator 也可以按照旧式的 UIView.animationWithDuration:… 的形式调用。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">UIViewPropertyAnimator</span>.runningPropertyAnimator(</span><br><span class="line">    withDuration: &lt;#<span class="type">T</span>##<span class="type">TimeInterval</span>#&gt;,</span><br><span class="line">    delay: &lt;#<span class="type">T</span>##<span class="type">TimeInterval</span>#&gt;,</span><br><span class="line">    options: &lt;#<span class="type">T</span>##<span class="type">UIView</span>.<span class="type">AnimationOptions</span>#&gt;,</span><br><span class="line">    animations: &lt;#<span class="type">T</span>##() -&gt; <span class="type">Void</span>#&gt;,</span><br><span class="line">    completion: &lt;#<span class="type">T</span>##((<span class="type">UIViewAnimatingPosition</span>) -&gt; <span class="type">Void</span>)?##((<span class="type">UIViewAnimatingPosition</span>) -&gt; <span class="type">Void</span>)?##(<span class="type">UIViewAnimatingPosition</span>) -&gt; <span class="type">Void</span>#&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>创建对象<br>Apple 提供了三种快速创建的方法。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">	<span class="comment">// 设置 duration 、 cureve 和 animation， 创建 UIViewPropertyAnimator</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">convenience</span> <span class="keyword">init</span>(duration: <span class="type">TimeInterval</span>, curve: <span class="type">UIView</span>.<span class="type">AnimationCurve</span>, animations: (() -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>)</span><br><span class="line">	<span class="comment">// 通过设置首尾两个点创建动画曲线，创建 UIViewPropertyAnimator</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">convenience</span> <span class="keyword">init</span>(duration: <span class="type">TimeInterval</span>, controlPoint1 point1: <span class="type">CGPoint</span>, controlPoint2 point2: <span class="type">CGPoint</span>, animations: (() -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>)</span><br><span class="line">	<span class="comment">//设置 dampingRatio（阻尼率），创建 UIViewPropertyAnimator</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">convenience</span> <span class="keyword">init</span>(duration: <span class="type">TimeInterval</span>, dampingRatio ratio: <span class="type">CGFloat</span>, animations: (() -&gt; <span class="type">Void</span>)? = <span class="literal">nil</span>)</span><br><span class="line">```  </span><br><span class="line">如果还是未能满足，可以通过自定义创建动画曲线。</span><br><span class="line">```<span class="type">Swift</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">init</span>(duration: <span class="type">TimeInterval</span>, timingParameters parameters: <span class="type">UITimingCurveProvider</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>动画状态</p>
+<ul>
+<li><p>Inactive<br>对象初始化或者动画结束后所处的状态。</p>
+</li>
+<li><p>Active<br>在调用 startAnimation() 、 pauseAnimation() 方法后对象就处于激活状态，直到动画完成或者手动调用 stopAnimation() 结束动画。</p>
+</li>
+<li><p>Stopped<br>在 stopAnimation() 被调用之后动画对象就处于停止状态，并且保留当前的所有属性值。如下图所示，停止状态无法反向回到激活态。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/skybrim/AllImages@dev/UIVIewPropertyAnimator-state.png" alt=""></p>
+</li>
+</ul>
+</li>
+<li><p>添加新动画<br>UIViewPropertyAnimator 可以在中途加入新的动画。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//The duration of the animation will be (1 - delayFactor) * animator.duration seconds.</span></span><br><span class="line"><span class="comment">//delayFactor，不是动画开始执行的绝对值，因为新动画加入时，animator 可能已经运行一段时间了</span></span><br><span class="line"><span class="comment">//默认为 0</span></span><br><span class="line">    animator.addAnimations(&#123;</span><br><span class="line">    	<span class="comment">//code...</span></span><br><span class="line">    &#125;, delayFactor: <span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>动画结束</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//UIViewAnimatingPosition，用于表明动画结束的位置，这个值本身是一个枚举，包含了 starting、end 和 current。通常得到的值是 end。</span></span><br><span class="line">    animator.addCompletion &#123; (<span class="type">UIViewAnimatingPosition</span>) <span class="keyword">in</span></span><br><span class="line">        <span class="comment">//code</span></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>控制动画进度<br>注意，只能在动画处于 inactive 和 active 的时候，可以控制。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@IBAction</span> <span class="function"><span class="keyword">func</span> <span class="title">changeAnimator</span><span class="params">(<span class="number">_</span> sender: UISlider)</span></span> &#123;</span><br><span class="line">    animator.fractionComplete = <span class="type">CGFloat</span>(sender.value)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://skybrim.top/2019/01/01/ios/uiviewpropertyanimator/" data-id="ckiia424r0049mobmczvn71c0" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2019/01/01/ios/uifont/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          UIFont
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2018/12/12/inbox/v2ray/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Project V</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tags</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/algorithm/" rel="tag">algorithm</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/css/" rel="tag">css</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ffmpeg/" rel="tag">ffmpeg</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/git/" rel="tag">git</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/hexo/" rel="tag">hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/homebrew/" rel="tag">homebrew</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/http/" rel="tag">http</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/iOS/" rel="tag">iOS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/inbox/" rel="tag">inbox</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/kindle/" rel="tag">kindle</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/proxy/" rel="tag">proxy</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/raspberry-pi/" rel="tag">raspberry-pi</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swift/" rel="tag">swift</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/travel/" rel="tag">travel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/vim/" rel="tag">vim</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/web/" rel="tag">web</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Tag Cloud</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/algorithm/" style="font-size: 16px;">algorithm</a> <a href="/tags/css/" style="font-size: 14px;">css</a> <a href="/tags/ffmpeg/" style="font-size: 16px;">ffmpeg</a> <a href="/tags/git/" style="font-size: 10px;">git</a> <a href="/tags/hexo/" style="font-size: 12px;">hexo</a> <a href="/tags/homebrew/" style="font-size: 10px;">homebrew</a> <a href="/tags/http/" style="font-size: 10px;">http</a> <a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/inbox/" style="font-size: 18px;">inbox</a> <a href="/tags/kindle/" style="font-size: 10px;">kindle</a> <a href="/tags/proxy/" style="font-size: 10px;">proxy</a> <a href="/tags/raspberry-pi/" style="font-size: 14px;">raspberry-pi</a> <a href="/tags/react/" style="font-size: 10px;">react</a> <a href="/tags/swift/" style="font-size: 16px;">swift</a> <a href="/tags/travel/" style="font-size: 10px;">travel</a> <a href="/tags/vim/" style="font-size: 14px;">vim</a> <a href="/tags/web/" style="font-size: 16px;">web</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/09/">September 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/08/">August 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/07/">July 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/06/">June 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/05/">May 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2020/02/">February 2020</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/12/">December 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/10/">October 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/06/">June 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/05/">May 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/03/">March 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2019/01/">January 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/12/">December 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2018/11/">November 2018</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/09/">September 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/06/">June 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/05/">May 2017</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2017/01/">January 2017</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2020/09/24/web/css-layout/">css 布局</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/24/web/css-box-model/">css 盒模型</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/react-useReducer-useContext/">react-useReducer-useContext</a>
+          </li>
+        
+          <li>
+            <a href="/2020/09/23/web/css-selectors/">css-selectors</a>
+          </li>
+        
+          <li>
+            <a href="/2020/08/08/inbox/homebrew-source/">homebrew-source</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2020 Wiley<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+  
+<script src="/fancybox/jquery.fancybox.pack.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+  </div>
+</body>
+</html>
